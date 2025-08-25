@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第四章：随机实验与因果识别</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第四章：随机实验与因果识别</h1>
+<p>在前三章中，我们学习了因果推断的基本框架、潜在结果模型和因果图方法。这些理论工具为我们提供了思考因果关系的严格框架。本章我们将探讨因果推断的"黄金标准"——随机对照试验（RCT）。通过随机化，我们可以打破处理变量与潜在混杂因素之间的关联，从而识别出真正的因果效应。尽管RCT在实践中面临诸多挑战，但理解其原理对于设计和分析任何因果研究都至关重要。</p>
+<h2 id="41-rct">4.1 随机对照试验（RCT）</h2>
+<h3 id="411-rct">4.1.1 RCT的基本原理</h3>
+<p>随机对照试验是因果推断的黄金标准，其核心思想极其简单却极其强大：通过随机分配处理，确保处理组和控制组在期望意义上是可比的。</p>
+<p>设 $T_i \in \{0, 1\}$ 为个体 $i$ 的处理状态，$Y_i$ 为观测结果，$Y_i(1)$ 和 $Y_i(0)$ 分别为潜在结果。在RCT中，处理分配机制为：</p>
+<p>$$P(T_i = 1) = p$$
+其中 $p$ 是预先设定的处理概率，通常取 $p = 0.5$。</p>
+<h3 id="412">4.1.2 为什么随机化解决了识别问题</h3>
+<p>随机化的魔力在于它保证了可忽略性假设（ignorability assumption）：
+$$\{Y_i(1), Y_i(0)\} \perp!!!\perp T_i$$
+这意味着潜在结果与处理分配独立。在这种情况下，简单的均值比较就能识别出平均处理效应（ATE）：
+$$\tau_{ATE} = E[Y_i(1) - Y_i(0)] = E[Y_i|T_i=1] - E[Y_i|T_i=0]$$
+从因果图的角度看，随机化切断了所有从混杂因素到处理变量的路径：</p>
+<div class="codehilite"><pre><span></span><code>    U（未观测混杂）
+    ↓
+X → Y
+↑
+T（随机分配）
+</code></pre></div>
+
+<h3 id="413-rct">4.1.3 RCT的统计分析</h3>
+<p>最简单的分析方法是两样本t检验：
+$$t = \frac{\bar{Y}_1 - \bar{Y}_0}{\sqrt{s_1^2/n_1 + s_0^2/n_0}}$$
+其中 $\bar{Y}_1$ 和 $\bar{Y}_0$ 分别是处理组和控制组的样本均值。</p>
+<p>更一般地，我们可以使用回归调整来提高精度：
+$$Y_i = \alpha + \tau T_i + \beta' X_i + \epsilon_i$$
+这里 $X_i$ 是预处理协变量。注意：即使不包含 $X_i$，$\tau$ 的估计也是无偏的，但包含 $X_i$ 可以减少方差。</p>
+<h3 id="414">4.1.4 样本量计算</h3>
+<p>设计RCT时，样本量计算至关重要。对于检测效应量 $\delta$ 的双侧检验，所需样本量为：
+$$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \sigma^2}{\delta^2}$$
+其中：</p>
+<ul>
+<li>$z_{\alpha/2}$：显著性水平对应的标准正态分位数</li>
+<li>$z_\beta$：统计功效对应的标准正态分位数</li>
+<li>$\sigma^2$：结果变量的方差</li>
+<li>$\delta$：最小可检测效应量</li>
+</ul>
+<h2 id="42">4.2 完全随机化与分层随机化</h2>
+<h3 id="421">4.2.1 完全随机化</h3>
+<p>完全随机化是最简单的随机化方案：每个个体独立地以概率 $p$ 被分配到处理组。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>实施简单</li>
+<li>分析直接</li>
+<li>无需预先了解协变量信息</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>可能导致协变量不平衡，特别是小样本情况</li>
+<li>处理组样本量是随机的</li>
+</ul>
+<p><strong>实施方法</strong>：</p>
+<ol>
+<li>生成 $n$ 个独立的均匀随机数 $U_i \sim Uniform(0,1)$</li>
+<li>如果 $U_i &lt; p$，将个体 $i$ 分配到处理组</li>
+</ol>
+<h3 id="422">4.2.2 分层随机化</h3>
+<p>分层随机化首先根据重要协变量将样本分层，然后在每层内进行随机化。</p>
+<p>设 $S$ 为层变量，第 $s$ 层的处理效应为：
+$$\tau_s = E[Y_i(1) - Y_i(0)|S_i = s]$$
+总体ATE的估计为：
+$$\hat{\tau}_{stratified} = \sum_s \frac{n_s}{n} \hat{\tau}_s$$
+<strong>优点</strong>：</p>
+<ul>
+<li>保证各层内的平衡</li>
+<li>提高估计精度</li>
+<li>允许异质性分析</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>需要预先确定分层变量</li>
+<li>层数过多可能导致某些层样本过少</li>
+</ul>
+<h3 id="423">4.2.3 区组随机化</h3>
+<p>区组随机化确保每个区组内处理组和控制组的样本量完全相等。</p>
+<p><strong>实施步骤</strong>：</p>
+<ol>
+<li>将 $n$ 个个体随机分成大小为 $b$ 的区组（通常 $b$ 是偶数）</li>
+<li>在每个区组内，随机选择 $b/2$ 个个体接受处理</li>
+</ol>
+<p>这保证了整体的处理组和控制组样本量完全相等（假设 $n$ 是 $b$ 的倍数）。</p>
+<h3 id="424">4.2.4 聚类随机化</h3>
+<p>当个体存在自然聚类（如学校、社区）时，可能需要在聚类层面进行随机化：
+$$T_c \sim Bernoulli(p)$$
+其中 $T_c$ 是聚类 $c$ 的处理状态。聚类内所有个体接受相同处理。</p>
+<p>聚类随机化的方差计算需要考虑组内相关性（ICC）：
+$$Var(\hat{\tau}) = \frac{\sigma^2}{n}[1 + (m-1)\rho]$$
+其中 $m$ 是平均聚类大小，$\rho$ 是组内相关系数。</p>
+<h2 id="43">4.3 合规性与意向性治疗分析</h2>
+<h3 id="431">4.3.1 非合规问题</h3>
+<p>在实际实验中，并非所有被分配到处理组的个体都会接受处理（non-compliance）。定义：</p>
+<ul>
+<li>$Z_i$：随机分配的处理（工具变量）</li>
+<li>$D_i$：实际接受的处理</li>
+<li>$Y_i$：观测结果</li>
+</ul>
+<p>存在四类个体：</p>
+<ol>
+<li><strong>Always-takers</strong>：无论分配如何都接受处理（$D_i(Z_i=0) = D_i(Z_i=1) = 1$）</li>
+<li><strong>Never-takers</strong>：无论分配如何都不接受处理（$D_i(Z_i=0) = D_i(Z_i=1) = 0$）</li>
+<li><strong>Compliers</strong>：遵循分配（$D_i(Z_i=0) = 0, D_i(Z_i=1) = 1$）</li>
+<li><strong>Defiers</strong>：违背分配（$D_i(Z_i=0) = 1, D_i(Z_i=1) = 0$）</li>
+</ol>
+<h3 id="432-itt">4.3.2 意向性治疗（ITT）分析</h3>
+<p>ITT估计量是基于随机分配而非实际处理的效应：
+$$\tau_{ITT} = E[Y_i|Z_i=1] - E[Y_i|Z_i=0]$$
+<strong>ITT的优点</strong>：</p>
+<ul>
+<li>保持随机化的完整性</li>
+<li>反映实际政策效果</li>
+<li>避免选择偏差</li>
+</ul>
+<p><strong>ITT的局限</strong>：</p>
+<ul>
+<li>可能低估真实处理效应</li>
+<li>不能回答"如果所有人都合规"的问题</li>
+</ul>
+<h3 id="433-cace">4.3.3 合规者平均因果效应（CACE）</h3>
+<p>CACE是仅对合规者群体的因果效应：
+$$\tau_{CACE} = E[Y_i(1) - Y_i(0)|Complier]$$
+在单调性假设（无defiers）下，CACE可以通过工具变量方法估计：
+$$\tau_{CACE} = \frac{E[Y_i|Z_i=1] - E[Y_i|Z_i=0]}{E[D_i|Z_i=1] - E[D_i|Z_i=0]} = \frac{\tau_{ITT}}{\text{合规率}}$$
+这就是著名的Wald估计量。</p>
+<h3 id="434">4.3.4 处理效应的界限</h3>
+<p>当存在非合规且没有额外假设时，我们只能得到处理效应的界限。Manski界限给出：
+$$\tau_{lower} \leq \tau_{ATE} \leq \tau_{upper}$$
+界限的宽度取决于非合规的程度和结果变量的取值范围。</p>
+<h2 id="44">4.4 实验设计的局限性</h2>
+<p>尽管RCT是因果推断的黄金标准，但在实践中面临诸多挑战和局限。理解这些局限对于正确设计实验和解释结果至关重要。</p>
+<h3 id="441">4.4.1 外部有效性问题</h3>
+<p>RCT的内部有效性通常很高，但外部有效性（generalizability）常常受到质疑。</p>
+<p><strong>样本代表性问题</strong>：</p>
+<ul>
+<li>实验样本可能不代表目标人群</li>
+<li>自愿参与导致的选择偏差</li>
+<li>地理或时间限制</li>
+</ul>
+<p><strong>环境差异</strong>：</p>
+<ul>
+<li>实验环境与实际应用环境的差异</li>
+<li>规模效应：小规模实验结果可能无法推广到大规模实施</li>
+</ul>
+<p><strong>PATE vs SATE</strong>：</p>
+<ul>
+<li>SATE（Sample Average Treatment Effect）：样本平均处理效应</li>
+<li>PATE（Population Average Treatment Effect）：总体平均处理效应</li>
+<li>当实验样本不是随机抽样时，$SATE \neq PATE$</li>
+</ul>
+<h3 id="442">4.4.2 伦理考虑</h3>
+<p>许多情况下，随机化在伦理上是不可接受的：</p>
+<p><strong>医疗伦理</strong>：</p>
+<ul>
+<li>不能随机剥夺可能有益的治疗</li>
+<li>临床均衡原则（clinical equipoise）</li>
+<li>知情同意的要求</li>
+</ul>
+<p><strong>公平性问题</strong>：</p>
+<ul>
+<li>教育资源的随机分配可能被视为不公平</li>
+<li>社会福利项目的随机化可能引发争议</li>
+</ul>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>等待名单设计（waitlist design）</li>
+<li>阶段性推广（stepped-wedge design）</li>
+<li>鼓励设计（encouragement design）</li>
+</ul>
+<h3 id="443">4.4.3 成本与可行性</h3>
+<p>RCT通常成本高昂且实施复杂：</p>
+<p><strong>直接成本</strong>：</p>
+<ul>
+<li>招募和筛选参与者</li>
+<li>实施和监控处理</li>
+<li>数据收集和管理</li>
+<li>合规性监控</li>
+</ul>
+<p><strong>时间成本</strong>：</p>
+<ul>
+<li>长期效应需要长期跟踪</li>
+<li>季节性效应需要特定时间窗口</li>
+</ul>
+<p><strong>组织挑战</strong>：</p>
+<ul>
+<li>多中心协调</li>
+<li>标准化程序</li>
+<li>质量控制</li>
+</ul>
+<h3 id="444">4.4.4 行为效应</h3>
+<p>实验本身可能改变参与者的行为：</p>
+<p><strong>霍桑效应（Hawthorne Effect）</strong>：
+参与者因为知道被观察而改变行为。数学表达：
+$$Y_i^{obs} = Y_i^{true} + \delta_{Hawthorne}$$
+<strong>约翰·亨利效应（John Henry Effect）</strong>：
+控制组因为知道自己是控制组而更加努力：
+$$\tau_{observed} = \tau_{true} - \delta_{JohnHenry}$$
+<strong>实验者效应</strong>：</p>
+<ul>
+<li>实验者的期望影响结果</li>
+<li>双盲设计的重要性</li>
+</ul>
+<h3 id="445-sutva">4.4.5 溢出效应与SUTVA违背</h3>
+<p><strong>SUTVA（Stable Unit Treatment Value Assumption）假设</strong>：
+$$Y_i = Y_i(T_i)$$
+即个体 $i$ 的结果只依赖于自己的处理状态，不受他人处理状态影响。</p>
+<p><strong>常见的SUTVA违背</strong>：</p>
+<ol>
+<li><strong>直接溢出</strong>：处理组影响控制组</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>处理组 → 控制组
+   ↓        ↓
+  Y_T      Y_C
+</code></pre></div>
+
+<ol start="2">
+<li>
+<p><strong>一般均衡效应</strong>：大规模实验改变市场均衡</p>
+</li>
+<li>
+<p><strong>社交网络效应</strong>：通过社交网络传播的影响</p>
+</li>
+</ol>
+<p><strong>处理方法</strong>：</p>
+<ul>
+<li>聚类随机化</li>
+<li>缓冲区设计</li>
+<li>网络实验设计</li>
+</ul>
+<h3 id="446">4.4.6 多重检验问题</h3>
+<p>当测试多个结果变量或子组时，出现假阳性的概率增加：</p>
+<p><strong>家族错误率（FWER）</strong>：
+$$FWER = P(\text{至少一个假阳性}) = 1 - (1-\alpha)^m$$
+其中 $m$ 是检验次数，$\alpha$ 是单个检验的显著性水平。</p>
+<p><strong>校正方法</strong>：</p>
+<ul>
+<li>Bonferroni校正：$\alpha_{adj} = \alpha/m$</li>
+<li>Holm-Bonferroni方法</li>
+<li>False Discovery Rate (FDR)控制</li>
+</ul>
+<h2 id="45-facebookab">4.5 行业案例：Facebook的社交网络A/B测试</h2>
+<p>Facebook的社交网络实验展示了在存在网络效应时如何设计和分析RCT。</p>
+<h3 id="451">4.5.1 问题背景</h3>
+<p>2012年，Facebook进行了一项大规模实验，测试新闻推送算法对用户行为的影响。挑战在于：</p>
+<ul>
+<li>用户之间存在强烈的社交互动</li>
+<li>一个用户的处理可能影响其朋友</li>
+<li>传统RCT的SUTVA假设被违背</li>
+</ul>
+<h3 id="452">4.5.2 网络效应的挑战</h3>
+<p>在社交网络中，处理效应可以分解为：</p>
+<ul>
+<li><strong>直接效应</strong>：算法改变对用户自身的影响</li>
+<li><strong>间接效应</strong>：朋友圈处理状态的影响</li>
+<li><strong>总效应</strong>：直接效应 + 间接效应</li>
+</ul>
+<p>数学表达：
+$$Y_i = f(T_i, \sum_{j \in N_i} T_j/|N_i|)$$
+其中 $N_i$ 是用户 $i$ 的朋友集合。</p>
+<h3 id="453">4.5.3 实验设计方案</h3>
+<p><strong>方案1：聚类随机化</strong>
+将社交网络划分为紧密连接的聚类，在聚类层面随机化：</p>
+<ul>
+<li>优点：减少溢出</li>
+<li>缺点：聚类划分困难，功效降低</li>
+</ul>
+<p><strong>方案2：网络边缘限制</strong>
+创建"隔离"的实验单元：</p>
+<div class="codehilite"><pre><span></span><code>   实验区域     缓冲区    控制区域
+   [处理组] | [不包括] | [控制组]
+</code></pre></div>
+
+<p><strong>方案3：饱和度设计</strong>
+不同区域采用不同的处理饱和度：</p>
+<ul>
+<li>0%处理（纯控制）</li>
+<li>25%处理</li>
+<li>50%处理</li>
+<li>75%处理</li>
+<li>100%处理（纯处理）</li>
+</ul>
+<h3 id="454-facebook">4.5.4 Facebook的解决方案</h3>
+<p>Facebook采用了聚类随机化结合饱和度设计：</p>
+<ol>
+<li><strong>图分割算法</strong>：使用谱聚类将用户网络分割</li>
+<li>
+<p><strong>多层次随机化</strong>：
+   - 第一层：聚类被随机分配到不同饱和度
+   - 第二层：聚类内个体随机分配处理</p>
+</li>
+<li>
+<p><strong>估计方程</strong>：
+$$Y_{ic} = \alpha + \beta_1 T_{ic} + \beta_2 \bar{T}_{-i,c} + \gamma X_{ic} + \epsilon_{ic}$$
+其中：</p>
+</li>
+</ol>
+<ul>
+<li>$T_{ic}$：个体处理状态</li>
+<li>$\bar{T}_{-i,c}$：聚类内其他人的平均处理</li>
+<li>$\beta_1$：直接效应</li>
+<li>$\beta_2$：溢出效应</li>
+</ul>
+<h3 id="455">4.5.5 结果与启示</h3>
+<p><strong>主要发现</strong>：</p>
+<ul>
+<li>直接效应：新算法提升了用户参与度约5%</li>
+<li>溢出效应：朋友使用新算法额外提升2-3%</li>
+<li>总效应：在完全推广情况下，总提升约7-8%</li>
+</ul>
+<p><strong>关键教训</strong>：</p>
+<ol>
+<li>忽略网络效应会低估总体影响</li>
+<li>传统A/B测试在社交平台上可能误导决策</li>
+<li>需要更复杂的实验设计来捕捉网络动态</li>
+</ol>
+<h3 id="456">4.5.6 推广到其他平台</h3>
+<p>类似的网络实验设计已被应用于：</p>
+<ul>
+<li>LinkedIn的职业推荐</li>
+<li>Twitter的信息传播研究  </li>
+<li>微信的社交功能测试</li>
+<li>抖音的内容推荐算法</li>
+</ul>
+<h2 id="_2">本章小结</h2>
+<p>本章深入探讨了随机对照试验（RCT）——因果推断的黄金标准。我们学习了：</p>
+<h3 id="_3">核心概念</h3>
+<ol>
+<li>
+<p><strong>随机化的力量</strong>：通过随机分配处理，我们打破了处理与混杂因素的关联，实现了 $\{Y(1), Y(0)\} \perp!!!\perp T$，使得简单的均值比较就能识别因果效应。</p>
+</li>
+<li>
+<p><strong>不同的随机化方案</strong>：
+   - 完全随机化：简单但可能导致不平衡
+   - 分层随机化：保证重要协变量的平衡
+   - 区组随机化：确保处理组和控制组样本量相等
+   - 聚类随机化：处理组内相关性问题</p>
+</li>
+<li>
+<p><strong>合规性问题</strong>：
+   - ITT分析保持随机化完整性，反映政策效果
+   - CACE通过工具变量方法估计合规者的因果效应
+   - Wald估计量：$\tau_{CACE} = \tau_{ITT}/\text{合规率}$</p>
+</li>
+<li>
+<p><strong>实验的局限性</strong>：
+   - 外部有效性：实验结果的可推广性
+   - 伦理约束：许多情况下随机化不可行
+   - 行为效应：霍桑效应、约翰·亨利效应
+   - SUTVA违背：溢出效应和网络效应</p>
+</li>
+</ol>
+<h3 id="_4">关键公式</h3>
+<ul>
+<li><strong>ATE估计</strong>：$\hat{\tau} = \bar{Y}_1 - \bar{Y}_0$</li>
+<li><strong>样本量计算</strong>：$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \sigma^2}{\delta^2}$</li>
+<li><strong>分层估计</strong>：$\hat{\tau}_{stratified} = \sum_s \frac{n_s}{n} \hat{\tau}_s$</li>
+<li><strong>CACE估计</strong>：$\hat{\tau}_{CACE} = \frac{\hat{\tau}_{ITT}}{\hat{\pi}_{complier}}$</li>
+</ul>
+<h3 id="_5">实践启示</h3>
+<p>Facebook的案例展示了在复杂环境中设计RCT的挑战和解决方案。网络效应、溢出效应等现实问题要求我们超越传统的实验设计，开发新的方法来捕捉这些复杂性。记住：</p>
+<ul>
+<li>完美的RCT在现实中很少存在</li>
+<li>理解局限性与设计实验同样重要</li>
+<li>创新的设计可以部分克服传统方法的限制</li>
+</ul>
+<h2 id="_6">练习题</h2>
+<h3 id="_7">基础题</h3>
+<p><strong>题目4.1：随机化的作用</strong>
+某研究者想评估一个新的学习APP对学生成绩的影响。他将100名学生随机分为两组，50人使用APP（处理组），50人不使用（控制组）。请解释：
+a) 为什么随机分配能够识别因果效应？
+b) 如果研究者让学生自愿选择是否使用APP，会产生什么问题？</p>
+<p><em>Hint: 考虑潜在结果框架和选择偏差</em></p>
+<details>
+<summary>参考答案</summary>
+<p>a) 随机分配确保了处理组和控制组在期望意义上是可比的。具体来说：</p>
+<ul>
+<li>随机化使得 $E[Y(1)|T=1] = E[Y(1)|T=0]$ 和 $E[Y(0)|T=1] = E[Y(0)|T=0]$</li>
+<li>因此，观察到的差异 $E[Y|T=1] - E[Y|T=0] = E[Y(1) - Y(0)]$ 就是真实的因果效应</li>
+<li>随机化切断了所有混杂因素到处理的路径</li>
+</ul>
+<p>b) 自愿选择会产生选择偏差：</p>
+<ul>
+<li>更有学习动机的学生可能更愿意使用APP</li>
+<li>这些学生即使不使用APP成绩也可能更好</li>
+<li>观察到的差异混合了APP的效果和学生特征的差异</li>
+<li>数学上：$E[Y(0)|T=1] \neq E[Y(0)|T=0]$，违背了可忽略性假设</li>
+</ul>
+</details>
+<p><strong>题目4.2：样本量计算</strong>
+研究者想检测一个干预措施是否能将某指标从均值100提高到105（标准差为20）。要求显著性水平0.05，统计功效0.8。需要多少样本量？</p>
+<p><em>Hint: 使用样本量公式，注意双侧检验</em></p>
+<details>
+<summary>参考答案</summary>
+<p>给定：</p>
+<ul>
+<li>效应量 $\delta = 105 - 100 = 5$</li>
+<li>标准差 $\sigma = 20$</li>
+<li>显著性水平 $\alpha = 0.05$，$z_{0.025} = 1.96$</li>
+<li>统计功效 $1-\beta = 0.8$，$z_{0.2} = 0.84$</li>
+</ul>
+<p>使用公式：
+$$n = \frac{2(z_{\alpha/2} + z_\beta)^2 \sigma^2}{\delta^2} = \frac{2(1.96 + 0.84)^2 \times 20^2}{5^2}$$
+$$n = \frac{2 \times 7.84 \times 400}{25} = \frac{6272}{25} = 250.88$$
+因此需要至少252个样本（每组126个）。</p>
+</details>
+<p><strong>题目4.3：ITT vs CACE</strong>
+在一项职业培训项目的RCT中：</p>
+<ul>
+<li>200人被随机分配到处理组，150人实际参加了培训</li>
+<li>200人被随机分配到控制组，20人私下参加了培训</li>
+<li>处理组平均收入增加了3000元</li>
+<li>控制组平均收入增加了1000元</li>
+</ul>
+<p>计算ITT效应和CACE。</p>
+<p><em>Hint: CACE = ITT / 合规率差异</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>ITT效应</strong>：
+$$\tau_{ITT} = 3000 - 1000 = 2000\text{元}$$
+<strong>合规率计算</strong>：</p>
+<ul>
+<li>处理组合规率：$150/200 = 0.75$</li>
+<li>控制组合规率：$(200-20)/200 = 0.90$</li>
+<li>合规率差异：$0.75 - (1-0.90) = 0.75 - 0.10 = 0.65$</li>
+</ul>
+<p>注意：这里假设没有defiers，控制组的20人是always-takers。</p>
+<p><strong>CACE计算</strong>：
+$$\tau_{CACE} = \frac{\tau_{ITT}}{\text{合规率差异}} = \frac{2000}{0.65} = 3076.92\text{元}$$
+解释：对于真正因为随机分配而参加培训的人（compliers），培训效果约为3077元。</p>
+</details>
+<h3 id="_8">挑战题</h3>
+<p><strong>题目4.4：分层随机化设计</strong>
+某公司要测试新的绩效奖励制度，有1000名员工分布在5个部门（各200人）。已知部门间绩效差异很大。请设计一个分层随机化方案，并说明如何分析数据。</p>
+<p><em>Hint: 考虑部门作为分层变量，以及加权平均的计算</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>设计方案</strong>：</p>
+<ol>
+<li>将5个部门作为层（strata）</li>
+<li>在每个部门内独立进行随机化，各100人进入处理组，100人进入控制组</li>
+<li>这确保了部门间的平衡</li>
+</ol>
+<p><strong>数据分析</strong>：</p>
+<ol>
+<li>
+<p>计算各层的处理效应：
+$$\hat{\tau}_s = \bar{Y}_{s,1} - \bar{Y}_{s,0}, \quad s = 1,...,5$$</p>
+</li>
+<li>
+<p>计算加权平均处理效应：
+$$\hat{\tau}_{stratified} = \sum_{s=1}^5 \frac{n_s}{n} \hat{\tau}_s = \frac{1}{5}\sum_{s=1}^5 \hat{\tau}_s$$
+（因为各部门人数相等）</p>
+</li>
+<li>
+<p>方差估计：
+$$Var(\hat{\tau}_{stratified}) = \sum_{s=1}^5 \left(\frac{n_s}{n}\right)^2 Var(\hat{\tau}_s)$$
+<strong>优势</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>保证部门间平衡</li>
+<li>可以分析部门异质性效应</li>
+<li>提高统计功效（如果部门确实是重要的预测变量）</li>
+</ul>
+</details>
+<p><strong>题目4.5：网络效应的处理</strong>
+一个社交媒体平台想测试新功能，但用户之间存在强烈互动。请设计一个实验方案来估计：
+a) 直接效应（用户自己使用新功能的效果）
+b) 间接效应（朋友使用新功能对用户的影响）</p>
+<p><em>Hint: 考虑聚类随机化或饱和度设计</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>方案：两阶段饱和度设计</strong></p>
+<p><strong>第一阶段：社区层面随机化</strong></p>
+<ol>
+<li>将用户网络划分为相对独立的社区（使用图分割算法）</li>
+<li>随机分配社区到不同的处理饱和度：
+   - 0%（纯控制）
+   - 30%（低饱和度）
+   - 70%（高饱和度）
+   - 100%（纯处理）</li>
+</ol>
+<p><strong>第二阶段：个体层面随机化</strong>
+在30%和70%饱和度的社区内，随机选择相应比例的用户使用新功能</p>
+<p><strong>估计模型</strong>：
+$$Y_{ic} = \alpha + \beta_1 T_{ic} + \beta_2 P_{-i,c} + \beta_3 T_{ic} \times P_{-i,c} + \epsilon_{ic}$$
+其中：</p>
+<ul>
+<li>$T_{ic}$：个体是否使用新功能</li>
+<li>$P_{-i,c}$：社区内其他用户的使用比例</li>
+<li>$\beta_1$：直接效应</li>
+<li>$\beta_2$：间接效应</li>
+<li>$\beta_3$：交互效应</li>
+</ul>
+<p><strong>识别策略</strong>：</p>
+<ul>
+<li>直接效应：比较相同饱和度下使用vs不使用的用户</li>
+<li>间接效应：比较不使用新功能但处于不同饱和度社区的用户</li>
+<li>总效应：100%饱和度 vs 0%饱和度</li>
+</ul>
+</details>
+<p><strong>题目4.6：非合规的工具变量分析</strong>
+某教育干预实验中，学生被随机分配参加补习班。但部分学生没有遵守分配。数据如下：</p>
+<ul>
+<li>分配到补习班：$Z=1$，未分配：$Z=0$</li>
+<li>实际参加：$D=1$，未参加：$D=0$</li>
+<li>你观察到：$P(D=1|Z=1)=0.8$，$P(D=1|Z=0)=0.2$</li>
+</ul>
+<p>如果ITT效应是10分，请推导：
+a) 各类型人群的比例（compliers, always-takers, never-takers）
+b) CACE是多少？</p>
+<p><em>Hint: 使用单调性假设（无defiers）</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>a) 人群类型分析</strong></p>
+<p>在单调性假设下（无defiers），有：</p>
+<ul>
+<li>Always-takers: $P(D=1|Z=0) = 0.2$（控制组中仍参加的人）</li>
+<li>Never-takers: $P(D=0|Z=1) = 0.2$（处理组中不参加的人）  </li>
+<li>Compliers: $P(D=1|Z=1) - P(D=1|Z=0) = 0.8 - 0.2 = 0.6$</li>
+</ul>
+<p>验证：$0.2 + 0.2 + 0.6 = 1.0$ ✓</p>
+<p><strong>b) CACE计算</strong></p>
+<p>使用Wald估计量：
+$$CACE = \frac{ITT}{\text{Complier比例}} = \frac{10}{0.6} = 16.67\text{分}$$
+<strong>解释</strong>：</p>
+<ul>
+<li>ITT效应（10分）是对所有被随机分配的学生的平均效应</li>
+<li>但只有60%的学生是compliers（真正因分配而改变行为）</li>
+<li>对这60%的compliers，真实效应是16.67分</li>
+<li>Always-takers无论如何都会参加，其效应无法识别</li>
+<li>Never-takers无论如何都不参加，其效应也无法识别</li>
+</ul>
+</details>
+<p><strong>题目4.7：实验的外部有效性</strong>
+某互联网公司在北京的1000名用户中进行了一项A/B测试，发现新推荐算法提升了用户使用时长20%。现在要推广到全国1亿用户。请分析：
+a) 可能影响外部有效性的因素
+b) 如何设计额外实验来验证外部有效性？</p>
+<p><em>Hint: 考虑样本代表性、规模效应、地域差异等</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>a) 影响外部有效性的因素</strong></p>
+<ol>
+<li>
+<p><strong>样本选择偏差</strong>：
+   - 北京用户可能更年轻、教育程度更高
+   - 使用习惯可能不同于其他地区</p>
+</li>
+<li>
+<p><strong>规模效应</strong>：
+   - 小规模测试时服务器负载低，响应快
+   - 大规模推广可能导致性能下降</p>
+</li>
+<li>
+<p><strong>地域文化差异</strong>：
+   - 不同地区用户偏好不同
+   - 网络环境差异（4G/5G覆盖）</p>
+</li>
+<li>
+<p><strong>时间效应</strong>：
+   - 测试期间可能有特殊事件
+   - 季节性因素</p>
+</li>
+<li>
+<p><strong>一般均衡效应</strong>：
+   - 大规模改变可能影响内容生态
+   - 创作者行为可能改变</p>
+</li>
+</ol>
+<p><strong>b) 验证外部有效性的实验设计</strong></p>
+<ol>
+<li>
+<p><strong>分层抽样实验</strong>：
+   - 按地域（一二三线城市）、年龄、使用频率分层
+   - 每层进行独立A/B测试
+   - 估计异质性效应：$\tau_{PATE} = \sum_s w_s \tau_s$</p>
+</li>
+<li>
+<p><strong>渐进式推广</strong>：
+   - 第一阶段：5个代表性城市（各1万用户）
+   - 第二阶段：20个城市（各5万用户）
+   - 第三阶段：全国推广
+   - 监控每阶段效应变化</p>
+</li>
+<li>
+<p><strong>饱和度实验</strong>：
+   - 测试不同渗透率下的效果
+   - 10%、30%、50%、70%用户使用新算法
+   - 评估网络效应和规模效应</p>
+</li>
+<li>
+<p><strong>时间验证</strong>：
+   - 延长测试期至少3个月
+   - 覆盖不同季节和节假日
+   - 分析效应的时间稳定性</p>
+</li>
+</ol>
+</details>
+<p><strong>题目4.8：多重检验校正</strong>
+研究者在一个RCT中检验了新药对10个健康指标的影响，使用0.05的显著性水平。结果发现其中2个指标在p&lt;0.05水平上显著。
+a) 不进行校正时，至少有一个假阳性的概率是多少？
+b) 使用Bonferroni校正后，这2个结果还显著吗？（假设p值分别为0.02和0.04）
+c) 讨论Bonferroni校正的优缺点</p>
+<p><em>Hint: FWER = 1 - (1-α)^m</em></p>
+<details>
+<summary>参考答案</summary>
+<p><strong>a) 家族错误率（FWER）</strong>
+$$FWER = 1 - (1-0.05)^{10} = 1 - 0.95^{10} = 1 - 0.599 = 0.401$$
+即有40.1%的概率至少出现一个假阳性。</p>
+<p><strong>b) Bonferroni校正</strong></p>
+<p>校正后的显著性水平：
+$$\alpha_{adj} = \frac{0.05}{10} = 0.005$$</p>
+<ul>
+<li>第一个结果：p = 0.02 &gt; 0.005，不再显著</li>
+<li>第二个结果：p = 0.04 &gt; 0.005，不再显著</li>
+</ul>
+<p>两个结果在Bonferroni校正后都不显著。</p>
+<p><strong>c) Bonferroni校正的优缺点</strong></p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>严格控制FWER</li>
+<li>实施简单</li>
+<li>不需要假设检验之间的相关性</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>过于保守，特别是检验数量多时</li>
+<li>降低统计功效，增加假阴性</li>
+<li>没有考虑检验间的相关性</li>
+</ul>
+<p><strong>改进方法</strong>：</p>
+<ul>
+<li>Holm-Bonferroni：递进式校正，功效更高</li>
+<li>FDR控制：允许一定比例的假阳性</li>
+<li>预先指定主要结果：减少需要校正的检验数</li>
+</ul>
+</details>
+<h2 id="_9">常见陷阱与错误</h2>
+<p>在设计和分析RCT时，即使是经验丰富的研究者也可能犯错。以下是最常见的陷阱和如何避免它们：</p>
+<h3 id="1">1. 随机化失败</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>使用伪随机方法（如按生日、学号奇偶）</li>
+<li>随机化后发现组间不平衡就重新随机化</li>
+<li>让执行者知道下一个分配结果</li>
+</ul>
+<p><strong>后果</strong>：破坏随机性，引入选择偏差</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>使用计算机生成的真随机数</li>
+<li>接受随机化结果，即使出现不平衡</li>
+<li>使用隐藏分配（allocation concealment）</li>
+</ul>
+<h3 id="2">2. 忽视统计功效</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>样本量计算基于过于乐观的效应量</li>
+<li>忽略流失率的影响</li>
+<li>多重比较但不增加样本量</li>
+</ul>
+<p><strong>后果</strong>：研究功效不足，无法检测真实效应</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>基于保守的效应量估计</li>
+<li>考虑20-30%的流失率</li>
+<li>为多重检验调整样本量</li>
+</ul>
+<h3 id="3">3. 选择性报告</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>只报告显著的结果</li>
+<li>事后选择主要结果变量</li>
+<li>进行子组分析直到找到显著结果</li>
+</ul>
+<p><strong>后果</strong>：夸大效应，产生假阳性</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>预先注册研究方案</li>
+<li>报告所有预设的分析</li>
+<li>明确区分探索性和验证性分析</li>
+</ul>
+<h3 id="4-itt">4. 误解ITT原则</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>因为"不公平"而排除不合规者</li>
+<li>只分析完成实验的参与者（per-protocol分析）</li>
+<li>混淆ITT和因果效应</li>
+</ul>
+<p><strong>后果</strong>：破坏随机化，引入偏差</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>始终首先进行ITT分析</li>
+<li>将per-protocol作为敏感性分析</li>
+<li>使用工具变量方法处理不合规</li>
+</ul>
+<h3 id="5-sutva">5. 忽略SUTVA违背</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>在存在明显溢出的情况下使用个体随机化</li>
+<li>忽略一般均衡效应</li>
+<li>不考虑处理的异质性</li>
+</ul>
+<p><strong>后果</strong>：估计偏差，错误的政策建议</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>评估溢出可能性</li>
+<li>考虑聚类随机化</li>
+<li>进行敏感性分析</li>
+</ul>
+<h3 id="6">6. 外推过度</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>将特定样本的结果推广到所有人群</li>
+<li>忽略环境和时间的影响</li>
+<li>假设线性外推</li>
+</ul>
+<p><strong>后果</strong>：错误的决策和预期</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>明确说明研究的外部有效性限制</li>
+<li>在不同环境重复实验</li>
+<li>考虑效应的异质性</li>
+</ul>
+<h3 id="7">7. 数据窥探</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>根据中期结果调整分析计划</li>
+<li>多次查看数据并在"合适"时停止</li>
+<li>根据结果选择模型</li>
+</ul>
+<p><strong>后果</strong>：I类错误膨胀，结果不可重复</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>预设停止规则</li>
+<li>使用正式的中期分析方法</li>
+<li>盲法分析</li>
+</ul>
+<h3 id="8">8. 基线不平衡的错误处理</h3>
+<p><strong>错误表现</strong>：</p>
+<ul>
+<li>对基线变量进行假设检验</li>
+<li>因为p&gt;0.05就认为"平衡"</li>
+<li>过度调整基线变量</li>
+</ul>
+<p><strong>后果</strong>：错误的推断，效率损失</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>关注实质性差异而非统计显著性</li>
+<li>使用标准化差异评估平衡</li>
+<li>预先指定协变量调整策略</li>
+</ul>
+<h3 id="_10">调试技巧</h3>
+<p>当RCT结果不符合预期时，系统地检查以下方面：</p>
+<ol>
+<li>
+<p><strong>数据质量</strong>：
+   - 检查数据录入错误
+   - 验证随机化是否正确执行
+   - 确认结果测量的准确性</p>
+</li>
+<li>
+<p><strong>实施质量</strong>：
+   - 审查实验日志
+   - 访谈执行人员
+   - 检查合规性数据</p>
+</li>
+<li>
+<p><strong>分析代码</strong>：
+   - 重现随机化过程
+   - 验证样本筛选逻辑
+   - 检查变量定义</p>
+</li>
+<li>
+<p><strong>理论假设</strong>：
+   - 重新审视因果理论
+   - 考虑未预期的机制
+   - 评估效应的时间动态</p>
+</li>
+</ol>
+<h2 id="_11">最佳实践检查清单</h2>
+<p>在设计和实施RCT时，使用以下检查清单确保研究质量：</p>
+<h3 id="_12">实验设计阶段</h3>
+<h4 id="_13">理论与假设</h4>
+<ul>
+<li>[ ] 明确定义因果问题和目标人群</li>
+<li>[ ] 制定清晰的研究假设</li>
+<li>[ ] 识别潜在的混杂因素和机制</li>
+<li>[ ] 考虑效应的异质性</li>
+</ul>
+<h4 id="_14">随机化方案</h4>
+<ul>
+<li>[ ] 选择合适的随机化方法（完全/分层/区组/聚类）</li>
+<li>[ ] 使用计算机生成随机序列</li>
+<li>[ ] 实施分配隐藏机制</li>
+<li>[ ] 记录随机化过程的细节</li>
+</ul>
+<h4 id="_15">样本量与功效</h4>
+<ul>
+<li>[ ] 基于保守的效应量估计计算样本量</li>
+<li>[ ] 考虑流失率（增加15-30%）</li>
+<li>[ ] 为多重检验调整样本量</li>
+<li>[ ] 进行功效分析的敏感性检验</li>
+</ul>
+<h4 id="_16">结果测量</h4>
+<ul>
+<li>[ ] 预先定义主要和次要结果</li>
+<li>[ ] 选择可靠和有效的测量工具</li>
+<li>[ ] 确定测量时点</li>
+<li>[ ] 考虑盲法评估的可行性</li>
+</ul>
+<h3 id="_17">实施阶段</h3>
+<h4 id="_18">招募与知情同意</h4>
+<ul>
+<li>[ ] 制定明确的纳入/排除标准</li>
+<li>[ ] 获得伦理委员会批准</li>
+<li>[ ] 准备标准化的知情同意书</li>
+<li>[ ] 记录招募过程和拒绝原因</li>
+</ul>
+<h4 id="_19">随机化执行</h4>
+<ul>
+<li>[ ] 严格按照预定方案执行随机化</li>
+<li>[ ] 维护分配隐藏直到分配时刻</li>
+<li>[ ] 记录每个参与者的分配时间和执行者</li>
+<li>[ ] 立即备份随机化记录</li>
+</ul>
+<h4 id="_20">干预实施</h4>
+<ul>
+<li>[ ] 标准化干预程序</li>
+<li>[ ] 培训所有执行人员</li>
+<li>[ ] 监控干预的保真度</li>
+<li>[ ] 记录任何偏离方案的情况</li>
+</ul>
+<h4 id="_21">数据收集</h4>
+<ul>
+<li>[ ] 使用标准化的数据收集表格</li>
+<li>[ ] 实施数据质量控制程序</li>
+<li>[ ] 定期备份数据</li>
+<li>[ ] 维护数据审计轨迹</li>
+</ul>
+<h3 id="_22">分析阶段</h3>
+<h4 id="_23">数据准备</h4>
+<ul>
+<li>[ ] 检查数据完整性和异常值</li>
+<li>[ ] 记录所有数据清理决策</li>
+<li>[ ] 评估基线平衡（使用标准化差异）</li>
+<li>[ ] 分析流失模式</li>
+</ul>
+<h4 id="_24">主要分析</h4>
+<ul>
+<li>[ ] 首先进行ITT分析</li>
+<li>[ ] 使用预先指定的分析方法</li>
+<li>[ ] 报告效应估计和置信区间</li>
+<li>[ ] 进行预设的子组分析</li>
+</ul>
+<h4 id="_25">敏感性分析</h4>
+<ul>
+<li>[ ] 进行per-protocol分析</li>
+<li>[ ] 测试不同的模型假设</li>
+<li>[ ] 评估缺失数据的影响</li>
+<li>[ ] 检验SUTVA假设</li>
+</ul>
+<h4 id="_26">报告要求</h4>
+<ul>
+<li>[ ] 遵循CONSORT声明</li>
+<li>[ ] 提供完整的流程图</li>
+<li>[ ] 报告所有预设的分析结果</li>
+<li>[ ] 讨论局限性和外部有效性</li>
+</ul>
+<h3 id="_27">质量保证</h3>
+<h4 id="_28">文档管理</h4>
+<ul>
+<li>[ ] 维护完整的研究方案</li>
+<li>[ ] 记录所有方案修改</li>
+<li>[ ] 保存原始数据和代码</li>
+<li>[ ] 准备数据共享计划</li>
+</ul>
+<h4 id="_29">透明度措施</h4>
+<ul>
+<li>[ ] 在临床试验注册平台注册</li>
+<li>[ ] 预先发布分析计划</li>
+<li>[ ] 承诺发表所有结果（包括阴性结果）</li>
+<li>[ ] 提供可重复的分析代码</li>
+</ul>
+<h4 id="_30">团队协调</h4>
+<ul>
+<li>[ ] 明确团队成员职责</li>
+<li>[ ] 定期召开团队会议</li>
+<li>[ ] 建立问题上报机制</li>
+<li>[ ] 保持与数据安全监察委员会的沟通</li>
+</ul>
+<h3 id="_31">特殊考虑</h3>
+<h4 id="_32">网络/溢出效应</h4>
+<ul>
+<li>[ ] 评估SUTVA违背的可能性</li>
+<li>[ ] 考虑聚类或饱和度设计</li>
+<li>[ ] 计划溢出效应的测量</li>
+<li>[ ] 准备相应的分析方法</li>
+</ul>
+<h4 id="_33">伦理合规</h4>
+<ul>
+<li>[ ] 确保风险-收益比合理</li>
+<li>[ ] 建立不良事件报告系统</li>
+<li>[ ] 准备提前终止标准</li>
+<li>[ ] 保护参与者隐私</li>
+</ul>
+<h4 id="_34">成本效益</h4>
+<ul>
+<li>[ ] 跟踪研究成本</li>
+<li>[ ] 评估实施的可行性</li>
+<li>[ ] 考虑成本效益分析</li>
+<li>[ ] 记录资源使用情况</li>
+</ul>
+<p>通过系统地遵循这个检查清单，研究者可以最大限度地提高RCT的质量和可信度，为因果推断提供可靠的证据。记住，完美的RCT很少存在，但通过仔细的设计和执行，我们可以最大限度地接近因果真相。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter3.html" class="nav-link prev">← 第三章：图模型与因果图</a><a href="chapter5.html" class="nav-link next">第五章：观察性研究中的因果推断 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

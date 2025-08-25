@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第十二章：因果发现</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第十二章：因果发现</h1>
+<p>在前面的章节中，我们学习了如何在已知因果结构的情况下进行因果推断。但在许多实际场景中，因果结构本身是未知的。我们需要从观察数据中自动发现变量之间的因果关系——这就是因果发现（Causal Discovery）的任务。本章将介绍主流的因果发现算法，包括基于约束的方法、基于分数的方法和连续优化方法，并探讨如何评估发现的因果结构的质量。</p>
+<h2 id="121">12.1 因果发现的基本概念</h2>
+<h3 id="1211">12.1.1 问题定义</h3>
+<p>因果发现的目标是从观察数据 $\mathcal{D} = \{X^{(1)}, ..., X^{(n)}\}$ 中学习变量集合 $\mathbf{X} = \{X_1, ..., X_p\}$ 之间的因果图结构 $G$。与传统的关联分析不同，因果发现试图揭示数据生成过程的真实机制，而不仅仅是统计相关性。</p>
+<p>这个任务面临几个根本性挑战：</p>
+<ol>
+<li>
+<p><strong>马尔可夫等价类</strong>：多个不同的DAG可能对应相同的条件独立性关系。例如，链结构 $X \rightarrow Y \rightarrow Z$ 和 $X \leftarrow Y \leftarrow Z$ 在观察数据下无法区分，除非我们有额外的假设或干预数据。</p>
+</li>
+<li>
+<p><strong>隐变量问题</strong>：未观测的混杂因素可能导致虚假的因果关系。当两个变量 $X$ 和 $Y$ 都被未观测变量 $U$ 影响时，即使 $X$ 和 $Y$ 之间没有直接因果关系，它们也会表现出相关性。</p>
+</li>
+<li>
+<p><strong>因果充分性假设</strong>：我们通常需要假设观测到了所有相关变量。违反这个假设会导致错误的因果结论。然而，在实际应用中，完全满足因果充分性几乎是不可能的。</p>
+</li>
+<li>
+<p><strong>忠实性假设</strong>：DAG中的条件独立性关系需要在数据分布中得到体现。参数的特殊取值可能导致额外的独立性，使得因果结构无法唯一确定。</p>
+</li>
+<li>
+<p><strong>样本复杂度</strong>：随着变量数量增加，可能的DAG数量呈超指数增长。对于 $p$ 个变量，可能的DAG数量为：
+   $$|DAG_p| = \sum_{k=0}^{p(p-1)/2} (-1)^k \binom{p(p-1)/2}{k} 2^{p(p-1)/2-k} \cdot p!$$
+例如，3个变量有25个可能的DAG，10个变量就有超过 $4.2 \times 10^{18}$ 个可能的DAG。</p>
+</li>
+<li>
+<p><strong>统计功效问题</strong>：有限样本下的假设检验可能缺乏统计功效，特别是在高维情况下需要进行大量的条件独立性测试。</p>
+</li>
+</ol>
+<h3 id="1212">12.1.2 识别性与马尔可夫等价类</h3>
+<p>因果发现的一个核心概念是马尔可夫等价类（Markov Equivalence Class, MEC）。理解MEC对于正确解释因果发现算法的输出至关重要。</p>
+<p><strong>定义</strong>：两个DAG $G_1$ 和 $G_2$ 属于同一个马尔可夫等价类，当且仅当它们蕴含相同的条件独立性关系集合。</p>
+<p><strong>等价性判定定理（Verma and Pearl, 1990）</strong>：
+两个DAG属于同一个马尔可夫等价类，当且仅当它们具有：</p>
+<ul>
+<li>相同的骨架（无向边结构）</li>
+<li>相同的v-结构（也称为对撞结构，形如 $A \rightarrow C \leftarrow B$ 的结构，其中A和B不相连）</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>例子1：链结构的等价类
+(a) A → B → C     (b) A ← B ← C     (c) A ← B → C
+这三个DAG具有相同的骨架A-B-C，且都没有v-结构
+它们属于同一个马尔可夫等价类
+条件独立性：A ⊥ C | B
+
+例子2：v-结构的识别
+(d) A → C ← B     (e) A → C → B     (f) A ← C → B
+       ↓
+       D
+(d)包含v-结构 A → C ← B（A和B不相连）
+(e)和(f)没有v-结构
+这三个属于不同的马尔可夫等价类
+</code></pre></div>
+
+<p><strong>CPDAG（完成部分有向无环图）</strong>：
+马尔可夫等价类可以用CPDAG表示，其中：</p>
+<ul>
+<li>有向边：在等价类中所有DAG中方向相同的边</li>
+<li>无向边：在等价类中不同DAG中方向可能不同的边</li>
+</ul>
+<p><strong>本质图（Essential Graph）</strong>：
+CPDAG也称为本质图，它编码了从观察数据可以确定的所有因果信息。计算本质图的算法：</p>
+<ol>
+<li>识别所有v-结构</li>
+<li>应用Meek规则传播约束</li>
+<li>剩余的边保持无向</li>
+</ol>
+<h3 id="1213">12.1.3 因果发现的假设</h3>
+<p>成功的因果发现依赖于几个关键假设。理解这些假设的含义和局限性对于正确应用因果发现算法至关重要。</p>
+<p><strong>假设1：因果马尔可夫条件（Causal Markov Condition）</strong>
+每个变量在给定其直接原因（父节点）的条件下，与其非效应（非后代节点）条件独立。</p>
+<p>形式化表述：对于DAG $G = (V, E)$ 和联合分布 $P$，
+$$X_i \perp!!!\perp \text{NonDesc}(X_i) | \text{Pa}(X_i)$$
+这个假设意味着DAG捕获了所有相关的因果关系，没有遗漏重要的直接因果联系。</p>
+<p><strong>假设2：忠实性假设（Faithfulness Assumption）</strong>
+数据分布 $P$ 对DAG $G$ 是忠实的，如果 $P$ 中的所有条件独立性关系都对应于 $G$ 中的d-分离关系，反之亦然。</p>
+<p>形式化：$X \perp!!!\perp Y | Z \text{ in } P \Leftrightarrow X \perp_d Y | Z \text{ in } G$</p>
+<p>忠实性假设排除了参数的"病态"取值。例如，在路径 $X \rightarrow Z \leftarrow Y$ 上，如果两条路径的效应恰好相消，可能导致 $X \perp Y$，违反忠实性。</p>
+<p><strong>假设3：因果充分性（Causal Sufficiency）</strong>
+不存在未观测的共同原因（混杂因素）同时影响两个或多个观测变量。</p>
+<p>违反因果充分性的后果：</p>
+<ul>
+<li>产生虚假的因果关系</li>
+<li>无法区分直接因果和通过隐变量的间接影响</li>
+<li>需要使用更复杂的模型（如MAG或PAG）</li>
+</ul>
+<p><strong>假设4：无选择偏差（No Selection Bias）</strong>
+数据采样过程不依赖于变量之间的因果关系。如果数据收集受到某些变量值的影响（如只观察幸存者），会引入选择偏差。</p>
+<p><strong>假设5：无测量误差</strong>
+观测变量准确反映了真实的潜在变量。测量误差可能掩盖或扭曲真实的因果关系。</p>
+<h2 id="122">12.2 基于约束的方法</h2>
+<p>基于约束的方法（Constraint-based methods）通过系统地测试条件独立性关系来构建因果图。这类方法的核心思想是：因果结构蕴含特定的条件独立性模式，通过识别这些模式可以推断因果结构。</p>
+<h3 id="1221-pc">12.2.1 PC算法</h3>
+<p>PC算法是最经典的基于约束的因果发现算法，由Peter Spirtes和Clark Glymour于1991年提出。它通过渐进式地测试条件独立性，从数据中学习因果图的等价类。</p>
+<p><strong>算法概览</strong>：
+PC算法分为两个主要阶段：骨架学习（发现哪些变量之间有边）和方向确定（确定边的方向）。</p>
+<p><strong>阶段1：骨架学习</strong></p>
+<p>骨架学习采用自顶向下的策略，从完全图开始逐步删除边：</p>
+<div class="codehilite"><pre><span></span><code>算法：<span class="nv">PC</span><span class="o">-</span>骨架学习
+输入：变量集<span class="nv">V</span>，显著性水平α
+输出：无向图骨架<span class="nv">G</span>，分离集<span class="nv">Sep</span>
+
+<span class="mi">1</span>.<span class="w"> </span>初始化：<span class="nv">G</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>完全无向图
+<span class="mi">2</span>.<span class="w"> </span><span class="nv">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w">  </span><span class="o">//</span><span class="w"> </span>条件集大小
+<span class="mi">3</span>.<span class="w"> </span><span class="k">while</span><span class="w"> </span>存在节点的邻居数<span class="w"> </span>≥<span class="w"> </span><span class="nv">l</span><span class="w"> </span><span class="k">do</span>
+<span class="mi">4</span>.<span class="w">   </span><span class="k">for</span><span class="w"> </span>每对相邻节点<span class="w"> </span><span class="ss">(</span><span class="nv">Xi</span>,<span class="w"> </span><span class="nv">Xj</span><span class="ss">)</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">G</span><span class="w"> </span><span class="k">do</span>
+<span class="mi">5</span>.<span class="w">     </span><span class="k">for</span><span class="w"> </span>所有大小为<span class="nv">l</span>的条件集<span class="w"> </span><span class="nv">S</span><span class="w"> </span>⊆<span class="w"> </span><span class="nv">Adj</span><span class="ss">(</span><span class="nv">Xi</span><span class="ss">)</span>\{<span class="nv">Xj</span>}<span class="w"> </span>∪<span class="w"> </span><span class="nv">Adj</span><span class="ss">(</span><span class="nv">Xj</span><span class="ss">)</span>\{<span class="nv">Xi</span>}<span class="w"> </span><span class="k">do</span>
+<span class="mi">6</span>.<span class="w">       </span><span class="k">if</span><span class="w"> </span>条件独立性测试<span class="w"> </span><span class="nv">Xi</span><span class="w"> </span>⊥<span class="w"> </span><span class="nv">Xj</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nv">S</span><span class="w"> </span><span class="ss">(</span><span class="nv">p</span><span class="o">-</span><span class="nv">value</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>α<span class="ss">)</span><span class="w"> </span><span class="k">then</span>
+<span class="mi">7</span>.<span class="w">         </span>删除边<span class="w"> </span><span class="nv">Xi</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Xj</span>
+<span class="mi">8</span>.<span class="w">         </span><span class="nv">Sep</span><span class="ss">(</span><span class="nv">Xi</span>,<span class="w"> </span><span class="nv">Xj</span><span class="ss">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">S</span><span class="w">  </span><span class="o">//</span><span class="w"> </span>记录分离集
+<span class="mi">9</span>.<span class="w">         </span><span class="k">break</span>
+<span class="mi">10</span>.<span class="w">  </span><span class="nv">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="mi">11</span>.<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">G</span>,<span class="w"> </span><span class="nv">Sep</span>
+</code></pre></div>
+
+<p><strong>优化技巧</strong>：</p>
+<ol>
+<li><strong>边的排序</strong>：优先测试相关性较弱的边，更可能快速删除</li>
+<li><strong>条件集选择</strong>：优先选择与两个节点都强相关的变量作为条件集</li>
+<li><strong>早停策略</strong>：当某一层没有边被删除时，可以提前终止</li>
+</ol>
+<p><strong>阶段2：方向确定</strong></p>
+<p>方向确定分为两步：识别v-结构和应用传播规则。</p>
+<div class="codehilite"><pre><span></span><code>算法：<span class="nv">PC</span><span class="o">-</span>方向确定
+输入：骨架<span class="nv">G</span>，分离集<span class="nv">Sep</span>
+输出：<span class="nv">CPDAG</span>
+
+<span class="mi">1</span>.<span class="w"> </span><span class="o">//</span><span class="w"> </span>识别<span class="nv">v</span><span class="o">-</span>结构
+<span class="mi">2</span>.<span class="w"> </span><span class="k">for</span><span class="w"> </span>每个三元组<span class="w"> </span><span class="ss">(</span><span class="nv">Xi</span>,<span class="w"> </span><span class="nv">Xj</span>,<span class="w"> </span><span class="nv">Xk</span><span class="ss">)</span><span class="w"> </span><span class="nv">where</span><span class="w"> </span><span class="nv">Xi</span><span class="o">-</span><span class="nv">Xj</span><span class="o">-</span><span class="nv">Xk</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">G</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">Xi</span>与<span class="nv">Xk</span>不相连<span class="w"> </span><span class="k">do</span>
+<span class="mi">3</span>.<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="nv">Xj</span><span class="w"> </span>∉<span class="w"> </span><span class="nv">Sep</span><span class="ss">(</span><span class="nv">Xi</span>,<span class="w"> </span><span class="nv">Xk</span><span class="ss">)</span><span class="w"> </span><span class="k">then</span>
+<span class="mi">4</span>.<span class="w">     </span>定向为<span class="w"> </span><span class="nv">Xi</span><span class="w"> </span>→<span class="w"> </span><span class="nv">Xj</span><span class="w"> </span>←<span class="w"> </span><span class="nv">Xk</span><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="nv">v</span><span class="o">-</span>结构
+<span class="mi">5</span>.<span class="w"> </span>
+<span class="mi">6</span>.<span class="w"> </span><span class="o">//</span><span class="w"> </span>应用<span class="nv">Meek</span>规则
+<span class="mi">7</span>.<span class="w"> </span><span class="nv">repeat</span>
+<span class="mi">8</span>.<span class="w">   </span>应用规则<span class="nv">R1</span><span class="o">-</span><span class="nv">R4</span>（见下文）
+<span class="mi">9</span>.<span class="w"> </span><span class="k">until</span><span class="w"> </span>没有新的边被定向
+<span class="mi">10</span>.<span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nv">CPDAG</span>
+</code></pre></div>
+
+<p><strong>Meek规则（完整版）</strong>：</p>
+<ul>
+<li><strong>R1</strong>：如果 $A \rightarrow B - C$ 且 $A$ 与 $C$ 不相连，则 $B \rightarrow C$（避免新v-结构）</li>
+<li><strong>R2</strong>：如果 $A \rightarrow B \rightarrow C$ 且 $A - C$，则 $A \rightarrow C$（避免有向环）</li>
+<li><strong>R3</strong>：如果存在两条路径 $A - D \rightarrow C$ 和 $A - E \rightarrow C$，且 $D$ 与 $E$ 不相连，则 $A \rightarrow C$（避免新v-结构）</li>
+<li><strong>R4</strong>：如果 $A - D \rightarrow C$ 且 $D \rightarrow B \rightarrow C$，$A$ 与 $B$ 不相连，则 $A \rightarrow C$（避免有向环）</li>
+</ul>
+<p><strong>时间复杂度分析</strong>：</p>
+<ul>
+<li>最坏情况：$O(p^{d+2})$，其中 $p$ 是变量数，$d$ 是最大度数</li>
+<li>骨架学习：需要测试 $O(p^2 \cdot 2^d)$ 个条件独立性</li>
+<li>方向确定：$O(p^3)$</li>
+</ul>
+<h3 id="1222-fcifast-causal-inference">12.2.2 FCI算法（Fast Causal Inference）</h3>
+<p>FCI算法是PC算法的扩展，由Spirtes等人于1999年提出。它放松了因果充分性假设，允许存在隐变量和选择偏差，是处理不完全观测系统的重要工具。</p>
+<p><strong>PAG（部分祖先图）表示</strong>：
+FCI输出PAG而非DAG，使用四种端点类型：</p>
+<ul>
+<li>尾端（—）：表示该节点不是另一节点的祖先</li>
+<li>箭头（&gt;）：表示该节点不是另一节点的原因</li>
+<li>圆圈（○）：表示端点类型未知</li>
+</ul>
+<p>边的类型及含义：</p>
+<ul>
+<li>$X \circ!!-!!\circ Y$：$X$ 和 $Y$ 之间存在关联，但方向完全未知</li>
+<li>$X \circ!!\rightarrow Y$：$X$ 不是 $Y$ 的后代，可能是祖先或通过隐变量关联</li>
+<li>$X \rightarrow Y$：$X$ 是 $Y$ 的祖先（可能通过隐变量）</li>
+<li>$X \leftrightarrow Y$：存在隐混杂 $L \rightarrow X$ 和 $L \rightarrow Y$</li>
+</ul>
+<p><strong>FCI算法流程</strong>：</p>
+<div class="codehilite"><pre><span></span><code>算法：FCI主流程
+输入：数据D，显著性水平α
+输出：PAG
+
+1. // 阶段1：初始骨架发现
+2. 运行PC算法的骨架学习阶段，得到初始骨架G和分离集Sep
+3. 
+4. // 阶段2：识别v-结构
+5. 对所有不相邻的Xi, Xk，如果存在Xj使得Xi-Xj-Xk：
+6.   if Xj ∉ Sep(Xi, Xk) then
+7.     标记为v-结构：Xi <span class="gs">*→ Xj ←*</span> Xk
+8. 
+9. // 阶段3：可能的d-分离（Possible d-sep）
+10. repeat
+11.   for 每对不相邻的节点 (Xi, Xj) do
+12.     找到所有可能的d-分离路径PDS(Xi, Xj)
+13.     for S ⊆ PDS(Xi, Xj) do
+14.       if Xi ⊥ Xj | S then
+15.         更新Sep(Xi, Xj) = S
+16.         如果Xi-Xk-Xj且Xk ∉ S，标记新的v-结构
+17. until 没有新的独立性被发现
+18. 
+19. // 阶段4：最终方向确定
+20. 应用完整的FCI定向规则R0-R10
+21. return PAG
+</code></pre></div>
+
+<p><strong>FCI定向规则（部分）</strong>：</p>
+<ul>
+<li><strong>R0</strong>：识别所有v-结构</li>
+<li><strong>R1</strong>：如果 $A *!!\rightarrow B \circ!!-!!* C$ 且 $A$ 和 $C$ 不相邻，则 $B \rightarrow C$</li>
+<li><strong>R2</strong>：如果 $A \rightarrow B *!!\rightarrow C$ 或 $A *!!\rightarrow B \rightarrow C$，且 $A *!!-!!\circ C$，则 $A *!!\rightarrow C$</li>
+<li><strong>R4</strong>：判别路径规则（用于识别隐变量的影响）</li>
+</ul>
+<p><strong>PC-Stable和FCI-Stable变体</strong>：
+原始PC/FCI算法的骨架可能依赖于变量顺序。Stable版本通过以下修改确保顺序无关：</p>
+<ol>
+<li>在删除边之前完成同一层级的所有测试</li>
+<li>基于所有测试结果统一更新图结构</li>
+<li>避免使用已删除边的信息进行后续测试</li>
+</ol>
+<h3 id="1223">12.2.3 条件独立性测试</h3>
+<p>条件独立性测试是基于约束方法的核心组件。测试的质量直接影响因果发现的准确性。</p>
+<p><strong>测试框架</strong>：
+零假设 $H_0: X \perp!!!\perp Y | Z$
+备择假设 $H_1: X \not\perp!!!\perp Y | Z$</p>
+<p><strong>连续变量的测试方法</strong>：</p>
+<ol>
+<li><strong>偏相关测试（线性高斯假设）</strong>：
+$$\rho_{XY|Z} = \frac{\rho_{XY} - \rho_{XZ}\rho_{YZ}}{\sqrt{(1-\rho_{XZ}^2)(1-\rho_{YZ}^2)}}$$
+Fisher's Z变换：$Z = \frac{1}{2}\ln\frac{1+|\rho|}{1-|\rho|}$</li>
+</ol>
+<p>在零假设下：$\sqrt{n-|Z|-3} \cdot Z \sim \mathcal{N}(0,1)$</p>
+<p>优点：计算快速，理论成熟
+   缺点：仅适用于线性关系</p>
+<ol start="2">
+<li><strong>核条件独立性测试（KCIT）</strong>：
+   使用再生核希尔伯特空间（RKHS）中的统计量：
+$$\text{KCIT} = n \cdot \text{tr}(K_X K_Y K_Z^{-1})$$
+其中 $K_X, K_Y, K_Z$ 是相应的核矩阵。</li>
+</ol>
+<p>优点：可检测非线性关系
+   缺点：计算复杂度高 $O(n^3)$</p>
+<ol start="3">
+<li><strong>条件互信息测试</strong>：
+$$I(X;Y|Z) = \mathbb{E}_{p(x,y,z)}\left[\log\frac{p(x,y|z)}{p(x|z)p(y|z)}\right]$$
+使用k近邻或核密度估计来估算互信息。</li>
+</ol>
+<p>优点：理论优美，无分布假设
+   缺点：高维时估计不准确</p>
+<p><strong>离散变量的测试方法</strong>：</p>
+<ol>
+<li>
+<p><strong>条件 $\chi^2$ 测试</strong>：
+$$\chi^2 = \sum_{x,y,z} \frac{(O_{xyz} - E_{xyz})^2}{E_{xyz}}$$
+自由度：$df = (|X|-1)(|Y|-1)|Z|$</p>
+</li>
+<li>
+<p><strong>G-test（似然比测试）</strong>：
+$$G = 2\sum_{x,y,z} O_{xyz} \ln\frac{O_{xyz}}{E_{xyz}}$$
+渐近分布：$G \sim \chi^2_{df}$</p>
+</li>
+<li>
+<p><strong>条件互信息测试</strong>：
+$$\hat{I}(X;Y|Z) = \sum_{x,y,z} \frac{n_{xyz}}{n} \log\frac{n \cdot n_{xyz}}{n_{xz} \cdot n_{yz}}$$
+<strong>混合变量的处理</strong>：</p>
+</li>
+</ol>
+<ul>
+<li>离散化连续变量（信息损失）</li>
+<li>使用混合Copula方法</li>
+<li>基于排序的非参数方法</li>
+</ul>
+<p><strong>多重假设检验校正</strong>：
+PC算法需要进行大量的独立性测试，需要控制总体错误率：</p>
+<ul>
+<li>Bonferroni校正：$\alpha' = \alpha / m$</li>
+<li>FDR控制：Benjamini-Hochberg程序</li>
+<li>自适应程序：根据图的稀疏性调整</li>
+</ul>
+<h2 id="123">12.3 基于分数的方法</h2>
+<p>基于分数的方法（Score-based methods）将因果发现表述为优化问题：在所有可能的DAG空间中搜索使某个评分函数最大化的结构。这类方法的优势在于可以直接比较不同的因果假设，并自然地处理模型复杂度与拟合优度的权衡。</p>
+<h3 id="1231">12.3.1 评分函数</h3>
+<p>评分函数需要满足几个关键性质才能保证因果发现的一致性：</p>
+<p><strong>理想性质</strong>：</p>
+<ol>
+<li><strong>分解性（Decomposability）</strong>：$\text{Score}(G) = \sum_{i=1}^p \text{Score}_i(X_i, Pa_i^G)$</li>
+<li><strong>分数等价性（Score Equivalence）</strong>：马尔可夫等价的DAG具有相同分数</li>
+<li><strong>一致性（Consistency）</strong>：样本量趋于无穷时，真实DAG获得最高分数</li>
+</ol>
+<p><strong>BIC分数（贝叶斯信息准则）</strong>：</p>
+<p>BIC在似然和模型复杂度之间寻求平衡：
+$$\text{BIC}(G) = \log P(\mathcal{D}|G, \hat{\theta}_G) - \frac{|G|}{2}\log n$$
+其中：</p>
+<ul>
+<li>$\hat{\theta}_G$ 是给定图结构下的最大似然估计</li>
+<li>$|G|$ 是模型参数数量</li>
+<li>$n$ 是样本大小</li>
+</ul>
+<p>对于线性高斯模型：
+$$|G| = p + |E| + p = 2p + |E|$$
+（$p$ 个截距，$|E|$ 个回归系数，$p$ 个噪声方差）</p>
+<p><strong>分解形式</strong>：
+$$\text{BIC}_i(Pa_i) = -\frac{n}{2}\log(RSS_i/n) - \frac{|Pa_i|+2}{2}\log n$$
+其中 $RSS_i$ 是节点 $i$ 对其父节点回归的残差平方和。</p>
+<p><strong>BDeu分数（贝叶斯Dirichlet等价uniform）</strong>：</p>
+<p>专门用于离散变量，基于Dirichlet先验的边际似然：
+$$\text{BDeu}(G) = \log P(\mathcal{D}|G) = \sum_{i=1}^{p} \sum_{j=1}^{q_i} \left[\log\frac{\Gamma(\alpha_{ij})}{\Gamma(\alpha_{ij}+n_{ij})} + \sum_{k=1}^{r_i} \log\frac{\Gamma(\alpha_{ijk}+n_{ijk})}{\Gamma(\alpha_{ijk})}\right]$$
+其中：</p>
+<ul>
+<li>$r_i$ 是变量 $X_i$ 的取值数</li>
+<li>$q_i = \prod_{X_k \in Pa_i} r_k$ 是父节点配置数</li>
+<li>$n_{ijk}$ 是 $X_i=k$ 且父节点取第 $j$ 个配置的样本数</li>
+<li>$\alpha_{ijk}$ 是Dirichlet先验的超参数</li>
+</ul>
+<p><strong>等价样本大小（ESS）选择</strong>：
+$$\alpha_{ijk} = \frac{\text{ESS}}{r_i \cdot q_i}$$
+常用 $\text{ESS} \in \{1, 10, 50\}$，ESS=1 对应无信息先验。</p>
+<p><strong>BGe分数（贝叶斯高斯等价）</strong>：</p>
+<p>用于连续高斯变量，基于Normal-Wishart先验：
+$$\text{BGe}(G) = \sum_{i=1}^p \text{BGe}_i(Pa_i)$$
+其中每个局部分数为：
+$$\text{BGe}_i(Pa_i) = \log\frac{\Gamma_p(\frac{\nu+n}{2})}{\Gamma_p(\frac{\nu}{2})} + \frac{\nu}{2}\log|T| - \frac{\nu+n}{2}\log|T+S_{Pa_i}|$$
+参数说明：</p>
+<ul>
+<li>$\nu$ 是Wishart分布的自由度参数</li>
+<li>$T$ 是先验尺度矩阵</li>
+<li>$S_{Pa_i}$ 是数据的散布矩阵</li>
+<li>$\Gamma_p$ 是多元Gamma函数</li>
+</ul>
+<p><strong>混合变量的评分函数</strong>：
+对于包含连续和离散变量的系统，可以使用：</p>
+<ul>
+<li>条件高斯模型的分数</li>
+<li>基于Copula的分数函数</li>
+<li>非参数分数（如基于核密度估计）</li>
+</ul>
+<h3 id="1232-gesgreedy-equivalence-search">12.3.2 GES算法（Greedy Equivalence Search）</h3>
+<p>GES算法在马尔可夫等价类空间中进行贪婪搜索：</p>
+<p><strong>前向阶段（Forward Phase）</strong>：</p>
+<ol>
+<li>从空图开始</li>
+<li>贪婪地添加边，每次选择分数提升最大的边</li>
+<li>直到分数不再提升</li>
+</ol>
+<p><strong>后向阶段（Backward Phase）</strong>：</p>
+<ol>
+<li>贪婪地删除边</li>
+<li>每次选择删除后分数提升最大（或下降最小）的边</li>
+<li>直到分数不再提升</li>
+</ol>
+<p>GES算法的优势：</p>
+<ul>
+<li>在大样本和忠实性假设下具有一致性</li>
+<li>搜索空间是等价类而非单个DAG</li>
+<li>计算效率相对较高</li>
+</ul>
+<h3 id="1233">12.3.3 动态规划方法</h3>
+<p>对于小规模问题（$p \leq 25$），可以使用动态规划找到全局最优解：
+$$\text{score}^*(U) = \max_{X_i \in U} \left\{ \max_{Pa_i \subseteq U \setminus \{X_i\}} \text{score}_i(Pa_i) + \text{score}^*(U \setminus \{X_i\}) \right\}$$
+这种方法保证找到最优DAG，但计算复杂度为 $O(p \cdot 2^p)$。</p>
+<h2 id="124">12.4 连续优化方法</h2>
+<p>近年来，将组合优化问题转化为连续优化问题成为因果发现的新趋势。</p>
+<h3 id="1241-notears">12.4.1 NOTEARS算法</h3>
+<p>NOTEARS（NO TEARS - 无环约束的平滑表示）将DAG学习表述为连续优化问题：</p>
+<p><strong>关键创新：无环约束的代数表示</strong>
+$$h(W) = \text{tr}(e^{W \circ W}) - p = 0$$
+其中 $W$ 是邻接矩阵，$\circ$ 表示Hadamard积。当且仅当 $W$ 对应无环图时，$h(W) = 0$。</p>
+<p><strong>优化问题</strong>：
+$$\min_W \frac{1}{2n}|X - XW|_F^2 + \lambda |W|_1$$
+$$\text{s.t. } h(W) = 0$$
+使用增广拉格朗日方法求解：
+$$\mathcal{L}_{\rho}(W, \alpha) = f(W) + \alpha h(W) + \frac{\rho}{2}h(W)^2$$</p>
+<h3 id="1242">12.4.2 非线性因果模型</h3>
+<p><strong>加性噪声模型（ANM）</strong>：
+$$X_j = f_j(Pa_j) + N_j$$
+其中 $f_j$ 是非线性函数，$N_j$ 是独立噪声。</p>
+<p><strong>识别性结果</strong>：在温和条件下，如果 $f$ 是非线性的，则因果方向是可识别的（除了高斯噪声+线性函数的情况）。</p>
+<p><strong>RESIT算法（Regression with Subsequent Independence Test）</strong>：</p>
+<ol>
+<li>回归：$\hat{Y} = f(X)$</li>
+<li>计算残差：$R = Y - \hat{Y}$</li>
+<li>测试独立性：$R \perp!!!\perp X$</li>
+<li>如果独立，则 $X \rightarrow Y$；否则尝试反向</li>
+</ol>
+<h3 id="1243-vae">12.4.3 基于VAE的方法</h3>
+<p><strong>因果VAE（Causal VAE）</strong>：
+将因果结构编码到变分自编码器中：</p>
+<p>编码器：$q_{\phi}(Z|X)$
+解码器：$p_{\theta}(X|Z)$
+因果层：$Z_i = f_i(Pa_i^Z) + \epsilon_i$</p>
+<p>目标函数：
+$$\mathcal{L} = \mathbb{E}_{q_{\phi}(Z|X)}[\log p_{\theta}(X|Z)] - \text{KL}(q_{\phi}(Z|X)||p(Z)) + \lambda \cdot \text{DAG_penalty}$$</p>
+<h2 id="125">12.5 因果发现的评估</h2>
+<p>评估因果发现算法的性能是一个挑战，因为真实的因果结构通常是未知的。</p>
+<h3 id="1251">12.5.1 结构评估指标</h3>
+<p><strong>结构汉明距离（SHD）</strong>：
+编辑操作（添加、删除、翻转边）的最小数量：
+$$\text{SHD} = \text{FP} + \text{FN} + \text{边方向错误数}$$
+<strong>精确率与召回率</strong>：</p>
+<ul>
+<li>精确率：$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$</li>
+<li>召回率：$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$</li>
+<li>F1分数：$\text{F1} = \frac{2 \cdot \text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$</li>
+</ul>
+<p><strong>结构干预距离（SID）</strong>：
+衡量两个因果图在干预分布上的差异：
+$$\text{SID}(G, G') = \sum_{i,j} \mathbb{I}[\text{Pa}_j^{do(X_i)}(G) \neq \text{Pa}_j^{do(X_i)}(G')]$$</p>
+<h3 id="1252">12.5.2 基于干预的评估</h3>
+<p>当可以进行干预实验时，可以更准确地评估因果结构：</p>
+<ol>
+<li><strong>预测干预效果</strong>：使用发现的因果图预测干预效果，与实际观察比较</li>
+<li><strong>主动学习</strong>：选择最有信息量的干预来区分候选因果结构</li>
+</ol>
+<h3 id="1253">12.5.3 基准数据集</h3>
+<p><strong>合成数据</strong>：</p>
+<ul>
+<li>线性高斯模型：容易生成，但过于简化</li>
+<li>非线性加性噪声模型：更真实，但计算成本高</li>
+<li>混合模型：包含线性和非线性关系</li>
+</ul>
+<p><strong>半合成数据</strong>：</p>
+<ul>
+<li>基于真实数据的因果关系</li>
+<li>保留真实数据的复杂性</li>
+<li>例如：DREAM挑战赛的基因调控网络</li>
+</ul>
+<p><strong>真实数据</strong>：</p>
+<ul>
+<li>Sachs蛋白质信号网络</li>
+<li>ALARM医疗诊断网络</li>
+<li>经济时间序列数据</li>
+</ul>
+<h2 id="126-5g">12.6 行业案例：华为5G网络故障根因分析</h2>
+<h3 id="_2">背景</h3>
+<p>华为在部署5G网络时面临复杂的故障诊断挑战。5G网络包含数万个相互依赖的组件，当出现性能下降或服务中断时，快速准确地定位根本原因至关重要。传统的基于规则的故障诊断系统难以处理复杂的依赖关系和新型故障模式。</p>
+<h3 id="_3">问题定义</h3>
+<p><strong>监控指标</strong>：</p>
+<ul>
+<li>基站性能指标（吞吐量、延迟、丢包率）</li>
+<li>核心网指标（信令负载、处理延迟）</li>
+<li>传输网指标（带宽利用率、传输错误）</li>
+<li>设备指标（CPU使用率、内存、温度）</li>
+<li>用户体验指标（连接成功率、切换成功率）</li>
+</ul>
+<p><strong>挑战</strong>：</p>
+<ol>
+<li>高维度：数千个监控指标</li>
+<li>时变性：网络拓扑和流量模式动态变化</li>
+<li>隐变量：部分故障原因无法直接观测</li>
+<li>快速性要求：需要在分钟级别内定位问题</li>
+</ol>
+<h3 id="_4">因果发现方案</h3>
+<p><strong>阶段1：离线因果图构建</strong></p>
+<p>使用历史数据构建基础因果图：</p>
+<div class="codehilite"><pre><span></span><code>数据预处理：
+
+1. 时间序列对齐和重采样（5分钟粒度）
+2. 异常值检测和处理
+3. 特征工程（滑动窗口统计量）
+
+算法选择：
+
+- PC-Stable算法：处理高维稀疏图
+- 时间序列扩展：考虑时滞效应
+- 领域知识约束：禁止某些边（如用户指标→硬件指标）
+</code></pre></div>
+
+<p><strong>阶段2：在线根因定位</strong></p>
+<p>当检测到异常时，使用因果图进行根因分析：</p>
+<div class="codehilite"><pre><span></span><code>输入：异常KPI集合 A = {KPI_1, ..., KPI_k}
+输出：根因节点集合 R
+
+算法：
+
+1. 在因果图中标记所有异常节点
+2. 计算每个节点的责任分数：
+   RS(v) = P(A|do(v=abnormal)) - P(A)
+
+3. 使用反向追溯找到最上游的异常节点
+4. 验证：模拟修复该节点，预测其他节点恢复情况
+</code></pre></div>
+
+<h3 id="_5">实施细节</h3>
+<p><strong>特征工程</strong>：</p>
+<ul>
+<li>原始指标：直接监控值</li>
+<li>差分特征：$\Delta X_t = X_t - X_{t-1}$</li>
+<li>比率特征：实际值/预期值</li>
+<li>交叉特征：不同层级指标的交互</li>
+</ul>
+<p><strong>因果强度评估</strong>：
+使用部分相关系数衡量直接因果强度：
+$$\rho_{ij|S} = \frac{\text{Cov}(X_i, X_j | S)}{\sqrt{\text{Var}(X_i|S) \cdot \text{Var}(X_j|S)}}$$</p>
+<h3 id="_6">结果与收益</h3>
+<p><strong>定量结果</strong>：</p>
+<ul>
+<li>根因定位准确率：从65%提升到89%</li>
+<li>平均定位时间：从45分钟减少到8分钟</li>
+<li>误报率：从30%降低到12%</li>
+<li>覆盖的故障类型：从20种扩展到35种</li>
+</ul>
+<p><strong>业务价值</strong>：</p>
+<ol>
+<li><strong>运维效率提升</strong>：减少70%的人工排查时间</li>
+<li><strong>服务可用性</strong>：网络可用性从99.95%提升到99.98%</li>
+<li><strong>知识沉淀</strong>：自动生成故障传播图谱</li>
+<li><strong>预防性维护</strong>：识别潜在故障链路</li>
+</ol>
+<h3 id="_7">经验教训</h3>
+<ol>
+<li><strong>数据质量至关重要</strong>：花费40%的时间在数据清洗和对齐</li>
+<li><strong>领域知识不可或缺</strong>：纯数据驱动的方法容易产生虚假因果关系</li>
+<li><strong>增量学习</strong>：因果图需要持续更新以适应网络变化</li>
+<li><strong>可解释性要求</strong>：运维人员需要理解和信任算法结果</li>
+<li><strong>多算法融合</strong>：结合PC算法和NOTEARS提高鲁棒性</li>
+</ol>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter11.html" class="nav-link prev">← 第十一章：时间序列因果推断</a><a href="chapter13.html" class="nav-link next">第十三章：反事实推理与结构因果模型 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

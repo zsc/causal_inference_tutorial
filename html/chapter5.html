@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第五章：观察性研究中的因果推断</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第五章：观察性研究中的因果推断</h1>
+<p>在现实世界中，我们经常面临无法进行随机实验的情况。伦理限制、成本考虑或实际可行性都可能使得随机对照试验无法实施。这时，我们需要从观察性数据中推断因果关系。本章将介绍观察性研究中的核心方法，包括如何处理混杂因素、如何使用倾向得分、以及各种匹配和加权技术。通过LinkedIn的职业发展路径分析案例，我们将看到这些方法如何在实际中发挥作用。</p>
+<h2 id="51">5.1 引言</h2>
+<h3 id="_2">观察性研究的定义与重要性</h3>
+<p>观察性研究（Observational Study）是指研究者不控制处理分配，而是观察自然发生的处理和结果。与随机对照试验（RCT）不同，观察性研究中的处理分配往往与潜在结果相关，这给因果推断带来了根本性挑战。</p>
+<p>为什么观察性研究如此重要？</p>
+<ol>
+<li>
+<p><strong>伦理约束</strong>：许多研究问题涉及伦理限制。例如，我们不能随机让人吸烟来研究吸烟对健康的影响。</p>
+</li>
+<li>
+<p><strong>成本和可行性</strong>：大规模RCT成本高昂，有时在技术上不可行。例如，研究教育政策对长期收入的影响需要数十年的跟踪。</p>
+</li>
+<li>
+<p><strong>外部有效性</strong>：RCT通常在受控环境中进行，其结果未必能推广到现实世界。观察性研究直接使用现实数据，外部有效性更强。</p>
+</li>
+<li>
+<p><strong>数据可用性</strong>：随着大数据时代的到来，海量的观察性数据变得容易获取，如电子健康记录、社交媒体数据、交易记录等。</p>
+</li>
+</ol>
+<h3 id="_3">核心挑战：混杂与选择偏差</h3>
+<p>观察性研究面临的核心挑战是<strong>混杂</strong>（Confounding）。当存在同时影响处理分配和结果的变量时，简单比较处理组和对照组的结果差异不能反映真实的因果效应。</p>
+<p>考虑一个简单例子：评估硕士学位对收入的影响。直接比较有硕士学位和没有硕士学位人群的平均收入会高估教育的因果效应，因为选择读硕士的人往往本身能力更强、家庭背景更好，这些因素同时影响教育选择和收入水平。</p>
+<div class="codehilite"><pre><span></span><code>        能力/背景
+         /     \
+        /       \
+       ↓         ↓
+    硕士学位 → 收入
+</code></pre></div>
+
+<h3 id="_4">识别策略概览</h3>
+<p>为了从观察性数据中识别因果效应，统计学家和经济学家发展了多种方法：</p>
+<ol>
+<li>
+<p><strong>基于设计的方法</strong>：
+   - 匹配（Matching）
+   - 分层（Stratification）
+   - 工具变量（将在第六章详述）
+   - 断点回归（将在第七章详述）</p>
+</li>
+<li>
+<p><strong>基于模型的方法</strong>：
+   - 回归调整
+   - 倾向得分方法
+   - 逆概率加权</p>
+</li>
+<li>
+<p><strong>双重稳健方法</strong>：
+   - 增广逆概率加权（AIPW）
+   - 目标最大似然估计（TMLE）</p>
+</li>
+</ol>
+<p>本章将重点介绍倾向得分、匹配和加权方法，这些是观察性研究中最常用的技术。</p>
+<h2 id="52">5.2 混杂因素与选择偏差</h2>
+<h3 id="_5">混杂因素的正式定义</h3>
+<p>在因果推断中，<strong>混杂因素</strong>（Confounder）是同时满足以下三个条件的变量：</p>
+<ol>
+<li><strong>与处理相关</strong>：混杂因素影响处理分配的概率</li>
+<li><strong>与结果相关</strong>：混杂因素影响结果变量</li>
+<li><strong>不是中介变量</strong>：混杂因素不在处理到结果的因果路径上</li>
+</ol>
+<p>用数学语言表述，变量$C$是处理$T$对结果$Y$的混杂因素，当且仅当：</p>
+<ul>
+<li>$C \not\perp!!!\perp T$（C与T不独立）</li>
+<li>$C \not\perp!!!\perp Y | T$（给定T后，C与Y仍不独立）</li>
+<li>$C$不是$T \to Y$路径上的中介变量</li>
+</ul>
+<h3 id="_6">混杂的图形表示</h3>
+<p>使用因果图可以直观地识别混杂。常见的混杂结构包括：</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">经典混杂</span><span class="err">（</span><span class="n">共同原因</span><span class="err">）：</span>
+<span class="w">       </span><span class="n">C</span>
+<span class="w">      </span><span class="o">/</span><span class="w"> </span><span class="err">\</span>
+<span class="w">     </span><span class="err">↓</span><span class="w">   </span><span class="err">↓</span>
+<span class="w">     </span><span class="n">T</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Y</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="n">混杂链</span><span class="err">：</span>
+<span class="w">     </span><span class="n">C</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Y</span>
+<span class="w">     </span><span class="err">└─────→──┘</span>
+
+<span class="mf">3.</span><span class="w"> </span><span class="n">M型偏差</span><span class="err">（</span><span class="n">选择偏差</span><span class="err">）：</span>
+<span class="w">     </span><span class="n">T</span><span class="w">   </span><span class="n">Y</span>
+<span class="w">      </span><span class="err">\</span><span class="w"> </span><span class="o">/</span>
+<span class="w">       </span><span class="err">↓</span>
+<span class="w">       </span><span class="n">S</span><span class="err">（</span><span class="n">选择变量</span><span class="err">）</span>
+</code></pre></div>
+
+<h3 id="_7">可忽略性假设</h3>
+<p>为了从观察性数据中识别因果效应，我们需要<strong>可忽略性假设</strong>（Ignorability Assumption），也称为<strong>无混杂假设</strong>：</p>
+<p>$$Y(1), Y(0) \perp!!!\perp T | X$$
+其中$X$是观测到的协变量集合。这个假设说明：给定观测到的协变量$X$，处理分配与潜在结果独立。</p>
+<p>可忽略性假设可以分解为两个部分：</p>
+<ol>
+<li><strong>条件独立性</strong>：$(Y(1), Y(0)) \perp!!!\perp T | X$</li>
+<li><strong>正值性</strong>（Positivity）：$0 &lt; P(T=1|X) &lt; 1$对所有$X$成立</li>
+</ol>
+<h3 id="_8">选择偏差的类型</h3>
+<p>选择偏差（Selection Bias）是观察性研究中的另一个重要问题。主要类型包括：</p>
+<ol>
+<li>
+<p><strong>样本选择偏差</strong>：研究样本不能代表目标总体
+   - 例子：仅研究在职员工的培训效果，忽略了因培训而离职的员工</p>
+</li>
+<li>
+<p><strong>自选择偏差</strong>：个体基于自身特征选择是否接受处理
+   - 例子：更有健康意识的人选择购买健康保险</p>
+</li>
+<li>
+<p><strong>生存偏差</strong>：只观察到"幸存"的单位
+   - 例子：研究创业成功因素时只看到存活的公司</p>
+</li>
+<li>
+<p><strong>失访偏差</strong>：处理组和对照组的失访率不同
+   - 例子：药物副作用导致处理组更高的退出率</p>
+</li>
+</ol>
+<h3 id="_9">识别混杂因素的实践方法</h3>
+<ol>
+<li>
+<p><strong>领域知识</strong>：基于对问题的理解识别潜在混杂因素
+   - 咨询领域专家
+   - 查阅相关文献
+   - 进行探索性数据分析</p>
+</li>
+<li>
+<p><strong>因果图方法</strong>：
+   - 构建DAG（有向无环图）
+   - 使用后门准则识别需要调整的变量集
+   - 避免调整碰撞器（Collider）</p>
+</li>
+<li>
+<p><strong>统计检验</strong>：
+   - 检查处理组和对照组的协变量平衡
+   - 使用标准化均值差异（SMD）
+   - 进行敏感性分析</p>
+</li>
+</ol>
+<h3 id="_10">处理混杂的基本策略</h3>
+<ol>
+<li>
+<p><strong>设计阶段</strong>：
+   - 限制（Restriction）：将研究限制在协变量的特定水平
+   - 匹配（Matching）：为每个处理单位找到相似的对照单位
+   - 分层（Stratification）：在协变量的各个层次内比较</p>
+</li>
+<li>
+<p><strong>分析阶段</strong>：
+   - 回归调整：在回归模型中包含混杂因素
+   - 倾向得分方法：基于处理概率进行调整
+   - 加权方法：使用逆概率加权创建伪总体</p>
+</li>
+</ol>
+<h3 id="_11">无法观测的混杂</h3>
+<p>最大的挑战是<strong>未观测混杂</strong>（Unmeasured Confounding）。即使我们调整了所有观测到的变量，仍可能存在未观测的混杂因素。应对策略包括：</p>
+<ol>
+<li><strong>敏感性分析</strong>：评估结果对未观测混杂的稳健性</li>
+<li><strong>负对照</strong>：使用不应受处理影响的结果作为检验</li>
+<li><strong>工具变量</strong>：寻找只通过处理影响结果的变量</li>
+<li><strong>面板数据方法</strong>：利用时间维度的信息</li>
+</ol>
+<h2 id="53">5.3 倾向得分方法</h2>
+<h3 id="_12">倾向得分的定义</h3>
+<p><strong>倾向得分</strong>（Propensity Score）是给定观测协变量时，单位接受处理的条件概率：
+$$e(X) = P(T=1|X)$$
+这个概念由Rosenbaum和Rubin（1983）提出，是观察性研究中最重要的工具之一。倾向得分将高维协变量降维到一维，大大简化了因果推断。</p>
+<h3 id="_13">倾向得分的关键性质</h3>
+<p><strong>定理（倾向得分的平衡性质）</strong>：如果处理分配满足可忽略性假设$(Y(1), Y(0)) \perp!!!\perp T | X$，那么：
+$$(Y(1), Y(0)) \perp!!!\perp T | e(X)$$
+这意味着，在倾向得分相同的单位中，处理分配是随机的。换句话说，倾向得分创造了一个"准实验"环境。</p>
+<p><strong>推论</strong>：</p>
+<ol>
+<li><strong>平衡性</strong>：$X \perp!!!\perp T | e(X)$（给定倾向得分，协变量在处理组和对照组中分布相同）</li>
+<li><strong>无混杂性</strong>：$E[Y(1) - Y(0) | e(X)] = E[Y | T=1, e(X)] - E[Y | T=0, e(X)]$</li>
+</ol>
+<h3 id="_14">倾向得分的估计</h3>
+<p>实践中，真实的倾向得分未知，需要从数据中估计。常用方法包括：</p>
+<ol>
+<li>
+<p><strong>逻辑回归</strong>（最常用）：
+$$\log\frac{e(X)}{1-e(X)} = \beta_0 + \beta^T X$$</p>
+</li>
+<li>
+<p><strong>机器学习方法</strong>：
+   - 随机森林
+   - 梯度提升树（GBM）
+   - 神经网络
+   - Super Learner（集成学习）</p>
+</li>
+<li>
+<p><strong>协变量平衡倾向得分（CBPS）</strong>：
+   同时优化倾向得分预测和协变量平衡</p>
+</li>
+</ol>
+<p><strong>模型选择考虑</strong>：</p>
+<ul>
+<li>预测准确性 vs 协变量平衡</li>
+<li>避免过拟合（极端倾向得分）</li>
+<li>包含交互项和非线性项</li>
+</ul>
+<h3 id="_15">平衡性诊断</h3>
+<p>估计倾向得分后，必须检查是否达到协变量平衡：</p>
+<ol>
+<li>
+<p><strong>标准化均值差异（SMD）</strong>：
+$$SMD = \frac{\bar{X}_{treated} - \bar{X}_{control}}{\sqrt{(S^2_{treated} + S^2_{control})/2}}$$
+通常要求$|SMD| &lt; 0.1$表示良好平衡</p>
+</li>
+<li>
+<p><strong>方差比</strong>：
+$$VR = \frac{S^2_{treated}}{S^2_{control}}$$
+理想情况下接近1</p>
+</li>
+<li>
+<p><strong>图形诊断</strong>：
+   - 倾向得分分布图（检查重叠）
+   - Love图（展示调整前后的SMD）
+   - QQ图（比较分布）</p>
+</li>
+</ol>
+<h3 id="_16">倾向得分的四种应用方式</h3>
+<h4 id="1-psm">1. 倾向得分匹配（PSM）</h4>
+<p>为每个处理单位找到倾向得分相近的对照单位：</p>
+<ul>
+<li><strong>最近邻匹配</strong>：选择倾向得分最接近的对照</li>
+<li><strong>卡尺匹配</strong>：限制最大匹配距离</li>
+<li><strong>k:1匹配</strong>：每个处理单位匹配k个对照</li>
+</ul>
+<p>平均处理效应估计：
+$$\hat{\tau}_{ATT} = \frac{1}{n_1}\sum_{i:T_i=1}[Y_i - Y_{j(i)}]$$
+其中$j(i)$是单位$i$的匹配对照。</p>
+<h4 id="2">2. 倾向得分分层</h4>
+<p>将样本按倾向得分分成若干层（通常5-10层），在每层内估计处理效应：
+$$\hat{\tau} = \sum_{s=1}^{S} \frac{N_s}{N} \hat{\tau}_s$$
+其中$\hat{\tau}_s$是第$s$层的处理效应估计。</p>
+<h4 id="3-55">3. 倾向得分加权（将在5.5节详述）</h4>
+<p>使用倾向得分构造权重，创建平衡的伪总体。</p>
+<h4 id="4">4. 倾向得分回归调整</h4>
+<p>将倾向得分作为协变量纳入回归模型：
+$$Y = \beta_0 + \beta_1 T + \beta_2 e(X) + \epsilon$$
+或使用更灵活的形式：
+$$Y = \beta_0 + \beta_1 T + f(e(X)) + g(T, e(X)) + \epsilon$$</p>
+<h3 id="_17">倾向得分方法的优势与局限</h3>
+<p><strong>优势</strong>：</p>
+<ol>
+<li>降维：将高维协变量问题转化为一维</li>
+<li>设计与分析分离：可以在不看结果的情况下评估平衡</li>
+<li>直观：模拟随机实验的逻辑</li>
+<li>透明：容易检查关键假设</li>
+</ol>
+<p><strong>局限</strong>：</p>
+<ol>
+<li>依赖可忽略性假设：无法处理未观测混杂</li>
+<li>需要足够的重叠：极端倾向得分导致估计不稳定</li>
+<li>模型依赖：倾向得分模型误设可能导致偏差</li>
+<li>效率损失：匹配和分层可能丢弃信息</li>
+</ol>
+<h3 id="_18">实践建议</h3>
+<ol>
+<li><strong>迭代优化</strong>：反复调整模型直到达到满意的平衡</li>
+<li><strong>敏感性分析</strong>：尝试不同的模型规范</li>
+<li><strong>检查重叠</strong>：确保处理组和对照组有足够的共同支撑</li>
+<li><strong>报告诊断</strong>：始终报告平衡性检验结果</li>
+<li><strong>考虑双重稳健方法</strong>：结合倾向得分和结果模型</li>
+</ol>
+<h2 id="54">5.4 匹配方法</h2>
+<p>匹配（Matching）是观察性研究中最直观的方法之一。基本思想是为每个处理单位找到一个或多个"相似"的对照单位，通过比较匹配对来估计因果效应。这种方法模拟了配对实验设计。</p>
+<h3 id="_19">精确匹配</h3>
+<p><strong>精确匹配</strong>（Exact Matching）要求处理单位和对照单位在所有协变量上完全相同。</p>
+<p><strong>实施步骤</strong>：</p>
+<ol>
+<li>将数据按协变量值分层</li>
+<li>在每个层内，匹配处理和对照单位</li>
+<li>丢弃无法匹配的单位</li>
+<li>在匹配样本上估计处理效应</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>完美平衡所有匹配变量</li>
+<li>非参数方法，无需模型假设</li>
+<li>结果易于解释</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>维度诅咒：随着协变量增加，精确匹配变得不可行</li>
+<li>大量样本被丢弃</li>
+<li>连续变量需要离散化</li>
+</ul>
+<h3 id="_20">近邻匹配</h3>
+<p><strong>近邻匹配</strong>（Nearest Neighbor Matching）基于距离度量选择最相似的单位。</p>
+<p><strong>距离度量</strong>：</p>
+<ol>
+<li>
+<p><strong>欧氏距离</strong>：
+$$d(i,j) = \sqrt{(X_i - X_j)^T(X_i - X_j)}$$</p>
+</li>
+<li>
+<p><strong>马氏距离</strong>（考虑协变量相关性）：
+$$d(i,j) = \sqrt{(X_i - X_j)^T\Sigma^{-1}(X_i - X_j)}$$</p>
+</li>
+<li>
+<p><strong>倾向得分距离</strong>：
+$$d(i,j) = |e(X_i) - e(X_j)|$$
+<strong>匹配策略</strong>：</p>
+</li>
+</ol>
+<ul>
+<li><strong>1:1匹配</strong>：每个处理单位匹配一个对照</li>
+<li><strong>1:k匹配</strong>：每个处理单位匹配k个对照</li>
+<li><strong>有放回 vs 无放回</strong>：对照单位是否可重复使用</li>
+</ul>
+<p><strong>偏差-方差权衡</strong>：</p>
+<ul>
+<li>更多匹配（大k）：降低方差，增加偏差</li>
+<li>更少匹配（小k）：降低偏差，增加方差</li>
+</ul>
+<h3 id="_21">卡尺匹配</h3>
+<p><strong>卡尺匹配</strong>（Caliper Matching）设置最大可接受距离：
+$$\text{匹配} \iff d(i,j) \leq c$$
+其中$c$是卡尺宽度。</p>
+<p><strong>卡尺选择</strong>：</p>
+<ul>
+<li>Austin（2011）建议：倾向得分标准差的0.2倍</li>
+<li>太小：许多单位无法匹配</li>
+<li>太大：匹配质量差</li>
+</ul>
+<p><strong>组合策略</strong>：
+卡尺 + 近邻：在卡尺内选择最近邻</p>
+<h3 id="_22">优化匹配</h3>
+<p><strong>最优匹配</strong>（Optimal Matching）通过求解优化问题找到全局最优匹配：
+$$\min \sum_{(i,j) \in M} d(i,j)$$
+其中$M$是匹配集合。</p>
+<p>这可以转化为二分图匹配问题，使用匈牙利算法求解。</p>
+<p><strong>遗传匹配</strong>（Genetic Matching）：
+使用遗传算法自动选择距离度量的权重，优化协变量平衡。</p>
+<h3 id="cem">粗化精确匹配（CEM）</h3>
+<p><strong>粗化精确匹配</strong>结合精确匹配和近似匹配的优点：</p>
+<ol>
+<li>将连续变量粗化（离散化）</li>
+<li>进行精确匹配</li>
+<li>在匹配层内使用加权估计</li>
+</ol>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>保证单调不平衡减少</li>
+<li>满足合并不变性</li>
+<li>限制模型依赖</li>
+</ul>
+<h3 id="_23">匹配质量评估</h3>
+<h4 id="1">1. 协变量平衡检验</h4>
+<p><strong>标准化偏差</strong>：
+$$SB = 100 \times \frac{\bar{X}_{treated} - \bar{X}_{control,matched}}{\sqrt{(S^2_{treated} + S^2_{control,matched})/2}}$$
+经验法则：$|SB| &lt; 10$表示良好平衡</p>
+<h4 id="2_1">2. 匹配样本特征</h4>
+<ul>
+<li><strong>匹配率</strong>：成功匹配的处理单位比例</li>
+<li><strong>有效样本量</strong>：
+$$ESS = \frac{(\sum w_i)^2}{\sum w_i^2}$$</li>
+</ul>
+<h4 id="3">3. 敏感性检验</h4>
+<ul>
+<li><strong>隐藏偏差分析</strong>：Rosenbaum界</li>
+<li><strong>不同匹配方法比较</strong></li>
+<li><strong>匹配变量选择的敏感性</strong></li>
+</ul>
+<h3 id="_24">处理效应估计</h3>
+<p>匹配后的平均处理效应：</p>
+<ol>
+<li>
+<p><strong>简单差分</strong>（1:1匹配）：
+$$\hat{\tau} = \frac{1}{n_m}\sum_{i \in matched} (Y_{i,treated} - Y_{i,control})$$</p>
+</li>
+<li>
+<p><strong>加权估计</strong>（1:k匹配）：
+$$\hat{\tau} = \frac{1}{n_1}\sum_{i:T_i=1} \left(Y_i - \frac{1}{k}\sum_{j \in M(i)} Y_j\right)$$</p>
+</li>
+<li>
+<p><strong>回归调整</strong>：
+   在匹配样本上进行回归，提高精度</p>
+</li>
+</ol>
+<h3 id="_25">匹配方法的实践考虑</h3>
+<h4 id="_26">选择匹配变量</h4>
+<ol>
+<li><strong>理论指导</strong>：基于领域知识选择混杂因素</li>
+<li><strong>避免过度匹配</strong>：不要匹配中介变量或碰撞器</li>
+<li><strong>预后变量</strong>：包含强预测结果的变量</li>
+</ol>
+<h4 id="_27">处理缺失数据</h4>
+<ul>
+<li>完整案例分析</li>
+<li>多重插补后匹配</li>
+<li>将缺失作为单独类别</li>
+</ul>
+<h4 id="_28">标准误计算</h4>
+<p>匹配破坏了独立性，需要特殊方法：</p>
+<ul>
+<li>Bootstrap（有争议）</li>
+<li>Abadie-Imbens标准误</li>
+<li>聚类稳健标准误</li>
+</ul>
+<h3 id="_29">匹配的优势与局限</h3>
+<p><strong>优势</strong>：</p>
+<ol>
+<li><strong>透明性</strong>：匹配过程直观易懂</li>
+<li><strong>设计阶段</strong>：可以在看结果前评估平衡</li>
+<li><strong>局部推断</strong>：聚焦于有共同支撑的区域</li>
+<li><strong>非参数</strong>：不依赖函数形式假设</li>
+</ol>
+<p><strong>局限</strong>：</p>
+<ol>
+<li><strong>维度诅咒</strong>：高维协变量空间中难以找到好匹配</li>
+<li><strong>信息损失</strong>：丢弃未匹配单位</li>
+<li><strong>模型依赖</strong>：距离度量的选择影响结果</li>
+<li><strong>有限样本</strong>：小样本中匹配质量差</li>
+</ol>
+<h2 id="55">5.5 逆概率加权</h2>
+<h3 id="ipw">IPW的基本原理</h3>
+<p><strong>逆概率加权</strong>（Inverse Probability Weighting, IPW）通过对观测单位赋予不同权重，创建一个"伪总体"，在这个伪总体中处理分配独立于协变量。</p>
+<p>核心思想：给予"罕见"单位更大的权重，使加权后的样本代表目标总体。</p>
+<h3 id="_30">权重的构造</h3>
+<p>对于二元处理，IPW权重定义为：
+$$w_i = \frac{T_i}{e(X_i)} + \frac{1-T_i}{1-e(X_i)}$$
+其中$e(X_i) = P(T_i=1|X_i)$是倾向得分。</p>
+<p><strong>直观理解</strong>：</p>
+<ul>
+<li>处理组中倾向得分低的单位获得高权重（代表不太可能接受处理的人群）</li>
+<li>对照组中倾向得分高的单位获得高权重（代表很可能接受处理的人群）</li>
+</ul>
+<h3 id="_31">不同的因果估计目标</h3>
+<p>根据目标参数不同，权重有不同形式：</p>
+<ol>
+<li>
+<p><strong>ATE（平均处理效应）</strong>：
+$$w_i^{ATE} = \frac{T_i}{e(X_i)} + \frac{1-T_i}{1-e(X_i)}$$</p>
+</li>
+<li>
+<p><strong>ATT（处理组平均处理效应）</strong>：
+$$w_i^{ATT} = T_i + (1-T_i)\frac{e(X_i)}{1-e(X_i)}$$</p>
+</li>
+<li>
+<p><strong>ATC（对照组平均处理效应）</strong>：
+$$w_i^{ATC} = T_i\frac{1-e(X_i)}{e(X_i)} + (1-T_i)$$</p>
+</li>
+</ol>
+<h3 id="ipw_1">IPW估计量</h3>
+<p>平均处理效应的IPW估计：
+$$\hat{\tau}_{IPW} = \frac{1}{n}\sum_{i=1}^n w_i \cdot T_i \cdot Y_i - \frac{1}{n}\sum_{i=1}^n w_i \cdot (1-T_i) \cdot Y_i$$
+或归一化版本：
+$$\hat{\tau}_{IPW} = \frac{\sum_{i:T_i=1} w_i Y_i}{\sum_{i:T_i=1} w_i} - \frac{\sum_{i:T_i=0} w_i Y_i}{\sum_{i:T_i=0} w_i}$$</p>
+<h3 id="_32">权重的稳定化</h3>
+<p>标准IPW权重可能非常大，导致估计不稳定。<strong>稳定权重</strong>通过乘以边际处理概率来缓解这个问题：
+$$sw_i = \frac{P(T_i=1) \cdot T_i}{e(X_i)} + \frac{P(T_i=0) \cdot (1-T_i)}{1-e(X_i)}$$
+稳定权重的优势：</p>
+<ul>
+<li>减少极端权重</li>
+<li>降低估计方差</li>
+<li>保持无偏性</li>
+</ul>
+<h3 id="_33">极端权重的处理</h3>
+<p>极端倾向得分（接近0或1）导致极端权重，几种处理方法：</p>
+<ol>
+<li>
+<p><strong>权重截断</strong>（Weight Trimming）：
+$$w_i^{trim} = \min(w_i, w_{max})$$
+设置权重上限，如第99百分位数</p>
+</li>
+<li>
+<p><strong>权重收缩</strong>（Weight Winsorization）：
+   将超过阈值的权重替换为阈值</p>
+</li>
+<li>
+<p><strong>倾向得分截断</strong>：
+$$e^{trim}(X) = \max(0.01, \min(0.99, e(X)))$$</p>
+</li>
+<li>
+<p><strong>重叠权重</strong>（Overlap Weights）：
+$$w_i^{overlap} = T_i(1-e(X_i)) + (1-T_i)e(X_i)$$
+强调倾向得分接近0.5的单位</p>
+</li>
+</ol>
+<h3 id="_34">双重稳健估计</h3>
+<p><strong>增广逆概率加权</strong>（Augmented IPW, AIPW）结合了IPW和结果回归模型：
+$$\hat{\tau}_{AIPW} = \frac{1}{n}\sum_{i=1}^n \left[\frac{T_i Y_i}{e(X_i)} - \frac{(T_i - e(X_i))}{e(X_i)}\hat{m}_1(X_i)\right]$$
+$$- \frac{1}{n}\sum_{i=1}^n \left[\frac{(1-T_i) Y_i}{1-e(X_i)} + \frac{(T_i - e(X_i))}{1-e(X_i)}\hat{m}_0(X_i)\right]$$
+其中$\hat{m}_1(X)$和$\hat{m}_0(X)$是结果模型。</p>
+<p><strong>双重稳健性质</strong>：只要倾向得分模型或结果模型之一正确，AIPW就是一致的。</p>
+<h3 id="_35">权重诊断</h3>
+<p>评估IPW方法的关键是检查权重分布和平衡：</p>
+<ol>
+<li>
+<p><strong>权重分布检查</strong>：
+   - 权重的均值、标准差、极值
+   - 权重分布图
+   - 有效样本量：$ESS = \frac{(\sum w_i)^2}{\sum w_i^2}$</p>
+</li>
+<li>
+<p><strong>加权协变量平衡</strong>：
+$$SMD_{weighted} = \frac{\bar{X}_{T=1,w} - \bar{X}_{T=0,w}}{\sqrt{(S^2_{T=1,w} + S^2_{T=0,w})/2}}$$</p>
+</li>
+<li>
+<p><strong>加权结果分布</strong>：
+   比较加权后处理组和对照组的结果分布</p>
+</li>
+</ol>
+<h3 id="ipw_2">IPW的扩展</h3>
+<ol>
+<li>
+<p><strong>边际结构模型</strong>（MSM）：
+   在加权伪总体上拟合参数模型：
+$$E[Y^*(t)] = \beta_0 + \beta_1 t$$</p>
+</li>
+<li>
+<p><strong>时变处理</strong>：
+$$w_i = \prod_{t=1}^T \frac{1}{P(A_{it}|A_{i,t-1}, L_{it})}$$</p>
+</li>
+<li>
+<p><strong>连续处理</strong>：
+   使用广义倾向得分：
+$$w_i = \frac{f(T_i)}{f(T_i|X_i)}$$</p>
+</li>
+</ol>
+<h3 id="ipw_3">IPW与其他方法的比较</h3>
+<p>| 方法 | IPW | 匹配 | 回归调整 |</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>IPW</th>
+<th>匹配</th>
+<th>回归调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>使用所有数据</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>非参数</td>
+<td>半参数</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>处理高维</td>
+<td>困难</td>
+<td>困难</td>
+<td>较好</td>
+</tr>
+<tr>
+<td>双重稳健</td>
+<td>可扩展</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>极值敏感</td>
+<td>高</td>
+<td>低</td>
+<td>低</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_36">实践建议</h3>
+<ol>
+<li>
+<p><strong>倾向得分建模</strong>：
+   - 优先考虑平衡而非预测准确性
+   - 包含所有潜在混杂因素
+   - 考虑交互项和非线性</p>
+</li>
+<li>
+<p><strong>权重检查</strong>：
+   - 始终检查权重分布
+   - 对极端权重进行敏感性分析
+   - 报告有效样本量</p>
+</li>
+<li>
+<p><strong>稳健性检验</strong>：
+   - 尝试不同的权重处理方法
+   - 使用双重稳健估计
+   - 进行未观测混杂的敏感性分析</p>
+</li>
+</ol>
+<h2 id="56-linkedin">5.6 行业案例：LinkedIn职业发展路径分析</h2>
+<h3 id="_37">背景与问题设定</h3>
+<p>LinkedIn作为全球最大的职业社交平台，拥有超过8亿用户的职业履历数据。一个核心问题是：<strong>获得特定技能认证对职业发展的因果影响是什么？</strong></p>
+<p>具体场景：评估"数据科学认证"对以下结果的影响：</p>
+<ul>
+<li>薪资增长</li>
+<li>职位晋升概率</li>
+<li>跳槽到更好公司的概率</li>
+</ul>
+<p><strong>挑战</strong>：</p>
+<ol>
+<li><strong>自选择偏差</strong>：选择获得认证的人本身可能更有进取心</li>
+<li><strong>混杂因素众多</strong>：教育背景、工作经验、行业、地理位置等</li>
+<li><strong>时间依赖</strong>：职业发展是动态过程</li>
+<li><strong>网络效应</strong>：社交网络可能影响职业机会</li>
+</ol>
+<h3 id="_38">因果图构建</h3>
+<div class="codehilite"><pre><span></span><code>    能力/进取心(U)
+       /    \
+      /      \
+     ↓        ↓
+  技能认证 → 职业结果
+     ↑        ↑
+     |        |
+  教育背景    |
+     ↑        |
+     └────────┘
+
+  工作经验 → 技能认证
+         \     ↓
+          \    |
+           ↘   ↓
+           职业结果
+
+  社交网络 → 职业结果
+</code></pre></div>
+
+<p>识别的关键混杂因素：</p>
+<ul>
+<li><strong>可观测</strong>：教育水平、工作年限、当前职位、行业、公司规模、地理位置</li>
+<li><strong>部分可观测</strong>：技能水平（通过技能标签推断）</li>
+<li><strong>不可观测</strong>：个人能力、进取心、家庭背景</li>
+</ul>
+<h3 id="_39">数据准备</h3>
+<p>从LinkedIn数据中提取的变量：</p>
+<div class="codehilite"><pre><span></span><code>用户特征：
+
+- 教育：学位、专业、学校排名
+- 经验：工作年限、职位历史、行业经验
+- 技能：技能标签数量、技能认可度
+- 网络：连接数、行业内连接比例
+- 活跃度：发文频率、互动率
+
+处理变量：
+
+- 是否获得数据科学认证（二元）
+- 获得认证的时间
+
+结果变量：
+
+- 12个月后的薪资变化（%）
+- 是否获得晋升（二元）
+- 是否跳槽到Fortune 500公司（二元）
+</code></pre></div>
+
+<h3 id="_40">方法选择与实施</h3>
+<h4 id="1_1">1. 倾向得分估计</h4>
+<p>使用梯度提升树（GBM）估计获得认证的概率：</p>
+<div class="codehilite"><pre><span></span><code>特征工程：
+
+- 交互项：教育×经验、行业×职位
+- 非线性变换：工作年限的样条
+- 时间特征：季节性、经济周期
+
+模型训练：
+
+- 5折交叉验证选择超参数
+- 早停防止过拟合
+- 特征重要性分析
+</code></pre></div>
+
+<p>倾向得分分布诊断：</p>
+<ul>
+<li>处理组均值：0.42</li>
+<li>对照组均值：0.18</li>
+<li>共同支撑区域：[0.05, 0.85]</li>
+</ul>
+<h4 id="2_2">2. 匹配实施</h4>
+<p>采用多种匹配策略：</p>
+<p><strong>策略A：倾向得分匹配</strong></p>
+<ul>
+<li>1:3最近邻匹配带卡尺（0.2×SD）</li>
+<li>匹配率：92%</li>
+<li>平均SMD（匹配后）：0.04</li>
+</ul>
+<p><strong>策略B：粗化精确匹配（CEM）</strong></p>
+<ul>
+<li>粗化变量：教育（4类）、经验（5类）、行业（10类）</li>
+<li>匹配率：78%</li>
+<li>完美平衡粗化变量</li>
+</ul>
+<p><strong>策略C：遗传匹配</strong></p>
+<ul>
+<li>优化25个协变量的权重</li>
+<li>最大化平衡（最小化最大SMD）</li>
+<li>计算密集但平衡最优</li>
+</ul>
+<h4 id="3-ipw">3. IPW分析</h4>
+<p>权重构造与诊断：</p>
+<div class="codehilite"><pre><span></span><code>权重统计：
+
+- 原始权重范围：[1.05, 42.3]
+- 稳定权重范围：[0.21, 8.7]
+- 有效样本量：原始82%，稳定91%
+
+极端权重处理：
+
+- 截断at 99th percentile
+- 敏感性分析：95th、97th、99th percentile
+</code></pre></div>
+
+<h4 id="4-aipw">4. 双重稳健估计（AIPW）</h4>
+<p>结合倾向得分和结果模型：</p>
+<ul>
+<li>结果模型：LASSO回归选择变量</li>
+<li>交叉拟合避免过拟合</li>
+<li>Bootstrap置信区间（1000次）</li>
+</ul>
+<h3 id="_41">结果汇总</h3>
+<p>| 方法 | 薪资增长(%) | 晋升概率提升 | 跳槽F500概率提升 |</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>薪资增长(%)</th>
+<th>晋升概率提升</th>
+<th>跳槽F500概率提升</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>简单比较</td>
+<td>15.2***</td>
+<td>0.18***</td>
+<td>0.12***</td>
+</tr>
+<tr>
+<td>PS匹配</td>
+<td>8.1***</td>
+<td>0.09***</td>
+<td>0.07***</td>
+</tr>
+<tr>
+<td>CEM</td>
+<td>7.8***</td>
+<td>0.08**</td>
+<td>0.06**</td>
+</tr>
+<tr>
+<td>IPW</td>
+<td>8.5***</td>
+<td>0.10***</td>
+<td>0.08***</td>
+</tr>
+<tr>
+<td>AIPW</td>
+<td>8.3***</td>
+<td>0.09***</td>
+<td>0.07***</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>p&lt;0.001, </strong>p&lt;0.01, </em>p&lt;0.05</p>
+<h3 id="_42">异质性分析</h3>
+<p>探索处理效应的异质性：</p>
+<div class="codehilite"><pre><span></span><code>按经验水平分层：
+
+- 初级（&lt;3年）：薪资增长11.2%
+- 中级（3-7年）：薪资增长8.5%
+- 高级（&gt;7年）：薪资增长4.1%
+
+按教育背景分层：
+
+- STEM专业：薪资增长9.8%
+- 非STEM专业：薪资增长6.2%
+
+按公司规模分层：
+
+- 初创公司：薪资增长12.3%
+- 大公司：薪资增长5.7%
+</code></pre></div>
+
+<h3 id="_43">稳健性检验</h3>
+<ol>
+<li>
+<p><strong>敏感性分析</strong>：
+   - Rosenbaum界：Γ=1.4时结果仍显著
+   - E-value：1.8（中等稳健性）</p>
+</li>
+<li>
+<p><strong>安慰剂检验</strong>：
+   - 使用认证前一年的结果：无显著效应
+   - 使用无关认证（如项目管理）：效应减半</p>
+</li>
+<li>
+<p><strong>时间趋势</strong>：
+   - 事件研究设计显示认证后立即出现跳跃
+   - 效应在6个月后趋于稳定</p>
+</li>
+</ol>
+<h3 id="_44">实践启示</h3>
+<ol>
+<li>
+<p><strong>业务洞察</strong>：
+   - 技能认证确实有因果效应，但小于相关性
+   - 效应对职业早期更大，建议针对性推广
+   - 认证价值因行业和公司类型而异</p>
+</li>
+<li>
+<p><strong>方法论贡献</strong>：
+   - 多种方法结果一致增强可信度
+   - 丰富的协变量减少未观测混杂
+   - 异质性分析提供精准干预指导</p>
+</li>
+<li>
+<p><strong>局限与改进</strong>：
+   - 未观测的能力和动机仍可能造成偏差
+   - 可考虑工具变量（如认证价格变化）
+   - 面板数据方法可能提供额外识别</p>
+</li>
+</ol>
+<h2 id="57">5.7 本章小结</h2>
+<p>本章深入探讨了观察性研究中的因果推断方法。核心要点包括：</p>
+<h3 id="_45">关键概念回顾</h3>
+<ol>
+<li>
+<p><strong>混杂与可忽略性</strong>：
+   - 混杂因素同时影响处理和结果
+   - 可忽略性假设：$(Y(1), Y(0)) \perp!!!\perp T | X$
+   - 正值性假设：$0 &lt; P(T=1|X) &lt; 1$</p>
+</li>
+<li>
+<p><strong>倾向得分</strong>：
+   - 定义：$e(X) = P(T=1|X)$
+   - 平衡性质：给定倾向得分，协变量在处理组和对照组平衡
+   - 降维作用：将高维协变量问题转化为一维</p>
+</li>
+<li>
+<p><strong>三大方法体系</strong>：
+   - <strong>匹配</strong>：为处理单位找到相似的对照单位
+   - <strong>加权</strong>：创建平衡的伪总体
+   - <strong>回归调整</strong>：在模型中控制混杂因素</p>
+</li>
+</ol>
+<h3 id="_46">核心公式</h3>
+<ul>
+<li><strong>IPW权重</strong>：$w_i = \frac{T_i}{e(X_i)} + \frac{1-T_i}{1-e(X_i)}$</li>
+<li><strong>AIPW估计量</strong>：结合倾向得分和结果模型的双重稳健估计</li>
+<li><strong>标准化均值差异</strong>：$SMD = \frac{\bar{X}_1 - \bar{X}_0}{\sqrt{(S_1^2 + S_0^2)/2}}$</li>
+</ul>
+<h3 id="_47">方法选择指南</h3>
+<p>| 场景 | 推荐方法 | 理由 |</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐方法</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小样本</td>
+<td>精确匹配</td>
+<td>保证完美平衡</td>
+</tr>
+<tr>
+<td>高维协变量</td>
+<td>倾向得分方法</td>
+<td>有效降维</td>
+</tr>
+<tr>
+<td>极端倾向得分</td>
+<td>匹配+卡尺</td>
+<td>避免极端权重</td>
+</tr>
+<tr>
+<td>需要全样本推断</td>
+<td>IPW</td>
+<td>使用所有数据</td>
+</tr>
+<tr>
+<td>模型不确定</td>
+<td>AIPW</td>
+<td>双重稳健性</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_48">实践智慧</h3>
+<ol>
+<li><strong>设计优于分析</strong>：在看结果前确保良好的协变量平衡</li>
+<li><strong>多种方法验证</strong>：使用不同方法检验结果稳健性</li>
+<li><strong>诊断必不可少</strong>：始终检查重叠、平衡和模型假设</li>
+<li><strong>报告透明</strong>：清楚说明识别假设和局限性</li>
+</ol>
+<h2 id="58">5.8 练习题</h2>
+<h3 id="_49">基础题（理解概念）</h3>
+<p><strong>题目1</strong>：判断下列哪些变量是吸烟对肺癌影响的混杂因素？
+a) 年龄
+b) 黄牙（吸烟的结果）
+c) 基因易感性
+d) 咳嗽（可能是吸烟和肺癌的共同结果）</p>
+<details>
+<summary>提示</summary>
+<p>考虑混杂因素的三个条件：与处理相关、与结果相关、不在因果路径上。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>a) 年龄：是混杂因素（影响吸烟倾向和肺癌风险）
+b) 黄牙：不是（是吸烟的结果，调整它会引入碰撞器偏差）
+c) 基因易感性：是混杂因素（可能影响吸烟行为和肺癌风险）
+d) 咳嗽：不是（可能是中介变量或碰撞器）</p>
+</details>
+<p><strong>题目2</strong>：给定倾向得分$e(X) = 0.8$，计算该单位作为处理单位和对照单位时的IPW权重（用于估计ATE）。</p>
+<details>
+<summary>提示</summary>
+<p>使用IPW权重公式，分别考虑$T=1$和$T=0$的情况。</p>
+</details>
+<details>
+<summary>答案</summary>
+<ul>
+<li>作为处理单位（T=1）：$w = 1/0.8 = 1.25$</li>
+<li>作为对照单位（T=0）：$w = 1/(1-0.8) = 1/0.2 = 5$
+对照单位获得更高权重，因为倾向得分高的对照单位更"罕见"。</li>
+</ul>
+</details>
+<p><strong>题目3</strong>：为什么在高维协变量情况下，精确匹配变得不可行？</p>
+<details>
+<summary>提示</summary>
+<p>考虑协变量组合的数量如何随维度增长。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>维度诅咒：假设有10个二元协变量，则有$2^{10} = 1024$种可能的组合。即使样本量很大，许多组合可能没有观测值，导致大量单位无法精确匹配。连续变量使问题更严重，因为完全相同的值几乎不可能。</p>
+</details>
+<h3 id="_50">挑战题（深入思考）</h3>
+<p><strong>题目4</strong>：某研究使用倾向得分匹配评估培训项目效果，发现匹配后某个重要协变量（如教育水平）的SMD为0.15。研究者认为"已经比0.2小了，可以接受"。请评论这种做法并提出改进建议。</p>
+<details>
+<summary>提示</summary>
+<p>考虑：1) SMD阈值的含义；2) 重要协变量的特殊性；3) 可能的补救措施。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>这种做法有问题：</p>
+<ol>
+<li>SMD &gt; 0.1已表明存在不平衡，特别是对重要协变量</li>
+<li>教育水平可能是强混杂因素，残余不平衡会导致偏差</li>
+<li>改进建议：
+   - 重新估计倾向得分，给教育水平更大权重
+   - 使用更严格的卡尺
+   - 在匹配样本上进行回归调整
+   - 尝试其他匹配方法（如CEM对教育精确匹配）
+   - 报告对该变量不平衡的敏感性分析</li>
+</ol>
+</details>
+<p><strong>题目5</strong>：一位分析师使用IPW估计因果效应，发现一些单位的权重超过100。她决定将所有权重截断在10。这种做法的优缺点是什么？有什么替代方案？</p>
+<details>
+<summary>提示</summary>
+<p>考虑偏差-方差权衡、目标参数的改变、以及其他处理极端权重的方法。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>优点：</p>
+<ul>
+<li>大幅降低方差，估计更稳定</li>
+<li>减少个别观测的影响</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>引入偏差，不再估计真实的ATE</li>
+<li>截断阈值（10）的选择是任意的</li>
+<li>可能严重扭曲目标估计量</li>
+</ul>
+<p>替代方案：</p>
+<ol>
+<li>使用稳定权重而非截断</li>
+<li>重叠权重（自动降低极端单位权重）</li>
+<li>限制分析到共同支撑区域</li>
+<li>重新考虑倾向得分模型</li>
+<li>使用双重稳健方法（如AIPW）</li>
+</ol>
+</details>
+<p><strong>题目6</strong>：设计一个模拟研究，比较倾向得分匹配、IPW和AIPW在不同场景下的表现。应该考虑哪些场景？如何评估方法表现？</p>
+<details>
+<summary>提示</summary>
+<p>考虑：混杂强度、重叠程度、样本量、模型误设等因素。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>模拟设计：</p>
+<p>场景设置：</p>
+<ol>
+<li>混杂强度：弱/中/强</li>
+<li>重叠：好（倾向得分∈[0.1,0.9]）/差（存在接近0或1的值）</li>
+<li>样本量：小(n=200)/中(n=1000)/大(n=5000)</li>
+<li>模型误设：
+   - 倾向得分正确/错误
+   - 结果模型正确/错误</li>
+<li>处理效应异质性：恒定/与协变量交互</li>
+</ol>
+<p>评估指标：</p>
+<ul>
+<li>偏差：$E[\hat{\tau}] - \tau$</li>
+<li>方差：$Var(\hat{\tau})$</li>
+<li>均方误差：$MSE = Bias^2 + Variance$</li>
+<li>覆盖率：95%置信区间包含真值的比例</li>
+<li>有效样本量（对IPW）</li>
+</ul>
+<p>预期结果：</p>
+<ul>
+<li>PS匹配：重叠差时表现最好（自动限制到共同支撑）</li>
+<li>IPW：模型正确时效率最高，但对极端权重敏感</li>
+<li>AIPW：双重稳健性使其在模型误设时表现最好</li>
+</ul>
+</details>
+<p><strong>题目7</strong>：某公司想评估远程办公对员工生产力的影响。由于员工自主选择是否远程办公，存在明显的选择偏差。请设计一个完整的观察性研究方案。</p>
+<details>
+<summary>提示</summary>
+<p>考虑：混杂因素识别、数据收集、方法选择、敏感性分析等。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>研究方案：</p>
+<ol>
+<li>
+<p>混杂因素识别：
+   - 个人特征：年龄、家庭状况、通勤距离
+   - 工作特征：职位、部门、工作年限、之前的绩效
+   - 技能：技术能力、自我管理能力
+   - 环境：家庭办公条件、网络质量</p>
+</li>
+<li>
+<p>数据收集：
+   - 结果：生产力指标（产出、质量、效率）
+   - 处理前测量：选择前6个月的绩效
+   - 动态数据：每月追踪</p>
+</li>
+<li>
+<p>识别策略：
+   - 主分析：倾向得分匹配（1:1带卡尺）
+   - 稳健性检验1：IPW（检查权重分布）
+   - 稳健性检验2：AIPW（双重稳健）
+   - 异质性分析：按职位类型、家庭状况分层</p>
+</li>
+<li>
+<p>诊断：
+   - 检查倾向得分重叠
+   - 评估协变量平衡（SMD &lt; 0.1）
+   - 检查匹配质量</p>
+</li>
+<li>
+<p>敏感性分析：
+   - Rosenbaum界分析
+   - 增加/删除协变量
+   - 不同匹配方法
+   - 安慰剂检验（使用不相关的结果）</p>
+</li>
+<li>
+<p>局限性说明：
+   - 可能存在未观测的动机差异
+   - 短期vs长期效应可能不同
+   - 疫情等外部因素的影响</p>
+</li>
+</ol>
+</details>
+<h2 id="59">5.9 常见陷阱与错误</h2>
+<h3 id="1_2">1. 倾向得分建模错误</h3>
+<p><strong>陷阱</strong>：过度关注倾向得分的预测准确性（如AUC），忽视协变量平衡。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>优先优化协变量平衡而非预测准确性</li>
+<li>使用CBPS等直接优化平衡的方法</li>
+<li>迭代调整模型直到达到满意的平衡</li>
+</ul>
+<h3 id="2_3">2. 忽视重叠假设</h3>
+<p><strong>陷阱</strong>：即使存在极端倾向得分（接近0或1），仍强行估计ATE。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>检查倾向得分分布和重叠</li>
+<li>考虑限制到共同支撑区域</li>
+<li>使用重叠权重或其他稳健方法</li>
+</ul>
+<h3 id="3_1">3. 后处理变量调整</h3>
+<p><strong>陷阱</strong>：调整可能受处理影响的变量（如中介变量）。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>只调整处理前的变量</li>
+<li>使用因果图识别合适的调整集</li>
+<li>避免调整碰撞器</li>
+</ul>
+<h3 id="4_1">4. 忽视标准误的复杂性</h3>
+<p><strong>陷阱</strong>：使用标准的统计推断，忽视匹配或加权导致的相关性。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>使用适当的标准误（如Abadie-Imbens）</li>
+<li>Bootstrap（注意匹配的特殊性）</li>
+<li>报告多种标准误估计</li>
+</ul>
+<h3 id="5">5. 过度解释</h3>
+<p><strong>陷阱</strong>：声称"控制了所有混杂因素"或"得到了因果效应"。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>明确说明识别假设</li>
+<li>承认可能的未观测混杂</li>
+<li>进行全面的敏感性分析</li>
+</ul>
+<h3 id="6">6. 方法选择不当</h3>
+<p><strong>陷阱</strong>：盲目使用流行方法，不考虑数据特点。</p>
+<p><strong>正确做法</strong>：</p>
+<ul>
+<li>根据样本量、维度、重叠等选择方法</li>
+<li>使用多种方法验证</li>
+<li>考虑方法的假设和局限</li>
+</ul>
+<h2 id="510">5.10 最佳实践检查清单</h2>
+<h3 id="_51">研究设计阶段</h3>
+<ul>
+<li>[ ] 明确定义处理和结果</li>
+<li>[ ] 构建因果图，识别混杂因素</li>
+<li>[ ] 评估数据质量和完整性</li>
+<li>[ ] 确定目标因果参数（ATE/ATT/ATC）</li>
+<li>[ ] 考虑识别假设的合理性</li>
+</ul>
+<h3 id="_52">数据准备阶段</h3>
+<ul>
+<li>[ ] 检查缺失数据模式</li>
+<li>[ ] 创建分析数据集，确保时序正确</li>
+<li>[ ] 探索性数据分析，了解分布</li>
+<li>[ ] 检查处理组和对照组的初始差异</li>
+<li>[ ] 考虑是否需要数据转换</li>
+</ul>
+<h3 id="_53">倾向得分估计</h3>
+<ul>
+<li>[ ] 选择合适的模型（逻辑回归/机器学习）</li>
+<li>[ ] 包含所有潜在混杂因素</li>
+<li>[ ] 考虑交互项和非线性</li>
+<li>[ ] 检查倾向得分分布</li>
+<li>[ ] 评估重叠/共同支撑</li>
+</ul>
+<h3 id="_54">平衡诊断</h3>
+<ul>
+<li>[ ] 计算标准化均值差异</li>
+<li>[ ] 检查方差比</li>
+<li>[ ] 绘制平衡诊断图</li>
+<li>[ ] 对重要协变量特别关注</li>
+<li>[ ] 比较调整前后的平衡</li>
+</ul>
+<h3 id="_55">效应估计</h3>
+<ul>
+<li>[ ] 使用适当的估计方法</li>
+<li>[ ] 计算正确的标准误</li>
+<li>[ ] 考虑多重检验调整</li>
+<li>[ ] 进行异质性分析</li>
+<li>[ ] 估计不同的因果参数</li>
+</ul>
+<h3 id="_56">敏感性分析</h3>
+<ul>
+<li>[ ] 对未观测混杂进行敏感性分析</li>
+<li>[ ] 尝试不同的模型规范</li>
+<li>[ ] 改变匹配/加权策略</li>
+<li>[ ] 进行安慰剂检验</li>
+<li>[ ] 评估对极端值的敏感性</li>
+</ul>
+<h3 id="_57">结果报告</h3>
+<ul>
+<li>[ ] 清楚描述方法和假设</li>
+<li>[ ] 报告平衡诊断结果</li>
+<li>[ ] 提供效应估计和不确定性</li>
+<li>[ ] 讨论结果的稳健性</li>
+<li>[ ] 说明研究局限性</li>
+<li>[ ] 提供可重复的代码/流程</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter4.html" class="nav-link prev">← 第四章：随机实验与因果识别</a><a href="chapter6.html" class="nav-link next">第六章：工具变量方法 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

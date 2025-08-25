@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第一章：因果推断导论</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第一章：因果推断导论</h1>
+<p>在数据驱动决策的时代，我们经常面临这样的问题：用户留存率的提升是因为产品改进还是季节性因素？广告投放真的带来了销售增长还是只是巧合？新算法的部署是否真正改善了系统性能？这些问题的核心不是"发生了什么"，而是"为什么发生"以及"如果我们改变某些因素会发生什么"。因果推断为我们提供了一套严格的数学框架来回答这些根本性问题。本章将介绍因果推断的基本概念，澄清相关性与因果性的本质区别，并通过实际案例展示因果思维的重要性。</p>
+<h2 id="11">1.1 相关性与因果性的本质区别</h2>
+<h3 id="_2">相关性：观察到的共同变化</h3>
+<p>相关性描述的是两个或多个变量之间的统计关联。当我们说变量 $X$ 和 $Y$ 相关时，意味着知道 $X$ 的值能帮助我们预测 $Y$ 的值。数学上，最常用的是皮尔逊相关系数：</p>
+<p>$$\rho_{X,Y} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y} = \frac{E[(X-\mu_X)(Y-\mu_Y)]}{\sigma_X \sigma_Y}$$
+其中 $\text{Cov}(X,Y)$ 是协方差，$\sigma_X$ 和 $\sigma_Y$ 分别是 $X$ 和 $Y$ 的标准差。</p>
+<p>相关性的关键特征：</p>
+<ul>
+<li><strong>对称性</strong>：$\text{Cor}(X,Y) = \text{Cor}(Y,X)$</li>
+<li><strong>纯粹的统计度量</strong>：不涉及时间顺序或生成机制</li>
+<li><strong>可能由多种原因造成</strong>：直接因果、反向因果、共同原因或纯粹巧合</li>
+</ul>
+<h3 id="_3">因果性：干预后的变化</h3>
+<p>因果关系描述的是一个变量的改变直接导致另一个变量改变的关系。用符号表示，"$X$ 导致 $Y$"（记作 $X \rightarrow Y$）意味着：如果我们主动改变 $X$，$Y$ 会随之改变。</p>
+<p>因果关系的核心特征：</p>
+<ul>
+<li><strong>非对称性</strong>：$X \rightarrow Y$ 不等同于 $Y \rightarrow X$</li>
+<li><strong>涉及干预</strong>：需要考虑"如果我们改变X"的反事实情况</li>
+<li><strong>具有方向性</strong>：有明确的原因和结果</li>
+</ul>
+<h3 id="_4">经典例子：冰淇淋销量与溺水事故</h3>
+<p>考虑这个著名的例子：数据显示冰淇淋销量与溺水事故数量高度正相关。</p>
+<div class="codehilite"><pre><span></span><code>观察到的相关性：
+    冰淇淋销量 ↑  ←→  溺水事故 ↑
+    相关系数 r ≈ 0.75
+</code></pre></div>
+
+<p>如果将相关性误认为因果性，我们可能得出荒谬的结论：</p>
+<ol>
+<li>吃冰淇淋导致溺水（错误）</li>
+<li>溺水导致人们买冰淇淋（错误）</li>
+</ol>
+<p>真实的因果结构：</p>
+<div class="codehilite"><pre><span></span><code>        温度（夏季）
+           ↙    ↘
+    冰淇淋销量   游泳人数
+                    ↓
+                 溺水事故
+</code></pre></div>
+
+<p>温度是共同原因（混杂因素）：夏季高温导致更多人买冰淇淋，同时也导致更多人游泳，进而增加溺水风险。</p>
+<h3 id="_5">区分相关性与因果性的实用方法</h3>
+<ol>
+<li><strong>时间顺序检验</strong>：原因必须发生在结果之前</li>
+<li><strong>干预思维实验</strong>：如果人为改变X，Y是否会改变？</li>
+<li><strong>机制分析</strong>：是否存在合理的因果机制？</li>
+<li><strong>混杂因素排查</strong>：是否存在共同影响X和Y的第三变量？</li>
+</ol>
+<h2 id="12">1.2 为什么需要因果推断</h2>
+<h3 id="_6">决策制定的核心需求</h3>
+<p>在实际应用中，我们关心的往往不是"what is"而是"what if"：</p>
+<p><strong>预测性问题</strong>（相关性足够）：</p>
+<ul>
+<li>明天的股价是多少？</li>
+<li>这个用户会不会点击广告？</li>
+<li>系统负载会达到多少？</li>
+</ul>
+<p><strong>因果性问题</strong>（需要因果推断）：</p>
+<ul>
+<li>如果我们提高价格10%，销量会下降多少？</li>
+<li>如果实施新的推荐算法，用户留存率会提升吗？</li>
+<li>如果增加服务器，响应时间会改善多少？</li>
+</ul>
+<h3 id="ai">AI系统的可解释性危机</h3>
+<p>现代深度学习模型在预测任务上表现卓越，但它们主要捕获的是相关性而非因果性。这导致：</p>
+<ol>
+<li><strong>分布偏移脆弱性</strong>：当数据分布改变时，基于相关性的模型可能完全失效</li>
+<li><strong>虚假关联学习</strong>：模型可能学到数据集中的偶然相关性</li>
+<li><strong>缺乏可解释性</strong>：无法回答"为什么"的问题</li>
+</ol>
+<p>例子：图像识别模型将哈士奇误认为狼，因为训练集中狼的图片背景都有雪，模型学到了"雪→狼"的虚假关联。</p>
+<h3 id="_7">公平性与伦理考量</h3>
+<p>在算法决策系统中，区分相关性和因果性对确保公平性至关重要：</p>
+<div class="codehilite"><pre><span></span><code>观察：某地区的邮编与贷款违约率相关
+错误做法：直接使用邮编作为信贷评分特征
+正确做法：识别真正的因果因素（如收入、就业状况）
+</code></pre></div>
+
+<p>使用相关性而非因果性可能导致：</p>
+<ul>
+<li>强化历史偏见</li>
+<li>产生歧视性决策</li>
+<li>违反公平性原则</li>
+</ul>
+<h3 id="_8">科学理解与知识积累</h3>
+<p>因果推断帮助我们：</p>
+<ol>
+<li><strong>建立可泛化的知识</strong>：因果关系比相关性更稳定</li>
+<li><strong>设计有效干预</strong>：知道因果机制才能设计改进方案</li>
+<li><strong>进行反事实推理</strong>：回答"如果当初..."的问题</li>
+</ol>
+<h2 id="13">1.3 因果推断的历史发展</h2>
+<h3 id="1920s-1960s">早期探索（1920s-1960s）</h3>
+<p><strong>Fisher的随机化实验（1920s）</strong>
+Ronald Fisher在农业试验中引入随机化，奠定了因果推断的实验基础。他的核心洞察：随机分配处理可以打破处理与混杂因素的关联。</p>
+<p><strong>Neyman-Rubin因果模型雏形（1923）</strong>
+Jerzy Neyman提出了潜在结果（potential outcomes）的概念，虽然当时并未被广泛认识。</p>
+<h3 id="1970s-1990s">现代框架形成（1970s-1990s）</h3>
+<p><strong>Rubin因果模型（1974）</strong>
+Donald Rubin重新发现并系统化了潜在结果框架，提出了著名的"Rubin Causal Model"（RCM）。核心概念：</p>
+<ul>
+<li>每个单位有多个潜在结果</li>
+<li>因果效应定义为潜在结果的比较</li>
+<li>基本问题：我们只能观察到一个潜在结果</li>
+</ul>
+<p><strong>Pearl的因果图理论（1988-1995）</strong>
+Judea Pearl发展了基于有向无环图（DAG）的因果推理框架：</p>
+<ul>
+<li>图模型表示因果关系</li>
+<li>d-分离准则判断条件独立</li>
+<li>do算子区分观察与干预</li>
+</ul>
+<h3 id="2000s-">计算时代的发展（2000s-至今）</h3>
+<p><strong>机器学习与因果推断的融合</strong></p>
+<ul>
+<li>因果森林（Causal Forests）</li>
+<li>深度学习的因果表示学习</li>
+<li>自动化因果发现算法</li>
+</ul>
+<p><strong>大规模实验平台</strong></p>
+<ul>
+<li>科技公司的A/B测试基础设施</li>
+<li>在线实验的网络效应处理</li>
+<li>持续实验与因果效应监测</li>
+</ul>
+<h3 id="_9">跨学科影响</h3>
+<p>因果推断已经深刻影响了多个领域：</p>
+<div class="codehilite"><pre><span></span><code>经济学：工具变量、断点回归、双重差分
+流行病学：因果图、中介分析
+计算机科学：因果发现、强化学习
+社会科学：自然实验、准实验设计
+</code></pre></div>
+
+<h2 id="14">1.4 三个层级的因果问题</h2>
+<p>Pearl提出了因果推理的三个层级，这个层级结构揭示了不同类型问题的本质差异，也说明了为什么某些问题比其他问题更难回答。</p>
+<h3 id="association">第一层级：关联（Association）</h3>
+<p><strong>核心问题：观察到什么？</strong></p>
+<p>这一层级涉及的是纯粹的统计问题，可以通过观察数据直接回答。</p>
+<p>数学表示：$P(Y|X)$ - 给定观察到X，Y的概率是多少？</p>
+<p>典型问题：</p>
+<ul>
+<li>购买了商品A的用户，有多大概率会购买商品B？</li>
+<li>具有特征X的患者，疾病Y的发病率是多少？</li>
+<li>当股票A上涨时，股票B上涨的概率是多少？</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>示例：在电商平台上
+观察：购买了键盘的用户中，60%也购买了鼠标
+表达：P(购买鼠标|购买键盘) = 0.6
+</code></pre></div>
+
+<p><strong>能力与局限：</strong></p>
+<ul>
+<li>✓ 可以进行预测</li>
+<li>✓ 可以发现模式</li>
+<li>✗ 不能指导干预</li>
+<li>✗ 不能解释机制</li>
+</ul>
+<h3 id="intervention">第二层级：干预（Intervention）</h3>
+<p><strong>核心问题：如果我们做了什么会怎样？</strong></p>
+<p>这一层级涉及主动改变系统，需要因果知识才能回答。</p>
+<p>数学表示：$P(Y|do(X))$ - 如果我们主动设置X，Y的概率是多少？</p>
+<p>注意：$P(Y|do(X)) \neq P(Y|X)$</p>
+<p>典型问题：</p>
+<ul>
+<li>如果我们强制推荐商品B，销量会增加多少？</li>
+<li>如果给患者用药X，治愈率会提高多少？</li>
+<li>如果央行加息，通胀率会下降多少？</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>示例：推荐系统干预
+观察：<span class="nv">P</span><span class="ss">(</span>点击<span class="o">|</span>看到推荐<span class="ss">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">3</span>
+干预：<span class="nv">P</span><span class="ss">(</span>点击<span class="o">|</span><span class="k">do</span><span class="ss">(</span>推荐<span class="ss">))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">2</span>
+差异原因：观察数据中的推荐是算法根据用户兴趣生成的（有选择偏差）
+</code></pre></div>
+
+<p><strong>从关联到干预的跃升：</strong></p>
+<p>要从第一层级上升到第二层级，需要：</p>
+<ol>
+<li>随机实验数据，或</li>
+<li>观察数据 + 因果假设（如无混杂假设）</li>
+</ol>
+<h3 id="counterfactual">第三层级：反事实（Counterfactual）</h3>
+<p><strong>核心问题：如果当初不同会怎样？</strong></p>
+<p>这是最高层级的因果问题，涉及对已发生事件的假想替代。</p>
+<p>数学表示：$P(Y_x|X=x', Y=y')$ - 已知实际上X=x'且Y=y'，如果X是x，Y会是什么？</p>
+<p>典型问题：</p>
+<ul>
+<li>如果这个流失的用户当初看到了优惠券，他会留下来吗？</li>
+<li>如果这个治愈的患者没有用药，他会自愈吗？</li>
+<li>如果算法没有崩溃，今天的收入会是多少？</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>示例：个性化医疗
+事实：患者接受了治疗A并康复了
+反事实问题：如果他接受治疗B，会康复得更快吗？
+挑战：同一个患者不能同时接受两种治疗
+</code></pre></div>
+
+<p><strong>反事实推理的独特性：</strong></p>
+<p>反事实问题最难回答，因为它们涉及：</p>
+<ol>
+<li>个体层面的推理（不是群体平均）</li>
+<li>已经发生的特定事件</li>
+<li>逻辑上不可能观察到的结果</li>
+</ol>
+<h3 id="_10">层级之间的关系</h3>
+<div class="codehilite"><pre><span></span><code>      第三层级：反事实
+           ↑
+      [需要结构因果模型]
+           ↑
+      第二层级：干预
+           ↑
+      [需要因果假设或实验]
+           ↑
+      第一层级：关联
+           ↑
+      [只需要数据]
+</code></pre></div>
+
+<p><strong>重要性质：</strong></p>
+<ol>
+<li><strong>层级不可逆</strong>：高层级的信息可以回答低层级的问题，反之不行</li>
+<li><strong>信息需求递增</strong>：每上升一个层级需要额外的假设或信息</li>
+<li><strong>实用性递增</strong>：高层级的答案对决策更有价值</li>
+</ol>
+<h3 id="_11">实践中的应用</h3>
+<p><strong>A/B测试（第二层级）</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 随机分配用户到控制组和处理组</span>
+<span class="k">if</span> <span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+    <span class="n">show_new_feature</span><span class="p">()</span>  <span class="c1"># do(feature=1)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">show_old_feature</span><span class="p">()</span>  <span class="c1"># do(feature=0)</span>
+
+<span class="c1"># 因果效应 = E[Y|do(feature=1)] - E[Y|do(feature=0)]</span>
+</code></pre></div>
+
+<p><strong>用户流失分析（第三层级）</strong></p>
+<div class="codehilite"><pre><span></span><code>已流失用户：没有看到挽留优惠
+反事实问题：如果看到了，会留下来吗？
+需要：用户特征 + 因果模型 → 个性化反事实预测
+</code></pre></div>
+
+<h2 id="15-netflix">1.5 行业案例：Netflix推荐算法中的辛普森悖论</h2>
+<h3 id="_12">案例背景</h3>
+<p>Netflix的推荐团队发现了一个令人困惑的现象：在分析新推荐算法的效果时，总体数据显示新算法降低了用户观看时长，但在每个用户群体内部，新算法都提升了观看时长。这就是著名的辛普森悖论（Simpson's Paradox）在实际业务中的体现。</p>
+<h3 id="_13">数据观察</h3>
+<p>假设Netflix将用户分为两类：</p>
+<ul>
+<li>重度用户（Heavy Users）：每月观看&gt;50小时</li>
+<li>轻度用户（Light Users）：每月观看&lt;50小时</li>
+</ul>
+<p><strong>总体数据：</strong></p>
+<div class="codehilite"><pre><span></span><code>旧算法：平均观看时长 = 35小时/月
+新算法：平均观看时长 = 33小时/月
+结论？新算法更差（-5.7%）
+</code></pre></div>
+
+<p><strong>分组数据：</strong></p>
+<div class="codehilite"><pre><span></span><code>重度用户：
+  旧算法：65小时/月 → 新算法：68小时/月 (+4.6%)
+
+轻度用户：
+  旧算法：20小时/月 → 新算法：22小时/月 (+10%)
+
+结论？新算法在两组都更好！
+</code></pre></div>
+
+<h3 id="_14">悖论的解释</h3>
+<p>关键在于用户组成的变化：</p>
+<div class="codehilite"><pre><span></span><code>        旧算法                    新算法
+重度用户：40% (65h)         重度用户：30% (68h)
+轻度用户：60% (20h)         轻度用户：70% (22h)
+----------------------------------------
+总体：0.4×65 + 0.6×20       总体：0.3×68 + 0.7×22
+    = 26 + 12 = 38h              = 20.4 + 15.4 = 35.8h
+</code></pre></div>
+
+<p><strong>因果机制：</strong>
+新算法更精准地识别用户兴趣，导致：</p>
+<ol>
+<li>一些边缘重度用户被重新分类为轻度用户</li>
+<li>算法对两类用户都提供了更好的推荐</li>
+<li>但组成比例的变化导致总体均值下降</li>
+</ol>
+<h3 id="_15">因果图分析</h3>
+<div class="codehilite"><pre><span></span><code>    算法类型 → 推荐质量 → 观看时长
+        ↓                    ↑
+    用户分类 ←───────────→ 用户偏好
+</code></pre></div>
+
+<p>混杂因素：用户偏好既影响用户分类，也影响观看时长。</p>
+<h3 id="_16">正确的评估方法</h3>
+<ol>
+<li>
+<p><strong>分层分析</strong>
+在每个用户层级内部评估算法效果，而不是看总体均值。</p>
+</li>
+<li>
+<p><strong>因果效应估计</strong>
+使用固定的用户分类（基于历史数据），评估：
+$$\tau = E[Y(新算法)|分类] - E[Y(旧算法)|分类]$$</p>
+</li>
+<li>
+<p><strong>A/B测试设计</strong></p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 正确的实验设计</span>
+<span class="k">def</span> <span class="nf">run_experiment</span><span class="p">(</span><span class="n">users</span><span class="p">):</span>
+    <span class="c1"># 先分类，再随机分配</span>
+    <span class="n">heavy_users</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">watch_time</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">]</span>
+    <span class="n">light_users</span> <span class="o">=</span> <span class="p">[</span><span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">watch_time</span> <span class="o">&lt;=</span> <span class="mi">50</span><span class="p">]</span>
+
+    <span class="c1"># 在各组内随机分配</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="p">[</span><span class="n">heavy_users</span><span class="p">,</span> <span class="n">light_users</span><span class="p">]:</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">half</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">assign_new_algo</span><span class="p">(</span><span class="n">group</span><span class="p">[:</span><span class="n">half</span><span class="p">])</span>
+        <span class="n">assign_old_algo</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="n">half</span><span class="p">:])</span>
+</code></pre></div>
+
+<h3 id="_17">业务启示</h3>
+<ol>
+<li><strong>避免简单的总体指标</strong>：总体均值可能误导决策</li>
+<li><strong>理解用户异质性</strong>：不同用户群体可能有相反的反应</li>
+<li><strong>考虑动态效应</strong>：算法可能改变用户行为模式</li>
+<li><strong>多维度评估</strong>：
+   - 用户留存率
+   - 内容多样性
+   - 长期vs短期效应</li>
+</ol>
+<h3 id="_18">推广到其他场景</h3>
+<p>辛普森悖论在许多业务场景中出现：</p>
+<p><strong>电商定价策略</strong></p>
+<div class="codehilite"><pre><span></span><code>总体：提价导致销量下降
+分组：在每个客户群体中，提价都增加了销量
+原因：价格敏感客户流失，改变了客户组成
+</code></pre></div>
+
+<p><strong>在线教育效果</strong></p>
+<div class="codehilite"><pre><span></span><code>总体：新教学方法降低了平均分
+分组：对优等生和后进生都有提升
+原因：中等学生的比例变化
+</code></pre></div>
+
+<h2 id="_19">本章小结</h2>
+<p>本章介绍了因果推断的基础概念和核心思想。我们学习了：</p>
+<h3 id="_20">关键概念</h3>
+<ol>
+<li>
+<p><strong>相关性vs因果性</strong>
+   - 相关性：$P(Y|X)$ - 观察到的统计关联
+   - 因果性：$P(Y|do(X))$ - 干预后的效果
+   - 根本区别：对称性vs非对称性，预测vs干预</p>
+</li>
+<li>
+<p><strong>因果推断的必要性</strong>
+   - 决策需要因果知识而非仅仅相关性
+   - AI系统的可解释性和鲁棒性要求
+   - 公平性和伦理决策的基础</p>
+</li>
+<li>
+<p><strong>Pearl因果层级</strong>
+   - 第一层：关联 - $P(Y|X)$
+   - 第二层：干预 - $P(Y|do(X))$
+   - 第三层：反事实 - $P(Y_x|X=x', Y=y')$</p>
+</li>
+</ol>
+<h3 id="_21">核心公式</h3>
+<ul>
+<li><strong>相关系数</strong>：$\rho_{X,Y} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$</li>
+<li><strong>因果效应</strong>：$\tau = E[Y|do(X=1)] - E[Y|do(X=0)]$</li>
+<li><strong>反事实查询</strong>：$P(Y_{x}|X=x', Y=y')$</li>
+</ul>
+<h3 id="_22">重要洞察</h3>
+<ol>
+<li>相关性不等于因果性，混杂因素可能造成虚假相关</li>
+<li>从数据到因果结论需要额外的假设或实验设计</li>
+<li>辛普森悖论警示我们注意群体异质性和组成效应</li>
+<li>因果推断是从"what is"到"what if"的关键桥梁</li>
+</ol>
+<p>通过本章的学习，你应该能够：</p>
+<ul>
+<li>识别相关性与因果性的区别</li>
+<li>理解不同层级因果问题的本质</li>
+<li>在实际问题中识别潜在的因果推断陷阱</li>
+<li>认识到因果思维在数据分析中的重要性</li>
+</ul>
+<h2 id="_23">练习题</h2>
+<h3 id="_24">基础题</h3>
+<p><strong>题目1：相关性判断</strong>
+某研究发现，咖啡消费量与程序员的代码产出量呈正相关（r=0.6）。以下哪些可能是合理的解释？
+a) 咖啡提高了编程效率
+b) 高产出的压力导致程序员喝更多咖啡
+c) 加班时间既增加了咖啡消费也增加了代码量
+d) 纯属巧合</p>
+<p><em>Hint: 考虑所有可能的因果方向和混杂因素。</em></p>
+<details>
+<summary>参考答案</summary>
+<p>所有选项都可能合理：</p>
+<ul>
+<li>a) 正向因果：咖啡→清醒→产出</li>
+<li>b) 反向因果：压力→咖啡消费</li>
+<li>c) 混杂因素：加班时间同时影响两者</li>
+<li>d) 虚假相关：样本量小或选择偏差</li>
+</ul>
+<p>关键是认识到相关性本身不能确定具体的因果机制。需要进一步的实验或因果假设才能区分。</p>
+</details>
+<p><strong>题目2：因果层级识别</strong>
+将以下问题分类到Pearl的三个因果层级：</p>
+<ol>
+<li>"购买了iPhone的用户中，多少比例也购买了AirPods？"</li>
+<li>"如果我们给所有用户推送优惠券，转化率会提升多少？"</li>
+<li>"这个已经流失的用户，如果当初给他发送挽留邮件，他会留下来吗？"</li>
+<li>"高学历人群的平均收入是多少？"</li>
+</ol>
+<p><em>Hint: 关注是观察、干预还是反事实。</em></p>
+<details>
+<summary>参考答案</summary>
+<ol>
+<li>第一层级（关联）：P(AirPods|iPhone) - 纯粹的条件概率</li>
+<li>第二层级（干预）：P(转化|do(优惠券)) - 主动干预的效果</li>
+<li>第三层级（反事实）：已知用户流失，假设不同的过去</li>
+<li>第一层级（关联）：E[收入|学历=高] - 观察性统计</li>
+</ol>
+<p>注意：即使涉及"如果"，问题2是面向未来的干预（可实验验证），而问题3是关于已发生事件的反事实（无法实验验证）。</p>
+</details>
+<p><strong>题目3：辛普森悖论识别</strong>
+某公司的数据显示：</p>
+<ul>
+<li>男性平均工资：8万/年，录用率：60%</li>
+<li>女性平均工资：7万/年，录用率：40%</li>
+</ul>
+<p>进一步分析发现：</p>
+<ul>
+<li>技术岗：男性工资10万（录用率70%），女性工资9.5万（录用率75%）</li>
+<li>非技术岗：男性工资6万（录用率50%），女性工资5.8万（录用率55%）</li>
+</ul>
+<p>这是否构成辛普森悖论？如果是，解释其机制。</p>
+<p><em>Hint: 检查分组数据与总体数据的方向是否一致。</em></p>
+<details>
+<summary>参考答案</summary>
+<p>是辛普森悖论。</p>
+<p>工资方面：</p>
+<ul>
+<li>总体：男性&gt;女性</li>
+<li>分组：两个岗位类型中，男性都&gt;女性（方向一致，不是悖论）</li>
+</ul>
+<p>录用率方面：</p>
+<ul>
+<li>总体：男性(60%)&gt;女性(40%)</li>
+<li>技术岗：女性(75%)&gt;男性(70%)</li>
+<li>非技术岗：女性(55%)&gt;男性(50%)</li>
+<li>分组中女性录用率都更高（方向相反，是悖论！）</li>
+</ul>
+<p>机制：女性更多申请竞争激烈的技术岗（基础录用率低），导致总体录用率降低。这是典型的组成效应。</p>
+</details>
+<h3 id="_25">挑战题</h3>
+<p><strong>题目4：因果推断设计</strong>
+某电商平台想评估"包邮"政策对销售额的因果效应。历史数据显示，包邮商品的销售额平均高30%。但产品经理怀疑这可能是因为热门商品更可能设置包邮。请设计一个方案来识别包邮的真实因果效应。</p>
+<p><em>Hint: 考虑如何打破包邮设置与商品属性的关联。</em></p>
+<details>
+<summary>参考答案</summary>
+<p>方案设计：</p>
+<ol>
+<li>
+<p><strong>随机实验（最佳）</strong>
+   - 随机选择部分商品强制包邮/不包邮
+   - 时间：2-4周
+   - 估计：ATE = E[销售|do(包邮)] - E[销售|do(不包邮)]</p>
+</li>
+<li>
+<p><strong>准实验设计</strong>
+   - 利用包邮门槛（如"满99包邮"）
+   - 使用断点回归，比较98元和100元商品的销售差异
+   - 假设：门槛附近的商品相似</p>
+</li>
+<li>
+<p><strong>观察性研究+因果假设</strong>
+   - 收集混杂因素：类目、价格、评分、历史销量
+   - 使用倾向得分匹配或逆概率加权
+   - 关键假设：无未观测混杂</p>
+</li>
+<li>
+<p><strong>工具变量方法</strong>
+   - 寻找只影响包邮设置但不直接影响销售的变量
+   - 如：仓库距离（影响运费成本→包邮决策）</p>
+</li>
+</ol>
+<p>每种方法的权衡：</p>
+<ul>
+<li>实验：因果效应最可信，但有机会成本</li>
+<li>准实验：利用现有变异，但只识别局部效应</li>
+<li>观察性：成本低，但依赖强假设</li>
+</ul>
+</details>
+<p><strong>题目5：反事实推理</strong>
+某算法工程师发现，使用了新特征的模型准确率提升了3%。但上线后发现，这个特征在生产环境经常缺失。现在需要回答：如果当初没有使用这个特征，模型的表现会怎样？这个问题属于哪个因果层级？如何回答？</p>
+<p><em>Hint: 区分"重新训练"和"反事实"的区别。</em></p>
+<details>
+<summary>参考答案</summary>
+<p>问题分析：</p>
+<ul>
+<li>属于第三层级（反事实）：对已经发生的事件假设不同的过去</li>
+<li>不是简单的"不用这个特征重新训练"（那是干预问题）</li>
+</ul>
+<p>回答方法：</p>
+<ol>
+<li><strong>结构因果模型方法</strong></li>
+</ol>
+<div class="codehilite"><pre><span></span><code>准确率 = f(特征集, 训练数据, 算法参数, 随机种子)
+反事实：保持其他所有条件完全相同，仅改变特征集
+</code></pre></div>
+
+<ol start="2">
+<li>
+<p><strong>实践近似方法</strong>
+   - 保存原始训练环境（数据分割、随机种子等）
+   - 移除特征后重新训练
+   - 比较：反事实效应 ≈ 原模型表现 - 无特征模型表现</p>
+</li>
+<li>
+<p><strong>特征重要性分析</strong>
+   - SHAP值：量化特征对预测的平均贡献
+   - 排列重要性：随机打乱特征值，观察性能下降
+   - 留一法：移除特征后的性能变化</p>
+</li>
+</ol>
+<p>关键洞察：</p>
+<ul>
+<li>真正的反事实无法完美回答（训练的随机性）</li>
+<li>实践中使用多种方法估计，给出置信区间</li>
+<li>这个案例说明了特征工程中的因果思考重要性</li>
+</ul>
+</details>
+<p><strong>题目6：混杂因素识别</strong>
+一项研究发现，使用代码自动补全工具的程序员bug率更高。研究者据此建议减少自动补全的使用。请分析可能的混杂因素，并说明为什么这个建议可能是错误的。</p>
+<p><em>Hint: 考虑谁更可能使用自动补全工具。</em></p>
+<details>
+<summary>参考答案</summary>
+<p>可能的混杂因素：</p>
+<ol>
+<li>
+<p><strong>经验水平</strong>
+   - 新手程序员更依赖自动补全
+   - 新手本身bug率就更高
+   - 因果图：经验 → {自动补全使用, bug率}</p>
+</li>
+<li>
+<p><strong>代码复杂度</strong>
+   - 复杂项目中更常用自动补全（API多、不熟悉）
+   - 复杂代码本身更容易出bug
+   - 因果图：复杂度 → {自动补全使用, bug率}</p>
+</li>
+<li>
+<p><strong>时间压力</strong>
+   - deadline紧张时更多使用自动补全提速
+   - 赶工的代码质量通常较差
+   - 因果图：时间压力 → {自动补全使用, bug率}</p>
+</li>
+<li>
+<p><strong>编程语言</strong>
+   - 某些语言（如Java）自动补全更完善
+   - 不同语言的bug率本身不同
+   - 因果图：语言类型 → {自动补全使用, bug率}</p>
+</li>
+</ol>
+<p>为什么建议可能错误：</p>
+<ol>
+<li>没有控制混杂因素的相关性≠因果性</li>
+<li>自动补全可能实际上减少了bug（相对于同等条件下不使用）</li>
+<li>正确的评估需要：
+   - 随机实验：随机分配是否可用自动补全
+   - 或匹配分析：比较相似背景程序员使用/不使用的效果</li>
+</ol>
+<p>政策启示：基于相关性的决策可能适得其反。</p>
+</details>
+<h2 id="_26">常见陷阱与错误</h2>
+<h3 id="1">1. 相关即因果谬误</h3>
+<p><strong>错误表现</strong>：看到两个变量相关就假设存在因果关系。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>观察：使用昂贵开发工具的团队产出更高
+错误结论：买昂贵工具能提高产出
+真相：高效团队更可能获得预算买好工具
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>始终考虑反向因果的可能性</li>
+<li>寻找潜在的混杂因素</li>
+<li>用"相关"而非"导致"描述观察结果</li>
+</ul>
+<h3 id="2">2. 选择偏差陷阱</h3>
+<p><strong>错误表现</strong>：基于有偏样本得出因果结论。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>观察：在线课程完成者的就业率很高
+错误结论：在线课程提高就业能力
+真相：能坚持完成课程的人本身就更有毅力
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>考虑样本的代表性</li>
+<li>关注流失和缺失数据</li>
+<li>使用意向性分析（Intention-to-treat）</li>
+</ul>
+<h3 id="3">3. 混淆预测与因果</h3>
+<p><strong>错误表现</strong>：将预测模型的特征重要性解释为因果效应。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 机器学习模型显示：</span>
+<span class="n">feature_importance</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+    <span class="s1">&#39;education&#39;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="s1">&#39;location&#39;</span><span class="p">:</span> <span class="mf">0.5</span>
+<span class="p">}</span>
+<span class="c1"># 错误：location对收入的因果效应最大</span>
+<span class="c1"># 正确：location对预测收入最有用（可能只是代理变量）</span>
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>区分"预测有用"和"因果相关"</li>
+<li>理解特征可能是代理变量</li>
+<li>使用因果推断方法而非纯预测模型</li>
+</ul>
+<h3 id="4">4. 忽视时间顺序</h3>
+<p><strong>错误表现</strong>：在因果推断中忽略时间先后关系。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>数据：抑郁症患者失业率高
+错误：失业导致抑郁
+可能：抑郁导致失业（反向因果）
+可能：双向因果关系
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>使用纵向数据而非横截面数据</li>
+<li>明确时间顺序</li>
+<li>考虑双向因果的可能</li>
+</ul>
+<h3 id="5">5. 平均效应谬误</h3>
+<p><strong>错误表现</strong>：将群体平均效应应用到个体。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>研究：药物平均降低血压10mmHg
+错误：每个患者都会降低10mmHg
+真相：效果因人而异，有人可能无效或反效果
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>报告效应的分布而非仅均值</li>
+<li>进行异质性分析</li>
+<li>使用个体化因果推断方法</li>
+</ul>
+<h3 id="6">6. 中介变量误用</h3>
+<p><strong>错误表现</strong>：控制了因果路径上的中介变量。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>研究：教育对收入的影响
+错误：控制&quot;职业&quot;作为协变量
+问题：职业是教育影响收入的中介
+后果：低估教育的总效应
+</code></pre></div>
+
+<p><strong>因果图</strong>：</p>
+<div class="codehilite"><pre><span></span><code>教育 → 职业 → 收入
+    ↘      ↗
+     技能
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>画出因果图</li>
+<li>区分混杂因素和中介变量</li>
+<li>明确要估计的是直接效应还是总效应</li>
+</ul>
+<h3 id="7-p">7. 过度依赖P值</h3>
+<p><strong>错误表现</strong>：将统计显著性等同于因果关系或实际重要性。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>结果：相关系数 r=0.01, p&lt;0.001（n=100万）
+错误：存在重要的因果关系
+真相：大样本下微小相关也会显著
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>报告效应大小，不仅是P值</li>
+<li>考虑实际意义vs统计显著性</li>
+<li>使用置信区间</li>
+</ul>
+<h3 id="8">8. 生态学谬误</h3>
+<p><strong>错误表现</strong>：将群体层面的关系推广到个体。</p>
+<p><strong>典型案例</strong>：</p>
+<div class="codehilite"><pre><span></span><code>观察：富裕地区的自杀率更高
+错误：富人更容易自杀
+真相：地区内可能是穷人自杀率更高（组内异质性）
+</code></pre></div>
+
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>使用多层次模型</li>
+<li>分别分析群体和个体效应</li>
+<li>谨慎推广结论的层级</li>
+</ul>
+<h2 id="_27">最佳实践检查清单</h2>
+<h3 id="_28">数据分析开始前</h3>
+<ul>
+<li>[ ] <strong>明确因果问题</strong></li>
+<li>区分是预测问题还是因果问题</li>
+<li>明确是哪个层级的因果问题（关联/干预/反事实）</li>
+<li>
+<p>定义清楚处理变量和结果变量</p>
+</li>
+<li>
+<p>[ ] <strong>识别潜在混杂</strong></p>
+</li>
+<li>列出所有可能影响处理和结果的变量</li>
+<li>画出初步的因果图</li>
+<li>
+<p>考虑未观测的混杂因素</p>
+</li>
+<li>
+<p>[ ] <strong>评估数据质量</strong></p>
+</li>
+<li>检查样本代表性</li>
+<li>识别选择偏差来源</li>
+<li>评估测量误差</li>
+</ul>
+<h3 id="_29">分析过程中</h3>
+<ul>
+<li>[ ] <strong>验证因果假设</strong></li>
+<li>检验时间顺序是否合理</li>
+<li>验证无混杂假设（如可能）</li>
+<li>
+<p>进行敏感性分析</p>
+</li>
+<li>
+<p>[ ] <strong>选择合适方法</strong></p>
+</li>
+<li>优先考虑实验方法</li>
+<li>如使用观察数据，明确所需假设</li>
+<li>
+<p>考虑多种识别策略</p>
+</li>
+<li>
+<p>[ ] <strong>处理异质性</strong></p>
+</li>
+<li>不仅报告平均效应</li>
+<li>进行分组分析</li>
+<li>检查辛普森悖论</li>
+</ul>
+<h3 id="_30">结果解释时</h3>
+<ul>
+<li>[ ] <strong>准确表述结论</strong></li>
+<li>使用"因果效应"而非"相关性"（如果适用）</li>
+<li>明确效应的适用范围</li>
+<li>
+<p>承认研究局限性</p>
+</li>
+<li>
+<p>[ ] <strong>提供完整信息</strong></p>
+</li>
+<li>报告效应大小和不确定性</li>
+<li>说明识别假设</li>
+<li>
+<p>讨论威胁因果推断的因素</p>
+</li>
+<li>
+<p>[ ] <strong>考虑实践意义</strong></p>
+</li>
+<li>评估效应的实际重要性</li>
+<li>讨论政策含义</li>
+<li>提供可操作的建议</li>
+</ul>
+<h3 id="_31">决策应用时</h3>
+<ul>
+<li>[ ] <strong>评估外部效度</strong></li>
+<li>考虑结果的可推广性</li>
+<li>识别环境依赖性</li>
+<li>
+<p>预期可能的异质性效应</p>
+</li>
+<li>
+<p>[ ] <strong>设计干预方案</strong></p>
+</li>
+<li>基于因果机制设计</li>
+<li>考虑意外后果</li>
+<li>
+<p>计划效果评估</p>
+</li>
+<li>
+<p>[ ] <strong>持续监测改进</strong></p>
+</li>
+<li>设置因果效应监测指标</li>
+<li>收集反馈数据</li>
+<li>迭代优化策略</li>
+</ul>
+<h3 id="_32">团队协作时</h3>
+<ul>
+<li>[ ] <strong>沟通因果概念</strong></li>
+<li>向非技术人员解释因果vs相关</li>
+<li>使用直观的例子和图表</li>
+<li>
+<p>强调假设的重要性</p>
+</li>
+<li>
+<p>[ ] <strong>建立因果思维文化</strong></p>
+</li>
+<li>在A/B测试中嵌入因果考虑</li>
+<li>定期review因果假设</li>
+<li>
+<p>分享因果推断最佳实践</p>
+</li>
+<li>
+<p>[ ] <strong>文档化因果分析</strong></p>
+</li>
+<li>记录因果图和假设</li>
+<li>保存分析代码和数据</li>
+<li>创建可重复的分析流程</li>
+</ul>
+<hr />
+<p><em>记住：好的因果推断始于清晰的因果思考。在急于使用复杂方法之前，先确保你理解了问题的因果结构。</em></p>
+            </article>
+            
+            <nav class="page-nav"><a href="index.html" class="nav-link prev">← 因果推断教程</a><a href="chapter2.html" class="nav-link next">第二章：潜在结果框架 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

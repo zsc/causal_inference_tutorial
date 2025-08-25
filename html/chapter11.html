@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第十一章：时间序列因果推断</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第十一章：时间序列因果推断</h1>
+<h2 id="_2">章节大纲</h2>
+<ol>
+<li><strong>引言</strong>：时间序列数据的因果推断挑战与机遇</li>
+<li><strong>格兰杰因果</strong>：基于预测的因果概念</li>
+<li><strong>向量自回归模型</strong>：多变量时间序列的因果建模</li>
+<li><strong>合成控制方法</strong>：构造反事实的艺术</li>
+<li><strong>因果影响分析</strong>：贝叶斯结构时间序列方法</li>
+<li><strong>行业案例</strong>：Google搜索趋势与股价预测</li>
+<li><strong>本章小结</strong></li>
+<li><strong>练习题</strong></li>
+<li><strong>常见陷阱与错误</strong></li>
+<li><strong>最佳实践检查清单</strong></li>
+</ol>
+<hr />
+<h2 id="_3">引言</h2>
+<p>时间序列数据在现实世界中无处不在——从股票价格到用户行为，从传感器读数到经济指标。在这些动态系统中识别因果关系面临独特的挑战：时间依赖性、序列相关性、以及潜在的反馈循环。本章将介绍专门针对时间序列数据的因果推断方法，帮助你理解如何在时间维度上建立和验证因果关系。</p>
+<h3 id="_4">本章学习目标</h3>
+<ul>
+<li>理解时间序列因果推断与静态数据因果推断的区别</li>
+<li>掌握格兰杰因果检验及其局限性</li>
+<li>学会使用向量自回归模型进行多变量因果分析</li>
+<li>理解合成控制方法的原理和应用场景</li>
+<li>掌握贝叶斯结构时间序列的因果影响分析</li>
+<li>能够在实际时间序列问题中选择合适的因果推断方法</li>
+</ul>
+<h3 id="_5">时间序列因果推断的独特挑战</h3>
+<p>时间序列数据的因果推断面临以下独特挑战：</p>
+<ol>
+<li><strong>时间依赖性</strong>：观测值之间存在时间顺序和依赖关系，违反了许多传统方法的独立性假设</li>
+<li><strong>动态效应</strong>：因果效应可能随时间变化，存在即时效应、滞后效应和累积效应</li>
+<li><strong>反馈循环</strong>：变量之间可能存在双向因果关系，形成复杂的反馈机制</li>
+<li><strong>混杂因素的时变性</strong>：混杂因素本身可能随时间变化，增加了识别的复杂性</li>
+<li><strong>有限样本</strong>：对于单一时间序列，我们只有一条实现路径，限制了统计推断的能力</li>
+</ol>
+<h3 id="_6">时间作为自然实验</h3>
+<p>时间维度为因果识别提供了独特的机会。时间的单向性确保了因果关系的时序约束：原因必须发生在结果之前。这个简单但强大的原则是许多时间序列因果推断方法的基础。</p>
+<div class="codehilite"><pre><span></span><code>过去 ──────&gt; 现在 ──────&gt; 未来
+  ↑            ↑            ↑
+可观测      决策点      待预测
+</code></pre></div>
+
+<h2 id="_7">格兰杰因果</h2>
+<p>格兰杰因果（Granger Causality）是时间序列分析中最常用的因果概念之一。1969年，经济学家Clive Granger提出了基于预测的因果性定义：如果变量X的历史信息能够帮助预测变量Y的未来值，超出Y自身历史信息所能提供的预测能力，那么我们说X格兰杰因果于Y。</p>
+<h3 id="_8">格兰杰因果的数学定义</h3>
+<p>设 $\{X_t\}$ 和 $\{Y_t\}$ 是两个平稳时间序列，$\Omega_t$ 表示到时刻 $t$ 为止的所有可用信息。格兰杰因果的正式定义：</p>
+<p>$$X \text{ 格兰杰因果于 } Y \iff \sigma^2(Y_{t+1} | \Omega_t) &lt; \sigma^2(Y_{t+1} | \Omega_t \setminus X_t)$$
+其中 $\sigma^2$ 表示预测误差的方差，$\Omega_t \setminus X_t$ 表示从信息集中排除 $X$ 的历史信息。</p>
+<h3 id="_9">格兰杰因果检验</h3>
+<p>实践中，格兰杰因果通常通过自回归模型来检验。考虑以下两个模型：</p>
+<p><strong>限制模型</strong>（仅使用Y的历史）：
+$$Y_t = \alpha_0 + \sum_{i=1}^p \alpha_i Y_{t-i} + \epsilon_t$$
+<strong>非限制模型</strong>（使用Y和X的历史）：
+$$Y_t = \beta_0 + \sum_{i=1}^p \beta_i Y_{t-i} + \sum_{j=1}^q \gamma_j X_{t-j} + \nu_t$$
+格兰杰因果检验的原假设是：$H_0: \gamma_1 = \gamma_2 = ... = \gamma_q = 0$</p>
+<p>如果拒绝原假设，则认为X格兰杰因果于Y。检验统计量通常使用F统计量：
+$$F = \frac{(RSS_r - RSS_{ur})/q}{RSS_{ur}/(T-p-q-1)}$$
+其中 $RSS_r$ 和 $RSS_{ur}$ 分别是限制模型和非限制模型的残差平方和。</p>
+<h3 id="_10">格兰杰因果的解释与局限</h3>
+<h4 id="_11">重要性质</h4>
+<ol>
+<li><strong>非对称性</strong>：X格兰杰因果于Y不意味着Y格兰杰因果于X</li>
+<li><strong>传递性不成立</strong>：X→Y且Y→Z不一定意味着X→Z</li>
+<li><strong>时间优先性</strong>：格兰杰因果尊重时间顺序，未来不能影响过去</li>
+</ol>
+<h4 id="_12">关键局限</h4>
+<p>格兰杰因果并不等同于真正的因果关系，这一点至关重要：</p>
+<ol>
+<li>
+<p><strong>预测性≠因果性</strong>：格兰杰因果本质上是预测关系，而非因果关系。例如，鸡叫可能格兰杰因果于日出，但显然鸡叫不是日出的原因。</p>
+</li>
+<li>
+<p><strong>潜在混杂因素</strong>：如果存在未观测的第三变量Z同时影响X和Y，可能产生虚假的格兰杰因果关系。</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>    Z (未观测)
+   ↙ ↘
+  X → Y
+  虚假的格兰杰因果
+</code></pre></div>
+
+<ol start="3">
+<li>
+<p><strong>瞬时因果</strong>：如果X对Y的影响是瞬时的（在同一时间点），格兰杰因果检验可能无法检测到。</p>
+</li>
+<li>
+<p><strong>非线性关系</strong>：标准的格兰杰因果检验基于线性模型，可能错过非线性的因果关系。</p>
+</li>
+</ol>
+<h3 id="_13">多变量格兰杰因果</h3>
+<p>在实际应用中，我们通常需要考虑多个变量之间的格兰杰因果关系。条件格兰杰因果考虑了其他变量的影响：
+$$Y_t = \alpha_0 + \sum_{i=1}^p \alpha_i Y_{t-i} + \sum_{j=1}^q \beta_j X_{t-j} + \sum_{k=1}^r \gamma_k Z_{t-k} + \epsilon_t$$
+这种方法可以部分解决潜在混杂因素的问题，但要求我们观测到所有相关变量。</p>
+<h2 id="var">向量自回归模型（VAR）</h2>
+<p>向量自回归模型是分析多个时间序列变量之间动态关系的强大工具。VAR模型将系统中的每个变量表示为其自身和其他变量滞后值的线性函数，提供了一个统一的框架来分析多变量时间序列的因果结构。</p>
+<h3 id="var_1">VAR模型的基本形式</h3>
+<p>一个包含 $k$ 个变量的 $p$ 阶VAR模型（记为VAR(p)）可以表示为：
+$$\mathbf{y}_t = \mathbf{c} + \mathbf{A}_1 \mathbf{y}_{t-1} + \mathbf{A}_2 \mathbf{y}_{t-2} + ... + \mathbf{A}_p \mathbf{y}_{t-p} + \mathbf{u}_t$$
+其中：</p>
+<ul>
+<li>$\mathbf{y}_t = (y_{1t}, y_{2t}, ..., y_{kt})'$ 是 $k \times 1$ 的变量向量</li>
+<li>$\mathbf{c}$ 是 $k \times 1$ 的常数向量</li>
+<li>$\mathbf{A}_i$ 是 $k \times k$ 的系数矩阵</li>
+<li>$\mathbf{u}_t$ 是 $k \times 1$ 的误差向量，满足 $E[\mathbf{u}_t] = 0$，$E[\mathbf{u}_t\mathbf{u}_t'] = \Sigma_u$</li>
+</ul>
+<h3 id="varvar">结构VAR与简化VAR</h3>
+<h4 id="var-svar">结构VAR (SVAR)</h4>
+<p>结构VAR模型明确建模变量之间的同期因果关系：
+$$\mathbf{B}_0 \mathbf{y}_t = \mathbf{c} + \mathbf{B}_1 \mathbf{y}_{t-1} + ... + \mathbf{B}_p \mathbf{y}_{t-p} + \mathbf{\epsilon}_t$$
+其中 $\mathbf{B}_0$ 捕获同期效应，$\mathbf{\epsilon}_t$ 是结构冲击。</p>
+<h4 id="_14">识别问题</h4>
+<p>从简化VAR到结构VAR需要施加识别约束。常用的识别策略包括：</p>
+<ol>
+<li><strong>短期约束</strong>（Cholesky分解）：假设变量之间存在递归的同期因果顺序</li>
+<li><strong>长期约束</strong>（Blanchard-Quah）：基于经济理论的长期效应约束</li>
+<li><strong>符号约束</strong>：基于理论预期的脉冲响应符号</li>
+<li><strong>外部工具变量</strong>：使用外生变量识别结构冲击</li>
+</ol>
+<h3 id="_15">脉冲响应分析</h3>
+<p>脉冲响应函数（IRF）描述了系统对冲击的动态响应，是VAR模型因果分析的核心工具。</p>
+<h4 id="_16">脉冲响应函数的定义</h4>
+<p>对于VAR(1)模型 $\mathbf{y}_t = \mathbf{A}\mathbf{y}_{t-1} + \mathbf{u}_t$，移动平均表示为：
+$$\mathbf{y}_t = \sum_{i=0}^{\infty} \mathbf{\Psi}_i \mathbf{u}_{t-i}$$
+其中 $\mathbf{\Psi}_i = \mathbf{A}^i$。元素 $\psi_{jk,i}$ 表示变量 $k$ 在时期 $t-i$ 受到一单位冲击对变量 $j$ 在时期 $t$ 的影响。</p>
+<h4 id="_17">正交化脉冲响应</h4>
+<p>由于VAR误差通常相关，需要正交化处理。Cholesky分解是常用方法：
+$$\Sigma_u = \mathbf{P}\mathbf{P}'$$
+正交化脉冲响应为：$\mathbf{\Theta}_i = \mathbf{\Psi}_i \mathbf{P}$</p>
+<h3 id="_18">方差分解</h3>
+<p>方差分解（FEVD）量化了每个结构冲击对预测误差方差的贡献，提供了因果重要性的度量。</p>
+<p>$h$ 步预测误差方差分解：
+$$\omega_{jk}(h) = \frac{\sum_{i=0}^{h-1} \theta_{jk,i}^2}{\sum_{k=1}^K \sum_{i=0}^{h-1} \theta_{jk,i}^2}$$
+这表示变量 $k$ 的冲击对变量 $j$ 的 $h$ 步预测误差方差的贡献比例。</p>
+<h3 id="var_2">VAR模型的因果推断应用</h3>
+<p>VAR模型在因果推断中的主要应用包括：</p>
+<ol>
+<li><strong>政策效应评估</strong>：分析货币政策、财政政策等的动态因果效应</li>
+<li><strong>溢出效应分析</strong>：研究市场间、国家间的冲击传导机制</li>
+<li><strong>预测与情景分析</strong>：基于因果结构进行条件预测</li>
+<li><strong>因果网络构建</strong>：通过VAR系数矩阵识别变量间的因果网络</li>
+</ol>
+<h2 id="_19">合成控制方法</h2>
+<p>合成控制方法（Synthetic Control Method）是评估单一处理单元因果效应的强大工具，特别适用于比较案例研究。该方法通过构造一个"合成"的控制单元来估计反事实结果。</p>
+<h3 id="_20">基本思想</h3>
+<p>当我们只有一个处理单元（如一个实施特定政策的地区）时，传统的因果推断方法难以应用。合成控制方法通过加权组合多个未处理单元来构造一个与处理单元相似的合成控制单元。</p>
+<p>设处理单元为单元1，在时期 $T_0$ 后接受处理。潜在结果模型：</p>
+<ul>
+<li>$Y_{1t}^N$：单元1在时期 $t$ 未接受处理的潜在结果</li>
+<li>$Y_{1t}^I$：单元1在时期 $t$ 接受处理的潜在结果</li>
+</ul>
+<p>处理效应：$\alpha_{1t} = Y_{1t}^I - Y_{1t}^N$，对于 $t &gt; T_0$</p>
+<p>关键挑战是 $Y_{1t}^N$ 不可观测。合成控制方法通过构造合成控制来估计它。</p>
+<h3 id="_21">合成控制的构造</h3>
+<h4 id="_22">权重选择</h4>
+<p>设有 $J$ 个潜在的控制单元。合成控制是这些单元的加权平均：
+$$\hat{Y}_{1t}^N = \sum_{j=2}^{J+1} w_j Y_{jt}$$
+权重 $\mathbf{w} = (w_2, ..., w_{J+1})'$ 满足：</p>
+<ul>
+<li>$w_j \geq 0$ 对所有 $j$</li>
+<li>$\sum_{j=2}^{J+1} w_j = 1$</li>
+</ul>
+<p>这些约束确保合成控制是一个凸组合，避免了外推。非负约束防止了不合理的负权重，而和为1的约束保证了合成控制的规模与处理单元可比。实践中，大多数权重会是零，只有少数控制单元被选中，这提供了一种自动的变量选择机制。</p>
+<h4 id="_23">优化问题</h4>
+<p>权重通过最小化处理前期的预测误差来选择：
+$$\min_{\mathbf{w}} ||\mathbf{X}_1 - \mathbf{X}_0\mathbf{w}||_V = \sqrt{(\mathbf{X}_1 - \mathbf{X}_0\mathbf{w})'V(\mathbf{X}_1 - \mathbf{X}_0\mathbf{w})}$$
+其中：</p>
+<ul>
+<li>$\mathbf{X}_1$：处理单元的预测变量值（包括处理前的结果变量和其他协变量）</li>
+<li>$\mathbf{X}_0$：控制单元的预测变量矩阵</li>
+<li>$V$：反映预测变量相对重要性的半正定权重矩阵</li>
+</ul>
+<p>矩阵 $V$ 的选择至关重要。理想情况下，$V$ 应该反映不同预测变量对结果变量的预测能力。常用的方法包括：</p>
+<ol>
+<li><strong>数据驱动选择</strong>：通过交叉验证最小化处理前的预测误差</li>
+<li><strong>回归权重</strong>：基于预测变量对结果的回归系数</li>
+<li><strong>均等权重</strong>：简单但可能不够优化的选择</li>
+</ol>
+<h4 id="_24">稀疏性与唯一性</h4>
+<p>合成控制权重的一个重要特征是稀疏性——通常只有少数几个控制单元获得正权重。这种稀疏性带来了几个优势：</p>
+<ol>
+<li><strong>可解释性</strong>：容易理解哪些控制单元构成了合成控制</li>
+<li><strong>稳定性</strong>：减少了过拟合的风险</li>
+<li><strong>透明性</strong>：提供了清晰的"捐献者池"（donor pool）</li>
+</ol>
+<p>然而，权重可能不唯一，特别是当控制单元高度相关时。这种情况下，需要额外的约束或正则化来获得唯一解。</p>
+<h3 id="_25">合成控制的推断</h3>
+<h4 id="_26">置换检验</h4>
+<p>由于合成控制方法通常应用于少数单元的情况，传统的大样本推断不适用。置换检验（Permutation test）提供了一种非参数的推断方法：</p>
+<ol>
+<li><strong>迭代应用</strong>：对每个控制单元，假装它是处理单元，构造其合成控制</li>
+<li><strong>计算伪处理效应</strong>：得到一系列伪处理效应的分布</li>
+<li><strong>比较真实效应</strong>：将真实处理效应与伪处理效应分布比较</li>
+</ol>
+<p>如果真实效应在分布的极端位置，则认为效应显著。这种方法的p值计算为：
+$$p = \frac{\sum_{j=1}^{J+1} \mathbf{1}(|\hat{\alpha}_j| \geq |\hat{\alpha}_1|)}{J+1}$$
+其中 $\hat{\alpha}_j$ 是单元 $j$ 的（伪）处理效应。</p>
+<h4 id="_27">预测误差比率</h4>
+<p>另一个重要的诊断指标是均方预测误差比（MSPE ratio）：
+$$\text{MSPE ratio} = \frac{\text{MSPE}_{\text{post}}}{\text{MSPE}_{\text{pre}}}$$
+较大的比率表明处理效应的存在。这个比率也可以用于置换检验，通过比较处理单元与控制单元的MSPE比率。</p>
+<h3 id="_28">合成控制的扩展</h3>
+<h4 id="_29">增广合成控制</h4>
+<p>标准合成控制可能存在偏差，特别是当完美匹配不可能时。增广合成控制（Augmented Synthetic Control）结合了结果模型来纠正这种偏差：
+$$\hat{Y}_{1t}^N = \sum_{j=2}^{J+1} w_j Y_{jt} + \hat{\mu}_t(\mathbf{X}_1) - \sum_{j=2}^{J+1} w_j \hat{\mu}_t(\mathbf{X}_j)$$
+其中 $\hat{\mu}_t(\cdot)$ 是基于控制单元估计的结果模型。这种方法具有双重稳健性：只要权重或结果模型之一正确指定，估计就是一致的。</p>
+<h4 id="_30">多个处理单元</h4>
+<p>当有多个单元同时接受处理时，可以使用以下策略：</p>
+<ol>
+<li><strong>分别构造</strong>：为每个处理单元单独构造合成控制</li>
+<li><strong>联合优化</strong>：同时优化所有处理单元的权重</li>
+<li><strong>部分池化</strong>：使用贝叶斯方法在完全池化和不池化之间权衡</li>
+</ol>
+<h4 id="_31">时变权重</h4>
+<p>标准方法使用固定权重，但在长时间序列中，最优权重可能随时间变化。时变权重的合成控制允许：
+$$\hat{Y}_{1t}^N = \sum_{j=2}^{J+1} w_{jt} Y_{jt}$$
+这增加了灵活性但也增加了过拟合的风险，需要适当的正则化。</p>
+<h3 id="_32">合成控制的假设与诊断</h3>
+<h4 id="_33">关键假设</h4>
+<ol>
+<li><strong>凸包条件</strong>：处理单元应该位于控制单元的凸包内</li>
+<li><strong>无干扰假设</strong>：处理不影响控制单元（SUTVA）</li>
+<li><strong>预测变量的外生性</strong>：用于匹配的变量不受未来处理的影响</li>
+</ol>
+<h4 id="_34">诊断检验</h4>
+<p>评估合成控制质量的关键诊断包括：</p>
+<ol>
+<li><strong>处理前拟合</strong>：检查合成控制在处理前期的拟合程度</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>处理前期间
+├─ 训练期：用于构造权重
+└─ 验证期：评估拟合质量
+</code></pre></div>
+
+<ol start="2">
+<li>
+<p><strong>平衡性检验</strong>：比较处理单元和合成控制在预测变量上的相似性</p>
+</li>
+<li>
+<p><strong>预期检验</strong>：如果政策在宣布和实施之间有时间差，可以检验宣布时是否有效应</p>
+</li>
+<li>
+<p><strong>留一交叉验证</strong>：在处理前期使用交叉验证评估预测能力</p>
+</li>
+</ol>
+<h2 id="_35">因果影响分析</h2>
+<p>贝叶斯结构时间序列（Bayesian Structural Time Series, BSTS）提供了另一种强大的因果推断框架，特别适合处理具有复杂时间模式的数据。Google开发的CausalImpact包使这种方法在实践中得到了广泛应用。</p>
+<h3 id="_36">贝叶斯结构时间序列模型</h3>
+<h4 id="_37">状态空间表示</h4>
+<p>BSTS模型使用状态空间形式，将观测时间序列分解为多个可解释的组成部分：
+$$y_t = \mathbf{Z}_t^T \boldsymbol{\alpha}_t + \epsilon_t$$
+其中：</p>
+<ul>
+<li>$y_t$ 是观测值</li>
+<li>$\boldsymbol{\alpha}_t$ 是不可观测的状态向量</li>
+<li>$\mathbf{Z}_t$ 是将状态映射到观测的向量</li>
+<li>$\epsilon_t \sim N(0, \sigma_\epsilon^2)$ 是观测误差</li>
+</ul>
+<p>状态向量遵循转移方程：
+$$\boldsymbol{\alpha}_{t+1} = \mathbf{T}_t \boldsymbol{\alpha}_t + \mathbf{R}_t \boldsymbol{\eta}_t$$
+其中 $\boldsymbol{\eta}_t$ 是状态扰动向量。</p>
+<h4 id="_38">模型组件</h4>
+<p>BSTS模型的灵活性来自于可以组合多种组件来捕捉数据的不同特征：</p>
+<ol>
+<li><strong>局部水平（Local Level）</strong></li>
+</ol>
+<p>最简单的组件，假设序列围绕一个随机游走的水平值波动：
+$$\mu_{t+1} = \mu_t + \eta_{\mu,t}, \quad \eta_{\mu,t} \sim N(0, \sigma_\mu^2)$$</p>
+<ol start="2">
+<li><strong>局部线性趋势（Local Linear Trend）</strong></li>
+</ol>
+<p>包含水平和斜率两个状态：
+$$\mu_{t+1} = \mu_t + \delta_t + \eta_{\mu,t}$$
+   $$\delta_{t+1} = \delta_t + \eta_{\delta,t}$$
+这允许趋势的方向和速率随时间变化。</p>
+<ol start="3">
+<li><strong>季节性（Seasonality）</strong></li>
+</ol>
+<p>对于周期为 $s$ 的季节性：
+$$\gamma_{t+1} = -\sum_{j=1}^{s-1} \gamma_{t+1-j} + \eta_{\gamma,t}$$
+这确保季节效应在一个完整周期内和为零。</p>
+<ol start="4">
+<li><strong>回归组件（Regression）</strong></li>
+</ol>
+<p>包含协变量的影响：
+$$\beta^T \mathbf{x}_t$$
+其中 $\mathbf{x}_t$ 是协变量向量，$\beta$ 是回归系数。</p>
+<h4 id="_39">模型选择与组合</h4>
+<p>选择合适的组件组合是BSTS建模的关键。常见的策略包括：</p>
+<ol>
+<li><strong>分解诊断</strong>：通过时间序列分解了解数据特征</li>
+<li><strong>信息准则</strong>：使用AIC、BIC等选择模型复杂度</li>
+<li><strong>预测性能</strong>：通过交叉验证评估不同模型的预测能力</li>
+<li><strong>领域知识</strong>：基于对问题的理解选择合理的组件</li>
+</ol>
+<h3 id="_40">因果影响的估计</h3>
+<h4 id="_41">反事实预测</h4>
+<p>在BSTS框架下，因果影响通过比较实际观测与反事实预测来估计：</p>
+<ol>
+<li><strong>模型训练</strong>：使用处理前数据估计BSTS模型</li>
+<li><strong>反事实预测</strong>：将模型外推到处理后期间，得到 $\hat{y}_t^{(0)}$</li>
+<li><strong>影响估计</strong>：计算差异 $\hat{\tau}_t = y_t - \hat{y}_t^{(0)}$</li>
+</ol>
+<h4 id="_42">贝叶斯推断</h4>
+<p>BSTS的贝叶斯性质提供了完整的后验分布，而不仅仅是点估计：
+$$p(\tau_t | \mathbf{y}_{1:T}) = \int p(y_t^{(0)} | \boldsymbol{\theta}) p(\boldsymbol{\theta} | \mathbf{y}_{1:T_0}) d\boldsymbol{\theta}$$
+这允许我们计算：</p>
+<ul>
+<li><strong>点估计</strong>：后验均值或中位数</li>
+<li><strong>不确定性区间</strong>：可信区间</li>
+<li><strong>概率陈述</strong>：如 $P(\tau_t &gt; 0 | \mathbf{y})$</li>
+</ul>
+<h4 id="_43">累积影响</h4>
+<p>除了逐时点的影响，累积影响often更有意义：
+$$\text{累积影响} = \sum_{t=T_0+1}^T \tau_t$$
+相对影响提供了标准化的度量：
+$$\text{相对影响} = \frac{\sum_{t=T_0+1}^T \tau_t}{\sum_{t=T_0+1}^T \hat{y}_t^{(0)}}$$</p>
+<h3 id="_44">模型诊断与验证</h3>
+<h4 id="_45">预测准确性</h4>
+<p>评估模型在处理前期的预测能力是关键的诊断步骤：</p>
+<ol>
+<li><strong>残差分析</strong>：检查残差的自相关性和正态性</li>
+<li><strong>回测</strong>：在处理前期进行样本外预测</li>
+<li><strong>预测区间覆盖</strong>：检查实际值落在预测区间内的频率</li>
+</ol>
+<h4 id="_46">敏感性分析</h4>
+<p>因果影响估计的稳健性需要通过敏感性分析来评估：</p>
+<ol>
+<li><strong>模型规格</strong>：尝试不同的组件组合</li>
+<li><strong>先验设置</strong>：检查结果对先验分布的敏感性</li>
+<li><strong>处理时间</strong>：改变假定的处理开始时间</li>
+<li><strong>协变量选择</strong>：如果使用回归组件，检查不同协变量集的影响</li>
+</ol>
+<h3 id="bsts">BSTS与合成控制的比较</h3>
+<p>两种方法各有优势，选择取决于具体问题：</p>
+<p><strong>BSTS的优势</strong>：</p>
+<ul>
+<li>自然处理时间序列组件（趋势、季节性）</li>
+<li>提供完整的不确定性量化</li>
+<li>可以包含多个协变量</li>
+<li>适合单一时间序列</li>
+</ul>
+<p><strong>合成控制的优势</strong>：</p>
+<ul>
+<li>不需要参数化模型假设</li>
+<li>透明的权重提供可解释性</li>
+<li>适合面板数据结构</li>
+<li>置换检验提供稳健的推断</li>
+</ul>
+<p>实践中，两种方法可以互补使用，提供更全面的因果证据。</p>
+<h3 id="_47">实施考虑</h3>
+<h4 id="_48">数据要求</h4>
+<p>成功应用BSTS需要：</p>
+<ol>
+<li><strong>足够的处理前数据</strong>：通常需要至少30-50个时间点</li>
+<li><strong>稳定的数据生成过程</strong>：处理前的模式应该相对稳定</li>
+<li><strong>相关协变量</strong>：如果可用，应包含预测能力强的协变量</li>
+</ol>
+<h4 id="_49">常见陷阱</h4>
+<ol>
+<li><strong>模型过拟合</strong>：过于复杂的模型可能在处理前拟合良好但预测差</li>
+<li><strong>结构突变</strong>：未被处理解释的结构突变会导致错误的因果推断</li>
+<li><strong>自相关忽视</strong>：忽略时间相关性会导致过于乐观的不确定性估计</li>
+<li><strong>溢出效应</strong>：如果处理影响了协变量序列，标准方法会失效</li>
+</ol>
+<h2 id="google">行业案例：Google搜索趋势与股价预测</h2>
+<h3 id="_50">案例背景</h3>
+<p>2013年，Google的研究团队面临一个关键问题：搜索趋势数据是否真正影响股票市场，还是仅仅反映市场情绪？这个问题对于理解信息传播、市场效率和投资策略都有重要意义。传统的相关性分析无法回答这个因果问题，因为搜索行为和股价可能同时受到未观测的新闻事件影响。</p>
+<p>研究团队需要解决的核心挑战包括：</p>
+<ol>
+<li>区分搜索趋势的预测能力和因果影响</li>
+<li>控制新闻事件等混杂因素</li>
+<li>处理高频时间序列数据的复杂动态</li>
+<li>评估不同类型搜索查询的差异化影响</li>
+</ol>
+<h3 id="_51">方法设计</h3>
+<h4 id="_52">数据收集与预处理</h4>
+<p>研究团队收集了多维度的时间序列数据：</p>
+<ol>
+<li>
+<p><strong>搜索数据</strong>：
+   - Google Trends的每日搜索量指数
+   - 关键词分类：公司名称、产品、财务术语、情绪词汇
+   - 地理分布：区分不同地区的搜索模式</p>
+</li>
+<li>
+<p><strong>市场数据</strong>：
+   - S&amp;P 500成分股的日收益率、交易量、波动率
+   - 市场微观结构指标：买卖价差、订单失衡
+   - 宏观经济变量：VIX指数、利率、汇率</p>
+</li>
+<li>
+<p><strong>控制变量</strong>：
+   - 新闻情感分数（基于自然语言处理）
+   - 社交媒体提及量
+   - 分析师报告发布时间</p>
+</li>
+</ol>
+<h4 id="_53">格兰杰因果分析</h4>
+<p>首先使用格兰杰因果检验建立基础关系。对于每只股票 $i$，估计VAR模型：
+$$r_{i,t} = \alpha_i + \sum_{j=1}^5 \beta_{i,j} r_{i,t-j} + \sum_{k=1}^5 \gamma_{i,k} S_{i,t-k} + \sum_{l=1}^5 \delta_{i,l} X_{i,t-l} + \epsilon_{i,t}$$
+其中：</p>
+<ul>
+<li>$r_{i,t}$ 是股票收益率</li>
+<li>$S_{i,t}$ 是标准化的搜索量</li>
+<li>$X_{i,t}$ 是控制变量向量</li>
+</ul>
+<p>关键发现：</p>
+<ul>
+<li>约60%的股票显示搜索量格兰杰因果于收益率（5%显著性水平）</li>
+<li>负面搜索词（如"破产"、"诉讼"）的预测能力更强</li>
+<li>效应主要集中在1-3天的滞后期</li>
+</ul>
+<h4 id="var_3">结构VAR识别</h4>
+<p>为了识别因果效应，团队使用了两种识别策略：</p>
+<ol>
+<li><strong>事件研究法</strong>：利用Google服务中断作为外生冲击</li>
+</ol>
+<p>在2012年8月的一次Google服务中断期间，搜索量外生下降约40%。这提供了一个自然实验来识别搜索对股价的因果影响。</p>
+<ol start="2">
+<li><strong>异质性工具变量</strong>：利用地理搜索模式差异</li>
+</ol>
+<p>不同地区的Google使用率差异提供了工具变量：
+$$Z_{i,t} = \sum_{r \in R} w_r \times \text{GooglePenetration}_r \times \text{LocalInterest}_{i,r,t}$$</p>
+<h4 id="_54">合成控制方法应用</h4>
+<p>对于重大事件（如产品发布、财报公告），使用合成控制方法评估搜索趋势的影响：</p>
+<ol>
+<li><strong>处理定义</strong>：搜索量激增（超过历史95%分位数）</li>
+<li><strong>控制池构建</strong>：同行业、相似市值的公司</li>
+<li><strong>匹配变量</strong>：历史收益率、波动率、交易量、基本面指标</li>
+</ol>
+<p>案例：Apple iPhone发布事件</p>
+<ul>
+<li>处理单元：AAPL</li>
+<li>合成控制权重：MSFT (0.31), GOOGL (0.24), IBM (0.20), 其他 (0.25)</li>
+<li>估计效应：发布后5天累积异常收益 +2.3% (p&lt;0.05)</li>
+</ul>
+<h4 id="bsts_1">BSTS因果影响分析</h4>
+<p>对于持续性的搜索模式变化，使用BSTS方法：</p>
+<p>模型规格：
+$$y_t = \mu_t + \gamma_t + \beta^T \mathbf{x}_t + \epsilon_t$$</p>
+<p>组件包括：</p>
+<ul>
+<li>局部线性趋势 $\mu_t$</li>
+<li>周季节性 $\gamma_t$（捕捉周内效应）</li>
+<li>回归组件（市场因子、行业指数）</li>
+</ul>
+<p>关键结果：</p>
+<ul>
+<li>搜索量持续上升20%导致股票超额收益约0.8%/月</li>
+<li>效应在小盘股中更显著（1.2%/月）</li>
+<li>负面搜索的影响约为正面搜索的1.5倍</li>
+</ul>
+<h3 id="_55">实施挑战与解决方案</h3>
+<h4 id="1">1. 高维度问题</h4>
+<p>挑战：数千个搜索词与数百只股票的组合导致维度爆炸。</p>
+<p>解决方案：</p>
+<ul>
+<li>使用LASSO进行变量选择</li>
+<li>主成分分析提取搜索因子</li>
+<li>层次聚类将相似搜索词分组</li>
+</ul>
+<h4 id="2">2. 反向因果</h4>
+<p>挑战：股价变动可能引起搜索行为变化。</p>
+<p>解决方案：</p>
+<ul>
+<li>使用滞后变量避免同期相关</li>
+<li>工具变量方法处理内生性</li>
+<li>集中分析盘前搜索对开盘价的影响</li>
+</ul>
+<h4 id="3">3. 结构突变</h4>
+<p>挑战：搜索行为和市场关系可能随时间变化。</p>
+<p>解决方案：</p>
+<ul>
+<li>滚动窗口估计时变参数</li>
+<li>贝叶斯变点检测识别结构突变</li>
+<li>分段建模不同市场环境</li>
+</ul>
+<h3 id="_56">业务影响与应用</h3>
+<h4 id="_57">量化交易策略</h4>
+<p>基于因果分析结果，开发了搜索驱动的交易策略：</p>
+<ol>
+<li>
+<p><strong>信号生成</strong>：
+   - 实时监控异常搜索模式
+   - 结合因果模型预测价格影响
+   - 风险调整后的仓位确定</p>
+</li>
+<li>
+<p><strong>业绩表现</strong>：
+   - 年化超额收益：8.3%
+   - 夏普比率：1.24
+   - 最大回撤：-12.5%</p>
+</li>
+</ol>
+<h4 id="_58">风险管理应用</h4>
+<ol>
+<li>
+<p><strong>早期预警系统</strong>：
+   - 监控负面搜索词激增
+   - 预测潜在的股价下跌
+   - 触发风险对冲机制</p>
+</li>
+<li>
+<p><strong>事件影响评估</strong>：
+   - 量化新闻事件的市场影响
+   - 区分短期噪音和持续趋势
+   - 优化事件驱动策略</p>
+</li>
+</ol>
+<h3 id="_59">经验教训</h3>
+<ol>
+<li>
+<p><strong>因果识别的重要性</strong>：
+   - 格兰杰因果只是起点，需要结构识别
+   - 多种方法交叉验证增强可信度
+   - 自然实验和工具变量提供关键识别</p>
+</li>
+<li>
+<p><strong>时间序列的特殊性</strong>：
+   - 动态效应需要仔细建模
+   - 结构稳定性假设需要检验
+   - 高频数据带来噪音但也提供识别机会</p>
+</li>
+<li>
+<p><strong>实践考虑</strong>：
+   - 数据质量比模型复杂度更重要
+   - 领域知识指导变量选择和模型设计
+   - 样本外验证是评估因果模型的金标准</p>
+</li>
+<li>
+<p><strong>商业价值</strong>：
+   - 因果洞察比预测准确性更有价值
+   - 可解释性对于风险管理至关重要
+   - 因果模型提供反事实分析能力</p>
+</li>
+</ol>
+<p>这个案例展示了如何综合运用多种时间序列因果推断方法，从数据中提取可操作的因果洞察，并将其转化为实际的商业价值。关键是理解每种方法的优势和局限，并根据具体问题选择合适的工具组合。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter10.html" class="nav-link prev">← 第十章：异质性处理效应</a><a href="chapter12.html" class="nav-link next">第十二章：因果发现 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

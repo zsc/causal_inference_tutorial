@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第十四章：因果推断与机器学习</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第十四章：因果推断与机器学习</h1>
+<p>机器学习在预测任务上取得了巨大成功，但传统的监督学习方法主要关注相关性而非因果性。当我们需要理解干预效果、进行反事实推理或确保模型在分布偏移下的鲁棒性时，将因果推断与机器学习相结合变得至关重要。本章将探讨如何将因果思维融入现代机器学习方法，包括因果正则化、因果表示学习、因果强化学习以及算法公平性的因果视角。</p>
+<h2 id="141">14.1 因果正则化</h2>
+<h3 id="1411">14.1.1 动机与背景</h3>
+<p>传统机器学习模型往往过度依赖虚假相关性（spurious correlations），导致在分布偏移（distribution shift）下性能大幅下降。因果正则化通过将因果结构知识编码到学习算法中，引导模型学习真正的因果关系而非表面相关性。</p>
+<h4 id="_2">虚假相关性的危害</h4>
+<p>考虑一个图像分类任务：识别奶牛。传统模型可能学习到"绿色草地"与"奶牛"的强相关性，因为训练数据中大部分奶牛照片都有草地背景。但这种相关性是虚假的——奶牛在沙滩上依然是奶牛。因果正则化帮助模型关注真正的因果特征。</p>
+<p>更严重的例子出现在医疗诊断中。某医院的肺炎检测模型在本院数据上表现优异（AUC &gt; 0.95），但部署到其他医院后性能骤降（AUC &lt; 0.70）。调查发现，模型学习到了扫描仪型号、医院标记等与疾病无关的特征。这些虚假相关在训练集中存在，但不具有因果关系，因此无法泛化。</p>
+<h4 id="_3">分布偏移的类型</h4>
+<p>在机器学习中，我们经常遇到以下类型的分布偏移：</p>
+<ol>
+<li>
+<p><strong>协变量偏移（Covariate Shift）</strong>：$P_{train}(X) \neq P_{test}(X)$，但 $P(Y|X)$ 保持不变
+   - 例子：训练集主要是年轻患者，测试集包含老年患者
+   - 传统方法：重要性加权</p>
+</li>
+<li>
+<p><strong>标签偏移（Label Shift）</strong>：$P_{train}(Y) \neq P_{test}(Y)$，但 $P(X|Y)$ 保持不变
+   - 例子：训练时正负样本平衡，实际应用中正样本稀少
+   - 传统方法：类别重平衡</p>
+</li>
+<li>
+<p><strong>概念偏移（Concept Shift）</strong>：$P_{train}(Y|X) \neq P_{test}(Y|X)$
+   - 例子：用户偏好随时间变化
+   - 这是最具挑战性的情况，传统方法难以处理</p>
+</li>
+</ol>
+<p>因果正则化特别适合处理概念偏移，因为它识别并利用不变的因果关系。</p>
+<h4 id="_4">因果正则化的核心思想</h4>
+<p>因果正则化基于一个关键观察：<strong>因果关系比统计相关性更稳定</strong>。具体而言：</p>
+<ul>
+<li><strong>统计相关性</strong>：可能因环境、时间、采样偏差而改变</li>
+<li><strong>因果关系</strong>：反映数据生成的本质机制，跨环境稳定</li>
+</ul>
+<p>数学上，如果 $X$ 是 $Y$ 的因果父节点，那么机制 $P(Y|X)$ 应该在不同环境下保持不变（除非有明确的机制变化）。这个性质称为<strong>自主性</strong>（autonomy）或<strong>模块性</strong>（modularity）。</p>
+<h3 id="1412">14.1.2 因果不变性原则</h3>
+<p>因果不变性原则（Causal Invariance Principle）是因果正则化的核心思想：</p>
+<p><strong>定义</strong>：如果特征 $X$ 对结果 $Y$ 有因果效应，那么条件分布 $P(Y|X)$ 在不同环境下应该保持不变。</p>
+<p>数学表述：
+$$P_e(Y|X_{causal}) = P_{e'}(Y|X_{causal}), \forall e, e' \in \mathcal{E}$$
+其中 $\mathcal{E}$ 是所有可能环境的集合，$X_{causal}$ 是具有因果效应的特征。</p>
+<h4 id="_5">理论基础</h4>
+<p>因果不变性原则基于<strong>独立因果机制（ICM）</strong>假设：</p>
+<ol>
+<li><strong>因果机制的独立性</strong>：生成 $Y$ 的机制独立于生成其原因 $X$ 的机制</li>
+<li><strong>稀疏变化原则</strong>：环境变化通常只影响少数机制</li>
+<li><strong>因果方向的不对称性</strong>：$P(Y|X)$ 比 $P(X|Y)$ 更稳定</li>
+</ol>
+<p>这些原则解释了为什么因果方向的条件分布更加稳定。考虑海拔（$X$）与温度（$Y$）的关系：</p>
+<ul>
+<li>因果方向：$P(温度|海拔)$ 由物理定律决定，非常稳定</li>
+<li>反因果方向：$P(海拔|温度)$ 依赖于地理分布，容易变化</li>
+</ul>
+<h4 id="_6">环境的形式化定义</h4>
+<p>环境 $e \in \mathcal{E}$ 可以理解为：</p>
+<ol>
+<li>
+<p><strong>时间环境</strong>：不同时间段的数据
+   - 早期用户 vs 近期用户
+   - 工作日 vs 周末</p>
+</li>
+<li>
+<p><strong>空间环境</strong>：不同地理位置或数据源
+   - 不同医院的医疗数据
+   - 不同国家的用户行为</p>
+</li>
+<li>
+<p><strong>介入环境</strong>：不同的实验条件
+   - A/B测试的不同组
+   - 不同的策略或处理</p>
+</li>
+<li>
+<p><strong>潜在环境</strong>：由未观测变量定义
+   - 不同的用户群体（但群体标签未知）
+   - 不同的数据生成模式</p>
+</li>
+</ol>
+<h4 id="_7">不变性的检验</h4>
+<p>如何检验特征集合 $S$ 是否满足不变性？</p>
+<p><strong>统计检验方法</strong>：</p>
+<div class="codehilite"><pre><span></span><code>对于特征子集 S：
+
+1. 在每个环境 e 中，拟合模型：f_e: S → Y
+2. 计算环境间的一致性：
+   <span class="k">-</span> 参数一致性：||θ_e - θ_e&#39;||₂ &lt; ε
+   <span class="k">-</span> 预测一致性：E[|f_e(S) - f_e&#39;(S)|] &lt; ε
+   <span class="k">-</span> 梯度一致性：||∇_θ L_e - ∇_θ L_e&#39;||₂ &lt; ε
+3. 选择最大的满足不变性的特征集
+</code></pre></div>
+
+<p><strong>基于假设检验的方法</strong>：</p>
+<p>零假设 $H_0$：$P_e(Y|S) = P_{e'}(Y|S)$ 对所有环境对 $(e, e')$ 成立</p>
+<p>检验统计量（以线性模型为例）：
+$$T = \sum_{e \in \mathcal{E}} n_e ||\beta_e - \bar{\beta}||^2$$
+其中 $\bar{\beta} = \frac{1}{|\mathcal{E}|} \sum_e \beta_e$，$n_e$ 是环境 $e$ 的样本量。</p>
+<h3 id="1413-irm">14.1.3 不变风险最小化（IRM）</h3>
+<p>IRM是实现因果正则化的一种重要方法，由Arjovsky等人在2019年提出。其核心思想是学习一个在所有环境中都是最优的预测器。</p>
+<h4 id="irm">IRM的直观理解</h4>
+<p>IRM寻找这样的表示：</p>
+<ol>
+<li><strong>表示质量</strong>：表示包含预测所需的信息</li>
+<li><strong>不变最优性</strong>：存在一个分类器在所有环境中都是最优的</li>
+<li><strong>因果含义</strong>：这样的表示捕获了因果特征</li>
+</ol>
+<p>考虑一个简化场景：</p>
+<div class="codehilite"><pre><span></span><code>环境1：狗主要在草地上，猫主要在沙发上
+环境2：狗主要在沙发上，猫主要在草地上
+
+传统ERM：可能学习背景特征
+IRM：强制学习动物本身的特征（因为只有这些特征在两个环境中都预测准确）
+</code></pre></div>
+
+<h4 id="_8">数学形式化</h4>
+<p><strong>IRM的理想目标</strong>（难以直接优化）：
+$$\min_{\Phi} \sum_{e \in \mathcal{E}} R^e(\Phi) \quad \text{s.t.} \quad w^* \in \arg\min_{w} R^e(w \circ \Phi), \forall e$$
+意思是：找到表示 $\Phi$，使得存在一个分类器 $w^*$ 在所有环境中都是最优的。</p>
+<p><strong>IRM的实用形式</strong>（IRMv1）：
+$$\min_{\Phi, w} \sum_{e \in \mathcal{E}_{tr}} R^e(w \circ \Phi) + \lambda \cdot ||\nabla_{w|w=1.0} R^e(w \cdot \Phi)||^2$$
+其中：</p>
+<ul>
+<li>$\Phi$：特征提取器（可以是深度网络）</li>
+<li>$w$：线性分类器（标量或向量）</li>
+<li>$R^e$：环境 $e$ 中的经验风险</li>
+<li>梯度惩罚项强制 $w=1.0$ 是所有环境的局部最优点</li>
+</ul>
+<h4 id="_9">梯度惩罚的理解</h4>
+<p>梯度惩罚 $||\nabla_{w|w=1.0} R^e(w \cdot \Phi)||^2$ 的含义：</p>
+<ol>
+<li>
+<p><strong>为什么在 $w=1.0$ 处计算梯度？</strong>
+   - 这是一个固定的参考点
+   - 如果 $w=1.0$ 对所有环境都是最优的，那么梯度应该都是0</p>
+</li>
+<li>
+<p><strong>梯度为0意味着什么？</strong>
+   - 在该点没有改进的方向
+   - 表示 $\Phi$ 已经提取了足够好的特征</p>
+</li>
+<li>
+<p><strong>多环境梯度一致性</strong>：
+   如果所有环境的梯度都是0，说明找到了不变的预测规则</p>
+</li>
+</ol>
+<h4 id="irm_1">实践中的IRM算法</h4>
+<p><strong>详细实现步骤</strong>：</p>
+<div class="codehilite"><pre><span></span><code>算法：IRM训练过程
+输入：多环境数据 {(X^e, Y^e)}_{e∈E}，超参数 λ
+
+1. 初始化：
+   <span class="k">-</span> 特征提取器 Φ（深度网络）
+   <span class="k">-</span> 线性分类器 w（初始化为1.0）
+
+2. 对每个训练批次：
+   a. 采样小批量数据
+   b. 对每个环境 e：
+
+      <span class="k">-</span> 计算特征：Z^e = Φ(X^e)
+      <span class="k">-</span> 计算预测：Ŷ^e = w · Z^e
+      <span class="k">-</span> 计算损失：L^e = CrossEntropy(Ŷ^e, Y^e)
+
+   c. 计算梯度惩罚：
+
+      <span class="k">-</span> 固定 w_dummy = 1.0
+      <span class="k">-</span> 对每个环境计算：grad^e = ∇_{w_dummy} L^e(w_dummy · Φ(X^e))
+      <span class="k">-</span> penalty = Σ_e ||grad^e||^2
+
+   d. 总损失：
+
+      <span class="k">-</span> loss_total = (1/|E|) Σ_e L^e + λ · penalty
+
+   e. 更新参数：
+
+      <span class="k">-</span> 通过反向传播更新 Φ 和 w
+
+3. 返回：训练好的模型 (Φ, w)
+</code></pre></div>
+
+<h4 id="irm_2">IRM的变体和改进</h4>
+<ol>
+<li>
+<p><strong>Risk Extrapolation (REx)</strong>：
+$$\min_{\theta} \sum_e R^e(\theta) + \lambda \cdot \text{Var}_e[R^e(\theta)]$$
+直接最小化环境间风险的方差，更简单但可能过于保守。</p>
+</li>
+<li>
+<p><strong>IRM-Games</strong>：
+   将IRM形式化为博弈：</p>
+</li>
+</ol>
+<ul>
+<li>玩家1（特征提取器）：最小化平均损失</li>
+<li>玩家2（环境特定分类器）：最大化环境间差异</li>
+<li>纳什均衡对应因果特征</li>
+</ul>
+<ol start="3">
+<li><strong>Group DRO (Distributionally Robust Optimization)</strong>：
+$$\min_{\theta} \max_{e \in \mathcal{E}} R^e(\theta)$$
+最小化最坏情况的风险，提供更强的鲁棒性保证。</li>
+</ol>
+<h3 id="1414">14.1.4 因果结构约束</h3>
+<p>当我们对系统的因果结构有先验知识时，可以将这些知识编码为正则化约束，引导模型学习符合因果关系的表示。</p>
+<h4 id="_10">结构化方程约束</h4>
+<p>如果我们知道变量间的因果图 $G$，可以通过约束模型参数来强制因果结构：</p>
+<p><strong>稀疏性约束</strong>：
+$$\mathcal{L}_{struct} = \sum_{(i,j) \notin E(G)} |\theta_{ij}| + \lambda_{dag} \cdot h(\Theta)$$
+其中：</p>
+<ul>
+<li>$\theta_{ij}$：变量 $i$ 对变量 $j$ 的影响系数</li>
+<li>$E(G)$：因果图的边集</li>
+<li>$h(\Theta)$：确保无环性的约束函数</li>
+</ul>
+<p><strong>无环性约束</strong>（NOTEARS方法）：
+$$h(\Theta) = \text{tr}(e^{\Theta \odot \Theta}) - d = 0$$
+这个连续可微的约束确保学习到的结构是DAG。</p>
+<h4 id="_11">条件独立性约束</h4>
+<p>根据因果图的d-分离准则，我们知道某些变量在给定其他变量时应该条件独立：</p>
+<p><strong>基于互信息的约束</strong>：
+$$\mathcal{L}_{indep} = \sum_{(X,Y,Z): X \perp!!!\perp_G Y | Z} \text{MI}(X; Y | Z)$$
+其中 $X \perp!!!\perp_G Y | Z$ 表示根据因果图 $G$，$X$ 和 $Y$ 在给定 $Z$ 时d-分离。</p>
+<p><strong>实际计算方法</strong>：</p>
+<div class="codehilite"><pre><span></span><code>对每个独立性约束 X ⊥ Y | Z：
+
+1. 估计条件分布 P(X|Z) 和 P(Y|Z)
+2. 计算条件互信息：
+   MI(X;Y|Z) = E_{p(x,y,z)}[log(p(x,y|z)/(p(x|z)p(y|z)))]
+
+3. 使用神经网络估计互信息（如MINE方法）
+4. 将MI(X;Y|Z)作为损失项最小化
+</code></pre></div>
+
+<h4 id="_12">因果顺序约束</h4>
+<p>当我们知道变量的因果顺序（拓扑排序）时：</p>
+<p><strong>层次化网络结构</strong>：</p>
+<div class="codehilite"><pre><span></span><code>如果因果顺序为 X₁ → X₂ → ... → Xₙ：
+
+<span class="k">-</span> 第i层只能接收第1到i-1层的输入
+<span class="k">-</span> 通过掩码矩阵实现：M[i,j] = 1 if j &lt; i else 0
+<span class="k">-</span> 参数矩阵：Θ_effective = Θ ⊙ M
+</code></pre></div>
+
+<p><strong>时间因果约束</strong>：
+对于时序数据，未来不能影响过去：
+$$\mathcal{L}_{temporal} = \sum_{t&lt;t'} ||\theta_{X_t \leftarrow X_{t'}}||^2$$</p>
+<h4 id="_13">路径特定约束</h4>
+<p>有时我们知道某些因果路径应该存在或不存在：</p>
+<p><strong>直接效应约束</strong>：
+如果 $X$ 对 $Y$ 没有直接效应（只有通过中介变量的间接效应）：
+$$\mathcal{L}_{no_direct} = ||\frac{\partial f_Y}{\partial X} \Big|_{M=\text{const}}||^2$$
+<strong>路径强度约束</strong>：
+限制特定路径的效应强度：
+$$\mathcal{L}_{path} = \sum_{\pi \in \Pi} w_\pi \cdot |\text{PathEffect}(\pi) - \tau_\pi|^2$$
+其中 $\Pi$ 是关注的路径集合，$\tau_\pi$ 是期望的路径效应。</p>
+<h2 id="142">14.2 因果表示学习</h2>
+<h3 id="1421">14.2.1 概念与目标</h3>
+<p>因果表示学习旨在从高维观测数据中学习低维的因果因子（causal factors），这些因子反映数据的生成机制而非仅仅是统计规律。</p>
+<h4 id="_14">核心目标</h4>
+<p>因果表示应该满足以下关键性质：</p>
+<ol>
+<li>
+<p><strong>解耦性（Disentanglement）</strong>：
+   - 不同因子独立变化，改变一个因子不影响其他因子
+   - 数学上：$p(z_1, ..., z_n) = \prod_i p(z_i | PA_i)$，其中 $PA_i$ 是稀疏的</p>
+</li>
+<li>
+<p><strong>可解释性（Interpretability）</strong>：
+   - 每个因子对应明确的语义概念
+   - 例如：物体的位置、颜色、形状各自对应不同的潜变量</p>
+</li>
+<li>
+<p><strong>可干预性（Interventionability）</strong>：
+   - 可以独立操作每个因子来生成反事实样本
+   - 干预 $do(z_i = z'_i)$ 只影响 $z_i$ 的子节点</p>
+</li>
+<li>
+<p><strong>鲁棒性（Robustness）</strong>：
+   - 学习到的表示在分布偏移下保持有效
+   - 因果机制的模块性保证了泛化能力</p>
+</li>
+</ol>
+<h4 id="_15">与传统表示学习的区别</h4>
+<p><strong>传统表示学习</strong>：</p>
+<ul>
+<li>目标：最大化互信息 $I(Z; X)$，保留尽可能多的信息</li>
+<li>方法：PCA、自编码器、对比学习</li>
+<li>问题：可能捕获虚假相关，缺乏因果语义</li>
+</ul>
+<p><strong>因果表示学习</strong>：</p>
+<ul>
+<li>目标：学习数据生成过程 $X = g(Z, U)$，其中 $Z$ 是因果因子</li>
+<li>方法：结构化VAE、因果对比学习、独立机制分析</li>
+<li>优势：表示具有因果含义，支持反事实推理</li>
+</ul>
+<h4 id="_16">应用场景</h4>
+<ol>
+<li>
+<p><strong>计算机视觉</strong>：
+   - 学习物体的形状、纹理、光照等独立因子
+   - 支持零样本组合泛化（如"蓝色大象"）</p>
+</li>
+<li>
+<p><strong>自然语言处理</strong>：
+   - 分离内容和风格（如情感、语气）
+   - 实现可控文本生成</p>
+</li>
+<li>
+<p><strong>推荐系统</strong>：
+   - 区分用户的真实偏好和流行度偏差
+   - 提高推荐的因果效应</p>
+</li>
+<li>
+<p><strong>医疗诊断</strong>：
+   - 识别疾病的独立风险因子
+   - 支持个性化治疗方案</p>
+</li>
+</ol>
+<h3 id="1422-icm">14.2.2 独立因果机制（ICM）原则</h3>
+<p>ICM原则假设：
+$$P(X_1, ..., X_n) = \prod_{i=1}^n P(X_i | PA_i)$$
+其中 $PA_i$ 是 $X_i$ 的因果父节点，且每个条件分布 $P(X_i | PA_i)$ 独立变化。</p>
+<p><strong>关键性质</strong>：</p>
+<ol>
+<li><strong>模块性</strong>：改变一个机制不影响其他机制</li>
+<li><strong>稀疏性</strong>：每个变量只依赖少数父节点</li>
+<li><strong>最小变化原则</strong>：干预通常只影响少数机制</li>
+</ol>
+<h3 id="1423">14.2.3 变分自编码器与因果解耦</h3>
+<p><strong>因果VAE架构</strong>：</p>
+<div class="codehilite"><pre><span></span><code>观测 x → 编码器 q(z|x) → 因果潜变量 z → 因果图 G → 解码器 p(x|z)
+</code></pre></div>
+
+<p>损失函数：
+$$\mathcal{L} = \mathbb{E}_{q(z|x)}[\log p(x|z)] - \beta \cdot KL[q(z|x)||p(z)] + \gamma \cdot \mathcal{L}_{causal}$$
+其中因果损失项 $\mathcal{L}_{causal}$ 强制潜变量遵循因果结构：
+$$\mathcal{L}_{causal} = \sum_{i,j} \mathbb{1}_{(i,j) \notin G} \cdot |\text{Cov}(z_i, z_j)|$$</p>
+<h3 id="1424">14.2.4 对比学习与因果发现</h3>
+<p>利用对比学习识别因果特征：</p>
+<p><strong>因果对比损失</strong>：
+$$\mathcal{L}_{CCL} = -\log \frac{\exp(\text{sim}(z_i, z_i^+)/\tau)}{\sum_{k} \exp(\text{sim}(z_i, z_k)/\tau)}$$
+其中：</p>
+<ul>
+<li>$z_i^+$：通过因果增强得到的正样本</li>
+<li>因果增强：只改变非因果特征（如背景、光照）</li>
+<li>$\tau$：温度参数</li>
+</ul>
+<p><strong>多环境对比学习</strong>：
+利用多环境数据识别不变特征：</p>
+<div class="codehilite"><pre><span></span><code>对每个批次：
+
+1. 从不同环境采样：x_e1, x_e2, ..., x_eK
+2. 提取特征：z_e1 = f(x_e1), ...
+3. 最大化环境间因果特征的一致性
+4. 最小化环境间虚假特征的相似性
+</code></pre></div>
+
+<h3 id="1425">14.2.5 因果解耦的评估指标</h3>
+<p><strong>解耦度量</strong>：</p>
+<ul>
+<li>
+<p><strong>MIG (Mutual Information Gap)</strong>：
+$$MIG = \frac{1}{K} \sum_{k=1}^K \frac{1}{H(v_k)} (I(z_{j^*}; v_k) - \max_{j \neq j^*} I(z_j; v_k))$$</p>
+</li>
+<li>
+<p><strong>SAP (Separated Attribute Predictability)</strong>：
+  评估每个潜变量对单一生成因子的预测能力</p>
+</li>
+</ul>
+<p><strong>因果性度量</strong>：</p>
+<ul>
+<li><strong>介入鲁棒性</strong>：模型在因果介入下的性能保持</li>
+<li><strong>反事实一致性</strong>：生成的反事实样本与真实反事实的一致性</li>
+</ul>
+<h2 id="143">14.3 因果强化学习</h2>
+<h3 id="1431">14.3.1 强化学习中的因果问题</h3>
+<p>传统强化学习面临的因果挑战：</p>
+<ol>
+<li><strong>混杂偏差</strong>：历史策略导致的观测数据偏差</li>
+<li><strong>信度分配问题</strong>：如何确定哪个动作导致了奖励</li>
+<li><strong>泛化困难</strong>：在新环境中性能下降</li>
+<li><strong>样本效率低</strong>：需要大量交互才能学习</li>
+</ol>
+<p>因果视角提供的解决方案：</p>
+<ul>
+<li>利用因果模型进行反事实推理</li>
+<li>基于因果图的信度分配</li>
+<li>学习因果不变的策略</li>
+<li>通过因果模型进行离线学习</li>
+</ul>
+<h3 id="1432-mdp">14.3.2 因果模型增强的MDP</h3>
+<p><strong>因果MDP定义</strong>：
+扩展标准MDP为 $\mathcal{M} = (S, A, P, R, \gamma, G)$，其中：</p>
+<ul>
+<li>$G$：状态-动作-奖励的因果图</li>
+<li>转移函数分解：$P(s'|s,a) = \prod_i P(s'_i | PA_i^G)$</li>
+</ul>
+<p><strong>结构化状态表示</strong>：
+将状态分解为因果相关的组件：
+$$S = S_{agent} \times S_{env} \times S_{confound}$$
+其中：</p>
+<ul>
+<li>$S_{agent}$：可控状态（位置、速度）</li>
+<li>$S_{env}$：环境状态（障碍物、目标）</li>
+<li>$S_{confound}$：混杂因素（其他智能体）</li>
+</ul>
+<h3 id="1433">14.3.3 反事实策略评估</h3>
+<p><strong>离线策略评估问题</strong>：
+给定历史数据 $\mathcal{D} = \{(s_t, a_t, r_t, s_{t+1})\}$ 由行为策略 $\pi_b$ 生成，评估目标策略 $\pi_e$ 的性能。</p>
+<p><strong>反事实推理方法</strong>：</p>
+<ol>
+<li>
+<p><strong>构建因果模型</strong>：
+$$M: S \times A \rightarrow S' \times R$$</p>
+</li>
+<li>
+<p><strong>反事实查询</strong>：
+   "如果在状态 $s_t$ 采取动作 $\pi_e(s_t)$ 而非 $a_t$，会得到什么奖励？"
+$$r_{CF} = R(s_t, \pi_e(s_t); U_t)$$
+其中 $U_t$ 是从观测数据推断的潜在混杂因素</p>
+</li>
+<li>
+<p><strong>重要性采样修正</strong>：
+$$V^{\pi_e} = \mathbb{E}_{\tau \sim \pi_b}\left[\sum_t \gamma^t r_t \prod_{k=0}^t \frac{\pi_e(a_k|s_k)}{\pi_b(a_k|s_k)}\right]$$</p>
+</li>
+</ol>
+<h3 id="1434">14.3.4 因果发现与探索</h3>
+<p><strong>因果好奇心驱动探索</strong>：
+定义内在奖励基于因果不确定性：
+$$r_{intrinsic} = H(G | \mathcal{D}) - H(G | \mathcal{D} \cup \{(s,a,s',r)\})$$
+这鼓励智能体采取能最大程度减少因果图不确定性的动作。</p>
+<p><strong>主动介入学习</strong>：</p>
+<div class="codehilite"><pre><span></span><code>算法：因果主动学习
+
+1. 初始化：因果假设集 H = {G_1, ..., G_k}
+2. 对每个时间步：
+   a. 计算每个动作的信息增益：
+      IG(a) = H(H) - E[H(H|s&#39;,r)|s,a]
+   b. 选择动作：a* = argmax_a [IG(a) + ε·Q(s,a)]
+   c. 执行动作，观测结果
+   d. 更新因果假设的后验概率
+
+3. 返回：最可能的因果图 G*
+</code></pre></div>
+
+<h3 id="1435">14.3.5 因果模型基础规划</h3>
+<p><strong>世界模型与因果推理</strong>：
+利用学习到的因果模型进行规划：</p>
+<ol>
+<li>
+<p><strong>前向模拟</strong>：
+$$s_{t+k} = f_{causal}(s_t, a_t, ..., a_{t+k-1})$$</p>
+</li>
+<li>
+<p><strong>反事实规划</strong>：
+   在规划时考虑"如果不这样做会怎样"：
+$$Q_{CF}(s,a) = R(s,a) + \gamma \max_{a'} V(f(s,a)) - \lambda \cdot \text{Regret}(s,a)$$
+其中遗憾项：
+$$\text{Regret}(s,a) = \max_{a' \neq a} Q_{CF}(s,a') - Q_{CF}(s,a)$$</p>
+</li>
+<li>
+<p><strong>因果层次规划</strong>：
+   - 高层：基于因果效应的子目标选择
+   - 低层：基于局部动力学的动作执行</p>
+</li>
+</ol>
+<h2 id="144">14.4 公平性与因果推断</h2>
+<h3 id="1441">14.4.1 算法公平性的因果视角</h3>
+<p>传统公平性定义的局限性：</p>
+<ul>
+<li><strong>统计平等</strong>（Statistical Parity）：$P(\hat{Y}=1|A=0) = P(\hat{Y}=1|A=1)$</li>
+<li><strong>机会平等</strong>（Equal Opportunity）：$P(\hat{Y}=1|Y=1,A=0) = P(\hat{Y}=1|Y=1,A=1)$</li>
+</ul>
+<p>这些定义忽略了因果路径，可能导致：</p>
+<ol>
+<li>禁止使用合理的预测因子</li>
+<li>无法区分直接歧视和间接影响</li>
+<li>不同公平性准则之间的冲突</li>
+</ol>
+<h3 id="1442">14.4.2 因果公平性框架</h3>
+<p><strong>因果图表示</strong>：</p>
+<div class="codehilite"><pre><span></span><code>    A (敏感属性)
+    ├── 直接路径 → Y (结果)
+    └── 间接路径 → M (中介变量) → Y
+</code></pre></div>
+
+<p><strong>路径特定效应</strong>：</p>
+<ul>
+<li>
+<p><strong>直接效应（DE）</strong>：$A$ 对 $Y$ 的直接因果效应
+$$DE = \mathbb{E}[Y(a=1, M(a=0)) - Y(a=0, M(a=0))]$$</p>
+</li>
+<li>
+<p><strong>间接效应（IE）</strong>：通过中介变量 $M$ 的效应
+$$IE = \mathbb{E}[Y(a=1, M(a=1)) - Y(a=1, M(a=0))]$$</p>
+</li>
+<li>
+<p><strong>总效应（TE）</strong>：$TE = DE + IE$</p>
+</li>
+</ul>
+<h3 id="1443">14.4.3 反事实公平性</h3>
+<p><strong>定义</strong>：如果在反事实世界中，改变个体的敏感属性不会改变决策结果，则称决策是反事实公平的。</p>
+<p>数学表述：
+$$P(\hat{Y}_{A \leftarrow a}(u) = \hat{Y}_{A \leftarrow a'}(u)) = 1, \forall u, a, a'$$
+其中 $u$ 表示个体的所有外生变量。</p>
+<p><strong>实现方法</strong>：</p>
+<ol>
+<li><strong>路径阻断</strong>：阻断不公平的因果路径</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 伪代码</span>
+<span class="k">def</span> <span class="nf">fair_prediction</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sensitive_attr</span><span class="p">):</span>
+    <span class="c1"># 1. 预测中介变量（在反事实世界中）</span>
+    <span class="n">m_cf</span> <span class="o">=</span> <span class="n">predict_mediator</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sensitive_attr</span><span class="o">=</span><span class="n">baseline</span><span class="p">)</span>
+    <span class="c1"># 2. 基于反事实中介变量预测</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict_outcome</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">m_cf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_pred</span>
+</code></pre></div>
+
+<ol start="2">
+<li><strong>公平表示学习</strong>：
+   学习与敏感属性因果独立的表示：
+$$\min_f \mathcal{L}_{task}(f(X), Y) + \lambda \cdot \mathcal{L}_{indep}(f(X), A)$$</li>
+</ol>
+<h3 id="1444">14.4.4 因果解释与审计</h3>
+<p><strong>个体公平性解释</strong>：
+对于被拒绝的申请者，提供因果解释：</p>
+<ul>
+<li>哪些因素导致了拒绝？</li>
+<li>如果改变哪些可控因素，结果会改变？</li>
+</ul>
+<p><strong>算法审计流程</strong>：</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">构建决策系统的因果图</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">识别所有从敏感属性到决策的因果路径</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">量化每条路径的因果效应</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">判断哪些路径是合理的</span><span class="err">，</span><span class="n">哪些构成歧视</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">评估整体公平性水平</span>
+</code></pre></div>
+
+<h3 id="1445">14.4.5 公平性与效用的权衡</h3>
+<p><strong>多目标优化框架</strong>：
+$$\min_{f} \mathcal{L}_{utility}(f) + \sum_{i} \lambda_i \cdot \mathcal{L}_{fairness}^i(f)$$</p>
+<p>其中不同的公平性约束：</p>
+<ul>
+<li>$\mathcal{L}_{fairness}^{DE}$：最小化直接歧视</li>
+<li>$\mathcal{L}_{fairness}^{IE}$：控制间接效应</li>
+<li>$\mathcal{L}_{fairness}^{CF}$：反事实公平性</li>
+</ul>
+<p><strong>帕累托前沿分析</strong>：
+找出效用和公平性之间的帕累托最优解集，让决策者根据具体场景选择合适的权衡点。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter13.html" class="nav-link prev">← 第十三章：反事实推理与结构因果模型</a><a href="chapter15.html" class="nav-link next">第十五章：实践案例与工具 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

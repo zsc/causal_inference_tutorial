@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第二章：潜在结果框架</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第二章：潜在结果框架</h1>
+<h2 id="_2">章节大纲</h2>
+<ol>
+<li><strong>开篇介绍</strong></li>
+<li><strong>Rubin因果模型</strong>
+   - 潜在结果的概念
+   - 因果推断的基本问题
+   - 观察数据与潜在结果</li>
+<li><strong>因果效应的定义</strong>
+   - 个体处理效应 (ITE)
+   - 平均处理效应 (ATE)
+   - 条件平均处理效应 (CATE)
+   - 处理组平均处理效应 (ATT)</li>
+<li><strong>基本问题与识别假设</strong>
+   - 因果推断的根本问题
+   - 可忽略性假设
+   - 重叠假设
+   - 一致性假设</li>
+<li><strong>SUTVA假设</strong>
+   - 无干扰假设
+   - 处理变量定义的唯一性
+   - SUTVA违背的情形</li>
+<li><strong>行业案例：Uber动态定价的因果效应评估</strong></li>
+<li><strong>本章小结</strong></li>
+<li><strong>练习题</strong></li>
+<li><strong>常见陷阱与错误</strong></li>
+<li><strong>最佳实践检查清单</strong></li>
+</ol>
+<hr />
+<h2 id="_3">开篇介绍</h2>
+<p>潜在结果框架（Potential Outcomes Framework），也称为Rubin因果模型，是现代因果推断的基石之一。这个框架为我们提供了一种精确定义和估计因果效应的数学语言。本章将深入探讨这一框架的核心概念，帮助你理解如何从数据中识别和估计因果效应。</p>
+<p>在本章中，你将学习到：</p>
+<ul>
+<li>如何使用潜在结果来定义因果效应</li>
+<li>为什么因果推断存在根本性困难</li>
+<li>哪些假设使得因果推断成为可能</li>
+<li>如何在实际应用中验证这些假设</li>
+</ul>
+<h2 id="1-rubin">1. Rubin因果模型</h2>
+<h3 id="11">1.1 潜在结果的概念</h3>
+<p>潜在结果框架的核心思想是：每个个体对于每种可能的处理都有一个潜在的结果，但我们只能观察到实际接受的处理所对应的结果。</p>
+<p>设想一个简单的二元处理场景：</p>
+<ul>
+<li>$i$ 表示个体</li>
+<li>$T_i \in \{0, 1\}$ 表示个体 $i$ 是否接受处理</li>
+<li>$Y_i(1)$ 表示个体 $i$ 接受处理时的潜在结果</li>
+<li>$Y_i(0)$ 表示个体 $i$ 不接受处理时的潜在结果</li>
+</ul>
+<p>关键洞察：对于每个个体，我们只能观察到：
+$$Y_i^{obs} = T_i \cdot Y_i(1) + (1-T_i) \cdot Y_i(0)$$
+这意味着 $Y_i(1)$ 和 $Y_i(0)$ 中总有一个是反事实的（counterfactual），无法直接观察。</p>
+<div class="codehilite"><pre><span></span><code>个体i的两种潜在状态：
+
+     现实世界              反事实世界
+    ┌─────────┐          ┌─────────┐
+    │ T_i = 1 │          │ T_i = 0 │
+    │ Y_i(1)  │          │ Y_i(0)  │
+    │ (观察到)│          │ (未观察)│
+    └─────────┘          └─────────┘
+         ↓                      ↓
+    实际结果 Y_i^obs       潜在结果（反事实）
+</code></pre></div>
+
+<h3 id="12">1.2 因果推断的基本问题</h3>
+<p>因果推断的根本问题（Fundamental Problem of Causal Inference）在于：</p>
+<ul>
+<li>我们永远无法同时观察到同一个体在接受处理和不接受处理时的结果</li>
+<li>这导致个体因果效应 $\tau_i = Y_i(1) - Y_i(0)$ 无法直接计算</li>
+</ul>
+<p>这个问题有时被称为"缺失数据问题"，但它比一般的缺失数据更为根本——这些数据在原则上就是不可观察的。</p>
+<h3 id="13">1.3 观察数据与潜在结果</h3>
+<p>观察数据与潜在结果之间的关系可以用以下表格说明：</p>
+<p>| 个体 | $T_i$ | $Y_i^{obs}$ | $Y_i(0)$ | $Y_i(1)$ | $\tau_i$ |</p>
+<table>
+<thead>
+<tr>
+<th>个体</th>
+<th>$T_i$</th>
+<th>$Y_i^{obs}$</th>
+<th>$Y_i(0)$</th>
+<th>$Y_i(1)$</th>
+<th>$\tau_i$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>$Y_1(0)$</td>
+<td>$Y_1(0)$</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>$Y_2(1)$</td>
+<td>?</td>
+<td>$Y_2(1)$</td>
+<td>?</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>$Y_3(0)$</td>
+<td>$Y_3(0)$</td>
+<td>?</td>
+<td>?</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>$Y_4(1)$</td>
+<td>?</td>
+<td>$Y_4(1)$</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>问号表示无法观察到的潜在结果。</p>
+<h2 id="2">2. 因果效应的定义</h2>
+<p>基于潜在结果框架，我们可以定义不同层次的因果效应。</p>
+<h3 id="21-individual-treatment-effect-ite">2.1 个体处理效应 (Individual Treatment Effect, ITE)</h3>
+<p>个体 $i$ 的因果效应定义为：
+$$\tau_i = Y_i(1) - Y_i(0)$$
+这是最细粒度的因果效应，表示处理对特定个体的影响。由于因果推断的根本问题，ITE通常无法识别。</p>
+<h3 id="22-average-treatment-effect-ate">2.2 平均处理效应 (Average Treatment Effect, ATE)</h3>
+<p>ATE是整个总体的平均因果效应：
+$$\tau_{ATE} = E[Y_i(1) - Y_i(0)] = E[Y_i(1)] - E[Y_i(0)]$$
+ATE回答的问题是："如果我们对总体中随机选择的个体施加处理，平均效果是什么？"</p>
+<h3 id="23-conditional-average-treatment-effect-cate">2.3 条件平均处理效应 (Conditional Average Treatment Effect, CATE)</h3>
+<p>CATE是给定协变量条件下的平均处理效应：
+$$\tau_{CATE}(x) = E[Y_i(1) - Y_i(0) | X_i = x]$$
+CATE允许我们研究处理效应的异质性，理解哪些子群体受益更多。</p>
+<h3 id="24-average-treatment-effect-on-the-treated-att">2.4 处理组平均处理效应 (Average Treatment Effect on the Treated, ATT)</h3>
+<p>ATT关注实际接受处理的群体：
+$$\tau_{ATT} = E[Y_i(1) - Y_i(0) | T_i = 1]$$
+ATT回答："对于那些实际接受处理的人，处理的平均效果是什么？"</p>
+<h3 id="25">2.5 不同效应的关系</h3>
+<p>这些效应之间存在以下关系：</p>
+<ul>
+<li>$ATE = P(T=1) \cdot ATT + P(T=0) \cdot ATU$</li>
+<li>其中 $ATU = E[Y_i(1) - Y_i(0) | T_i = 0]$ 是未处理组的平均处理效应</li>
+</ul>
+<p>当处理效应存在异质性时，ATE、ATT和ATU可能差异很大。</p>
+<div class="codehilite"><pre><span></span><code>效应层次结构：
+
+    ITE (个体层面)
+    τ₁, τ₂, τ₃, ...
+         ↓
+    CATE (子群体层面)
+    τ(x₁), τ(x₂), ...
+         ↓
+    ATE/ATT (总体层面)
+    τ_ATE, τ_ATT
+</code></pre></div>
+
+<h2 id="3">3. 基本问题与识别假设</h2>
+<p>要从观察数据中识别因果效应，我们需要一些关键假设。</p>
+<h3 id="31-ignorability-unconfoundedness">3.1 可忽略性假设 (Ignorability / Unconfoundedness)</h3>
+<p>可忽略性假设要求：
+$$(Y_i(0), Y_i(1)) \perp!!!\perp T_i | X_i$$
+这意味着在给定观察到的协变量 $X_i$ 后，处理分配与潜在结果独立。换句话说，没有未观察到的混杂因素影响处理分配和结果。</p>
+<p>这个假设也被称为：</p>
+<ul>
+<li>条件独立性假设 (Conditional Independence Assumption, CIA)</li>
+<li>无混杂假设 (No Unmeasured Confounding)</li>
+<li>选择基于可观察变量 (Selection on Observables)</li>
+</ul>
+<h3 id="32-overlap-common-support">3.2 重叠假设 (Overlap / Common Support)</h3>
+<p>重叠假设要求：
+$$0 &lt; P(T_i = 1 | X_i = x) &lt; 1$$
+对于协变量的每个取值，都存在接受处理和不接受处理的个体。这确保了我们可以在相似的个体之间进行比较。</p>
+<p>违反重叠假设的情况：</p>
+<div class="codehilite"><pre><span></span><code>违反重叠假设的例子：
+
+协变量X  | T=0的个体 | T=1的个体
+---------|-----------|----------
+x &lt; 0    |    有     |    无    ← 违反
+0 ≤ x ≤ 1|    有     |    有    ✓ 满足
+x &gt; 1    |    无     |    有    ← 违反
+</code></pre></div>
+
+<h3 id="33-consistency">3.3 一致性假设 (Consistency)</h3>
+<p>一致性假设连接潜在结果和观察结果：
+$$\text{如果 } T_i = t, \text{ 则 } Y_i^{obs} = Y_i(t)$$
+这个假设要求处理是明确定义的，不存在处理的"隐藏版本"。</p>
+<h3 id="34">3.4 识别策略</h3>
+<p>在这三个假设成立的条件下，我们可以从观察数据中识别因果效应：
+$$E[Y_i(1)] = E[E[Y_i | T_i = 1, X_i]]$$
+$$E[Y_i(0)] = E[E[Y_i | T_i = 0, X_i]]$$
+因此：
+$$\tau_{ATE} = E[E[Y_i | T_i = 1, X_i] - E[Y_i | T_i = 0, X_i]]$$</p>
+<h2 id="4-sutva">4. SUTVA假设</h2>
+<p>SUTVA (Stable Unit Treatment Value Assumption) 是潜在结果框架的核心假设，它包含两个组成部分。</p>
+<h3 id="41-no-interference">4.1 无干扰假设 (No Interference)</h3>
+<p>个体 $i$ 的潜在结果不受其他个体处理状态的影响：
+$$Y_i(t_i) = Y_i(t_i, t_{-i}) \text{ 对所有 } t_{-i}$$
+其中 $t_{-i}$ 表示除了个体 $i$ 之外所有其他个体的处理向量。</p>
+<p>违反无干扰假设的例子：</p>
+<ul>
+<li><strong>疫苗接种</strong>：一个人接种疫苗会通过群体免疫影响他人</li>
+<li><strong>社交网络实验</strong>：朋友圈中的处理会产生溢出效应</li>
+<li><strong>市场竞争</strong>：一家公司的定价策略影响竞争对手的收益</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>无干扰 vs 有干扰：
+
+无干扰（SUTVA满足）：
+个体1: T₁=1 → Y₁(1)
+个体2: T₂=0 → Y₂(0)
+两者独立，互不影响
+
+有干扰（SUTVA违反）：
+个体1: T₁=1 ↘
+              → 影响Y₂
+个体2: T₂=0 ↗
+</code></pre></div>
+
+<h3 id="42-no-hidden-variations">4.2 处理变量定义的唯一性 (No Hidden Variations)</h3>
+<p>处理 $T=t$ 对所有接受该处理的个体意味着相同的事情：
+$$\text{如果 } T_i = t, \text{ 则潜在结果是 } Y_i(t) \text{ 而非 } Y_i(t, v)$$
+其中 $v$ 表示处理的不同版本或实施方式。</p>
+<p>违反唯一性假设的例子：</p>
+<ul>
+<li><strong>药物剂量</strong>：不同患者接受不同剂量，但都标记为"接受治疗"</li>
+<li><strong>培训项目</strong>：不同地点的培训质量差异很大</li>
+<li><strong>政策实施</strong>：同一政策在不同地区执行力度不同</li>
+</ul>
+<h3 id="43-sutva">4.3 SUTVA的重要性</h3>
+<p>SUTVA使得因果推断问题大大简化：</p>
+<ol>
+<li>将潜在结果从 $Y_i(t_1, t_2, ..., t_n)$ 简化为 $Y_i(t_i)$</li>
+<li>允许我们使用其他个体作为反事实的代理</li>
+<li>使得处理效应的定义变得明确</li>
+</ol>
+<h3 id="44-sutva">4.4 处理SUTVA违背</h3>
+<p>当SUTVA被违背时，可以考虑：</p>
+<ol>
+<li><strong>重新定义处理单元</strong>：将相互影响的个体组合成集群</li>
+<li><strong>显式建模干扰</strong>：使用网络模型或空间模型</li>
+<li><strong>修改估计目标</strong>：估计直接效应和溢出效应</li>
+<li><strong>设计层面的解决</strong>：使用集群随机化</li>
+</ol>
+<h2 id="5-uber">5. 行业案例：Uber动态定价的因果效应评估</h2>
+<h3 id="_4">背景</h3>
+<p>Uber需要评估动态定价（surge pricing）对司机供给和乘客需求的因果效应。这是一个典型的需要潜在结果框架的场景。</p>
+<h3 id="_5">问题定义</h3>
+<ul>
+<li><strong>处理变量 $T$</strong>：是否实施1.5倍动态定价（相对于正常价格）</li>
+<li><strong>结果变量 $Y$</strong>：</li>
+<li>$Y_d$：区域内的乘客订单数</li>
+<li>$Y_s$：区域内的活跃司机数</li>
+<li>$Y_r$：总收入</li>
+<li><strong>潜在结果</strong>：</li>
+<li>$Y_d(1), Y_s(1), Y_r(1)$：实施动态定价时的潜在结果</li>
+<li>$Y_d(0), Y_s(0), Y_r(0)$：不实施动态定价时的潜在结果</li>
+</ul>
+<h3 id="_6">因果效应定义</h3>
+<p>Uber关心的因果效应：
+$$\tau_{demand} = E[Y_d(1) - Y_d(0)]$$ $$\tau_{supply} = E[Y_s(1) - Y_s(0)]$$
+$$\tau_{revenue} = E[Y_r(1) - Y_r(0)]$$</p>
+<h3 id="_7">识别挑战</h3>
+<ol>
+<li>
+<p><strong>混杂因素</strong>：
+   - 时间因素（高峰期vs非高峰期）
+   - 地理位置（市中心vs郊区）
+   - 天气状况
+   - 特殊事件（演唱会、体育赛事）</p>
+</li>
+<li>
+<p><strong>SUTVA违背风险</strong>：
+   - <strong>空间溢出</strong>：相邻区域的定价影响司机流动
+   - <strong>时间依赖</strong>：当前定价影响未来预期</p>
+</li>
+</ol>
+<h3 id="_8">实验设计</h3>
+<p>Uber采用了地理-时间随机化实验：</p>
+<div class="codehilite"><pre><span></span><code>实验设计示意：
+时间段  | 区域A | 区域B | 区域C | 区域D
+--------|-------|-------|-------|-------
+18:00   |  1.5x |  1.0x |  1.5x |  1.0x
+19:00   |  1.0x |  1.5x |  1.0x |  1.5x
+20:00   |  1.5x |  1.0x |  1.5x |  1.0x
+21:00   |  1.0x |  1.5x |  1.0x |  1.5x
+</code></pre></div>
+
+<h3 id="_9">关键假设验证</h3>
+<ol>
+<li><strong>可忽略性</strong>：通过随机化保证</li>
+<li><strong>重叠性</strong>：每个区域-时间组合都有机会接受处理</li>
+<li><strong>SUTVA</strong>：
+   - 选择足够大且相互隔离的区域
+   - 避免在边界地区收集数据
+   - 控制实验时长避免学习效应</li>
+</ol>
+<h3 id="_10">结果分析</h3>
+<p>使用潜在结果框架，Uber发现：</p>
+<ul>
+<li>$\tau_{demand} = -0.25$：需求减少25%</li>
+<li>$\tau_{supply} = +0.40$：供给增加40%</li>
+<li>$\tau_{revenue} = +0.12$：总收入增加12%</li>
+</ul>
+<h3 id="_11">经验教训</h3>
+<ol>
+<li><strong>处理定义的重要性</strong>：明确定义"1.5倍"的基准价格</li>
+<li><strong>时间窗口选择</strong>：效应可能随时间变化</li>
+<li><strong>异质性分析</strong>：不同类型区域效应差异很大</li>
+<li><strong>长期vs短期</strong>：短期实验可能低估长期适应效应</li>
+</ol>
+<h2 id="_12">本章小结</h2>
+<p>潜在结果框架为因果推断提供了严格的数学基础。关键要点包括：</p>
+<ol>
+<li><strong>潜在结果</strong>：每个个体对每种处理都有潜在结果，但只能观察一个</li>
+<li><strong>因果效应定义</strong>：通过潜在结果的差异定义，包括ITE、ATE、CATE、ATT</li>
+<li><strong>根本问题</strong>：无法同时观察同一个体的所有潜在结果</li>
+<li><strong>识别假设</strong>：
+   - 可忽略性（无混杂）
+   - 重叠性（共同支撑）
+   - 一致性（处理定义明确）</li>
+<li><strong>SUTVA假设</strong>：无干扰和处理唯一性</li>
+<li><strong>实践应用</strong>：需要仔细设计实验或利用观察数据的特殊结构</li>
+</ol>
+<p>记住：因果推断不是关于相关性，而是关于"如果...会怎样"的反事实问题。</p>
+<h2 id="_13">练习题</h2>
+<h3 id="_14">基础题</h3>
+<p><strong>练习2.1</strong> 潜在结果的理解<br />
+某公司对100名员工进行培训效果评估，其中50人接受培训（T=1），50人未接受（T=0）。观察到培训组平均绩效提升20分，对照组平均提升5分。</p>
+<p>a) 写出每组观察到的平均结果<br />
+b) 能否直接得出ATE = 15分？为什么？<br />
+c) 需要什么假设才能识别因果效应？</p>
+<p><strong>Hint</strong>: 考虑选择偏差和潜在结果框架的假设。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) </p>
+<ul>
+<li>培训组：$E[Y^{obs}|T=1] = E[Y(1)|T=1] = 20$</li>
+<li>对照组：$E[Y^{obs}|T=0] = E[Y(0)|T=0] = 5$</li>
+</ul>
+<p>b) 不能。观察到的差异15分是：
+$$E[Y|T=1] - E[Y|T=0] = E[Y(1)|T=1] - E[Y(0)|T=0]$$
+这不等于ATE除非：</p>
+<ul>
+<li>$E[Y(1)|T=1] = E[Y(1)]$（培训组代表性）</li>
+<li>$E[Y(0)|T=0] = E[Y(0)]$（对照组代表性）</li>
+</ul>
+<p>可能存在选择偏差：能力强的员工更可能被选中培训。</p>
+<p>c) 需要可忽略性假设：$(Y(0), Y(1)) \perp!!!\perp T | X$
+即在控制协变量X后，培训分配与潜在结果独立。</p>
+</details>
+<p><strong>练习2.2</strong> SUTVA假设<br />
+以下哪些场景可能违反SUTVA假设？解释原因。</p>
+<p>a) 测试新版App界面对用户活跃度的影响<br />
+b) 评估员工加薪对工作满意度的影响<br />
+c) 研究疫苗接种对感染率的影响<br />
+d) 分析广告投放对产品销量的影响</p>
+<p><strong>Hint</strong>: 考虑个体之间是否存在相互影响。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) <strong>可能满足SUTVA</strong>：如果用户独立使用App，互不影响。</p>
+<p>b) <strong>违反SUTVA</strong>：员工之间会比较薪资，一个人加薪可能影响其他人的满意度（相对剥夺感）。</p>
+<p>c) <strong>违反SUTVA</strong>：疫苗产生群体免疫，一个人接种会降低他人感染风险。</p>
+<p>d) <strong>违反SUTVA</strong>：广告有溢出效应，看到广告的人可能影响没看到的人（口碑传播）。</p>
+</details>
+<p><strong>练习2.3</strong> 因果效应类型<br />
+某电商平台测试优惠券对购买行为的影响。总体中30%的用户收到优惠券。已知：</p>
+<ul>
+<li>ATT = 50元（收到优惠券的用户平均多消费50元）</li>
+<li>ATU = 30元（未收到优惠券的用户如果收到会多消费30元）</li>
+</ul>
+<p>计算ATE并解释其含义。</p>
+<p><strong>Hint</strong>: 使用ATE分解公式。</p>
+<details>
+<summary>参考答案</summary>
+<p>使用分解公式：
+$$ATE = P(T=1) \cdot ATT + P(T=0) \cdot ATU$$
+$$ATE = 0.3 \times 50 + 0.7 \times 30 = 15 + 21 = 36元$$
+含义：如果随机给总体中任一用户发放优惠券，平均会增加36元消费。</p>
+<p>注意ATT &gt; ATU，说明实际收到优惠券的用户（可能是活跃用户）对优惠券反应更强烈，存在选择效应。</p>
+</details>
+<h3 id="_15">挑战题</h3>
+<p><strong>练习2.4</strong> 识别假设的检验<br />
+一家科技公司通过观察数据评估远程办公（T=1）对员工生产力Y的影响。他们收集了以下协变量：</p>
+<ul>
+<li>工作年限（X1）</li>
+<li>部门（X2）</li>
+<li>过往绩效评分（X3）</li>
+</ul>
+<p>公司发现远程办公的员工平均生产力提高10%。</p>
+<p>a) 列出可能违反可忽略性假设的未观测混杂因素<br />
+b) 如何通过敏感性分析评估结论的稳健性？<br />
+c) 设计一个更好的识别策略</p>
+<p><strong>Hint</strong>: 思考什么因素同时影响远程办公选择和生产力。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 可能的未观测混杂因素：</p>
+<ul>
+<li><strong>家庭状况</strong>：有小孩的员工更倾向远程办公，但可能影响生产力</li>
+<li><strong>自律性</strong>：自律的员工既更可能选择远程办公，生产力也更高</li>
+<li><strong>通勤距离</strong>：住得远的员工选择远程办公，但距离本身不影响生产力</li>
+<li><strong>家庭办公环境</strong>：有独立办公空间的员工更可能选择并受益于远程办公</li>
+</ul>
+<p>b) 敏感性分析方法：</p>
+<ol>
+<li><strong>Rosenbaum bounds</strong>：假设存在未观测混杂使优势比改变Γ倍，计算不同Γ下的效应边界</li>
+<li><strong>E-value</strong>：计算需要多强的未观测混杂才能完全解释观察到的效应</li>
+<li><strong>负对照结果</strong>：使用不应受远程办公影响的结果（如过去的生产力）检验</li>
+</ol>
+<p>c) 更好的识别策略：</p>
+<ol>
+<li><strong>随机实验</strong>：随机分配远程办公资格</li>
+<li><strong>准实验</strong>：
+   - 利用公司政策突变（如COVID-19强制远程）
+   - 断点回归（如通勤距离超过阈值才允许远程）
+   - 工具变量（如办公室装修导致的外生远程办公）</li>
+<li><strong>面板数据</strong>：利用同一员工远程前后的变化，控制时不变特征</li>
+</ol>
+</details>
+<p><strong>练习2.5</strong> SUTVA与网络效应<br />
+某社交平台测试新功能对用户参与度的影响。用户之间存在好友关系网络。</p>
+<p>a) 为什么标准SUTVA假设不成立？<br />
+b) 定义考虑网络效应的潜在结果<br />
+c) 如何设计实验缓解SUTVA违背？</p>
+<p><strong>Hint</strong>: 考虑直接效应和间接效应的分离。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) SUTVA违背的原因：</p>
+<ul>
+<li><strong>社交影响</strong>：朋友使用新功能会影响自己的使用行为</li>
+<li><strong>网络外部性</strong>：功能价值依赖于多少朋友在使用</li>
+<li><strong>信息扩散</strong>：通过社交网络了解功能存在</li>
+</ul>
+<p>b) 网络潜在结果定义：
+设 $G_i$ 为个体i的朋友处理向量，潜在结果变为：
+$$Y_i(t_i, G_i) = Y_i(t_i, \sum_{j \in N_i} t_j / |N_i|)$$
+分解为：</p>
+<ul>
+<li>直接效应：$DE_i = Y_i(1, 0) - Y_i(0, 0)$</li>
+<li>间接效应：$IE_i = Y_i(0, 1) - Y_i(0, 0)$</li>
+<li>总效应：$TE_i = Y_i(1, 1) - Y_i(0, 0)$</li>
+</ul>
+<p>c) 实验设计策略：</p>
+<ol>
+<li>
+<p><strong>集群随机化</strong>：
+   - 将网络分割成连通分量
+   - 随机化整个集群
+   - 估计总效应</p>
+</li>
+<li>
+<p><strong>两阶段随机化</strong>：
+   - 第一阶段：随机选择"种子"用户
+   - 第二阶段：在其朋友中随机选择
+   - 分离直接和溢出效应</p>
+</li>
+<li>
+<p><strong>饱和度设计</strong>：
+   - 随机化不同比例的用户接受处理
+   - 估计不同暴露水平下的效应</p>
+</li>
+</ol>
+</details>
+<p><strong>练习2.6</strong> 反事实推理<br />
+某算法推荐系统想评估个性化推荐对用户留存的因果效应。对于用户i：</p>
+<ul>
+<li>观察到使用个性化推荐（T=1），30天留存</li>
+<li>反事实：如果使用随机推荐会怎样？</li>
+</ul>
+<p>a) 为什么这个反事实问题难以回答？<br />
+b) 如何利用其他用户的数据近似这个反事实？<br />
+c) 什么条件下这种近似是合理的？</p>
+<p><strong>Hint</strong>: 考虑用户异质性和可交换性。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 困难原因：</p>
+<ul>
+<li><strong>时间不可逆</strong>：无法让同一用户在同一时期体验两种推荐</li>
+<li><strong>用户学习</strong>：用户行为会适应推荐系统</li>
+<li><strong>状态依赖</strong>：当前偏好受历史推荐影响</li>
+</ul>
+<p>b) 近似方法：</p>
+<ol>
+<li><strong>匹配</strong>：找到相似用户j（基于特征X）且Tj=0，用Yj(0)近似Yi(0)</li>
+<li><strong>回归调整</strong>：$\hat{Y}_i(0) = \hat{E}[Y|T=0, X=X_i]$</li>
+<li><strong>逆概率加权</strong>：使用倾向得分重新加权对照组</li>
+</ol>
+<p>c) 合理性条件：</p>
+<ol>
+<li><strong>可交换性</strong>：$(Y_i(0), Y_i(1)) \perp!!!\perp T_i | X_i$</li>
+<li><strong>重叠</strong>：存在特征相似但接受不同处理的用户</li>
+<li><strong>SUTVA</strong>：用户之间的推荐相互独立</li>
+<li><strong>稳定性</strong>：用户偏好在研究期间相对稳定</li>
+</ol>
+<p>关键假设：条件on X后，用户i和j的潜在结果分布相同：
+$$Y_i(0)|X_i \stackrel{d}{=} Y_j(0)|X_j \text{ when } X_i = X_j$$</p>
+</details>
+<p><strong>练习2.7</strong> 开放性思考题<br />
+讨论以下问题：潜在结果框架能否用于研究历史事件的因果效应（如"如果某历史事件没有发生会怎样"）？有什么局限性？</p>
+<p><strong>Hint</strong>: 考虑可重复性、SUTVA、和反事实的定义。</p>
+<details>
+<summary>参考答案</summary>
+<p>潜在结果框架应用于历史事件的挑战：</p>
+<p><strong>理论层面的问题</strong>：</p>
+<ol>
+<li><strong>唯一性</strong>：历史事件是唯一的，没有可重复的单元</li>
+<li><strong>SUTVA极度违背</strong>：历史事件相互关联，蝴蝶效应</li>
+<li><strong>处理定义模糊</strong>：什么构成"事件没有发生"？</li>
+<li><strong>多重均衡</strong>：历史可能有多条可能路径</li>
+</ol>
+<p><strong>方法论挑战</strong>：</p>
+<ol>
+<li><strong>无法观察反事实</strong>：没有平行历史做对照</li>
+<li><strong>混杂因素众多</strong>：历史因素错综复杂</li>
+<li><strong>时间依赖</strong>：后续事件依赖前序事件</li>
+</ol>
+<p><strong>可能的方法</strong>：</p>
+<ol>
+<li><strong>合成控制</strong>：用其他国家/地区构造反事实</li>
+<li><strong>断点回归</strong>：利用历史上的临界事件</li>
+<li><strong>结构模型</strong>：建立历史过程的理论模型</li>
+</ol>
+<p><strong>局限性</strong>：</p>
+<ul>
+<li>结论高度依赖模型假设</li>
+<li>无法验证反事实的合理性</li>
+<li>更适合做定性而非定量分析</li>
+</ul>
+<p><strong>启示</strong>：
+潜在结果框架最适合可重复、可操作的干预。对于独特历史事件，它提供思考框架但难以严格应用。这提醒我们因果推断方法都有其适用边界。</p>
+</details>
+<h2 id="_16">常见陷阱与错误</h2>
+<h3 id="1">1. 概念混淆</h3>
+<p><strong>错误</strong>：将相关性当作因果性</p>
+<ul>
+<li>❌ "处理组结果更好，所以处理有效"</li>
+<li>✅ "在满足识别假设下，处理组与对照组的差异可归因于处理"</li>
+</ul>
+<p><strong>错误</strong>：混淆不同类型的因果效应</p>
+<ul>
+<li>❌ 用ATT代替ATE做政策推广决策</li>
+<li>✅ 明确区分目标人群和识别的效应类型</li>
+</ul>
+<h3 id="2_1">2. 假设违背</h3>
+<p><strong>错误</strong>：忽视未观测混杂</p>
+<ul>
+<li><strong>症状</strong>：仅控制容易观测的变量</li>
+<li><strong>后果</strong>：估计偏差可能很大</li>
+<li><strong>解决</strong>：敏感性分析、寻找准实验</li>
+</ul>
+<p><strong>错误</strong>：忽视重叠假设</p>
+<ul>
+<li><strong>症状</strong>：处理组和对照组特征差异极大</li>
+<li><strong>后果</strong>：外推导致估计不可靠</li>
+<li><strong>解决</strong>：限制分析样本、检查倾向得分分布</li>
+</ul>
+<h3 id="3-sutva">3. SUTVA相关错误</h3>
+<p><strong>错误</strong>：忽视溢出效应</p>
+<ul>
+<li><strong>例子</strong>：社交网络实验、地理相邻单元</li>
+<li><strong>后果</strong>：低估或高估真实效应</li>
+<li><strong>解决</strong>：集群随机化、显式建模干扰</li>
+</ul>
+<p><strong>错误</strong>：处理定义不明确</p>
+<ul>
+<li><strong>例子</strong>："培训"包含多种形式和强度</li>
+<li><strong>后果</strong>：违反一致性假设</li>
+<li><strong>解决</strong>：精确定义处理的各个方面</li>
+</ul>
+<h3 id="4">4. 实践中的错误</h3>
+<p><strong>错误</strong>：选择性报告</p>
+<ul>
+<li><strong>表现</strong>：只报告显著的结果</li>
+<li><strong>解决</strong>：预注册分析计划</li>
+</ul>
+<p><strong>错误</strong>：忽视效应异质性</p>
+<ul>
+<li><strong>表现</strong>：只关注平均效应</li>
+<li><strong>解决</strong>：分析CATE，理解谁受益更多</li>
+</ul>
+<h3 id="5">5. 解释错误</h3>
+<p><strong>错误</strong>：过度推广</p>
+<ul>
+<li>❌ "对这个样本有效，所以对所有人有效"</li>
+<li>✅ 明确外部有效性的边界</li>
+</ul>
+<p><strong>错误</strong>：忽视均衡效应</p>
+<ul>
+<li><strong>问题</strong>：小规模实验扩大后市场反应不同</li>
+<li><strong>解决</strong>：考虑一般均衡效应</li>
+</ul>
+<h2 id="_17">最佳实践检查清单</h2>
+<h3 id="_18">设计阶段</h3>
+<ul>
+<li>[ ] <strong>明确因果问题</strong></li>
+<li>清晰定义处理变量</li>
+<li>明确目标因果效应（ATE/ATT/CATE）</li>
+<li>
+<p>确定目标人群</p>
+</li>
+<li>
+<p>[ ] <strong>评估识别策略</strong></p>
+</li>
+<li>列出所有潜在混杂因素</li>
+<li>检查重叠假设的合理性</li>
+<li>
+<p>评估SUTVA的适用性</p>
+</li>
+<li>
+<p>[ ] <strong>数据需求分析</strong></p>
+</li>
+<li>确定需要的协变量</li>
+<li>评估样本量是否充足</li>
+<li>考虑数据收集的可行性</li>
+</ul>
+<h3 id="_19">实施阶段</h3>
+<ul>
+<li>[ ] <strong>数据质量检查</strong></li>
+<li>检查缺失数据模式</li>
+<li>验证处理分配机制</li>
+<li>
+<p>检查协变量平衡性</p>
+</li>
+<li>
+<p>[ ] <strong>假设验证</strong></p>
+</li>
+<li>检验重叠假设（倾向得分分布）</li>
+<li>评估可忽略性（平衡性检验）</li>
+<li>
+<p>检查SUTVA违背的迹象</p>
+</li>
+<li>
+<p>[ ] <strong>稳健性分析</strong></p>
+</li>
+<li>尝试多种识别方法</li>
+<li>进行敏感性分析</li>
+<li>检验不同模型设定</li>
+</ul>
+<h3 id="_20">分析阶段</h3>
+<ul>
+<li>[ ] <strong>效应估计</strong></li>
+<li>计算点估计和置信区间</li>
+<li>分析效应异质性</li>
+<li>
+<p>检查极端值影响</p>
+</li>
+<li>
+<p>[ ] <strong>验证检查</strong></p>
+</li>
+<li>安慰剂检验</li>
+<li>负对照检验</li>
+<li>预处理趋势检验（如适用）</li>
+</ul>
+<h3 id="_21">报告阶段</h3>
+<ul>
+<li>[ ] <strong>透明报告</strong></li>
+<li>清楚说明所有假设</li>
+<li>报告所有预设分析</li>
+<li>
+<p>讨论局限性</p>
+</li>
+<li>
+<p>[ ] <strong>结果解释</strong></p>
+</li>
+<li>区分统计显著和实际重要</li>
+<li>讨论外部有效性</li>
+<li>
+<p>提供政策含义时谨慎</p>
+</li>
+<li>
+<p>[ ] <strong>可重复性</strong></p>
+</li>
+<li>提供数据和代码（如可能）</li>
+<li>详细描述方法</li>
+<li>记录所有分析决策</li>
+</ul>
+<h3 id="_22">关键提醒</h3>
+<p>⚠️ <strong>永远记住</strong>：</p>
+<ul>
+<li>因果推断需要假设，没有假设就没有识别</li>
+<li>好的研究设计比复杂的统计方法更重要</li>
+<li>承认局限性是优秀研究的标志</li>
+<li>因果效应可能因人、因时、因地而异</li>
+</ul>
+<hr />
+<p>通过本章的学习，你已经掌握了潜在结果框架的核心概念。这个框架将贯穿整个教程，是理解后续所有因果推断方法的基础。下一章，我们将学习另一个重要的因果推断框架——图模型与因果图。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter1.html" class="nav-link prev">← 第一章：因果推断导论</a><a href="chapter3.html" class="nav-link next">第三章：图模型与因果图 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

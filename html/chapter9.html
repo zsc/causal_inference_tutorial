@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第九章：中介分析与路径分析</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第九章：中介分析与路径分析</h1>
+<p>在因果推断中，我们不仅关心处理对结果的总体影响，更想理解这种影响是如何产生的——通过什么机制或路径实现。中介分析（Mediation Analysis）为我们提供了打开因果"黑箱"的钥匙，帮助我们理解因果效应的传导机制。本章将系统介绍中介分析的理论框架、识别策略、敏感性分析方法，以及在复杂场景下的应用。</p>
+<h2 id="91">9.1 直接效应与间接效应</h2>
+<h3 id="911">9.1.1 因果路径的分解</h3>
+<p>考虑一个简单的因果链：处理变量 $T$ 通过中介变量 $M$ 影响结果变量 $Y$。这个过程可以用以下因果图表示：</p>
+<div class="codehilite"><pre><span></span><code>    T → M → Y
+    ↘     ↗
+      直接
+</code></pre></div>
+
+<p>在这个框架下，$T$ 对 $Y$ 的总效应（Total Effect, TE）可以分解为：</p>
+<ul>
+<li><strong>直接效应（Direct Effect, DE）</strong>：$T$ 不经过 $M$ 直接对 $Y$ 的影响</li>
+<li><strong>间接效应（Indirect Effect, IE）</strong>：$T$ 通过 $M$ 对 $Y$ 的影响</li>
+</ul>
+<p>数学上，总效应可以表示为：
+$$\text{TE} = \text{DE} + \text{IE}$$</p>
+<h3 id="912-baron-kenny">9.1.2 Baron-Kenny方法</h3>
+<p>Baron和Kenny（1986）提出的经典中介分析方法基于线性回归模型：</p>
+<p><strong>步骤1</strong>：检验 $T$ 对 $Y$ 的总效应
+$$Y = c \cdot T + e_1$$
+<strong>步骤2</strong>：检验 $T$ 对 $M$ 的效应
+$$M = a \cdot T + e_2$$
+<strong>步骤3</strong>：同时纳入 $T$ 和 $M$ 预测 $Y$
+$$Y = c' \cdot T + b \cdot M + e_3$$
+其中：</p>
+<ul>
+<li>总效应 = $c$</li>
+<li>直接效应 = $c'$</li>
+<li>间接效应 = $a \times b$</li>
+</ul>
+<h3 id="913-baron-kenny">9.1.3 Baron-Kenny方法的局限性</h3>
+<p>尽管Baron-Kenny方法直观易懂，但存在重要局限：</p>
+<ol>
+<li><strong>线性假设</strong>：假设所有关系都是线性的，无法处理非线性关系</li>
+<li><strong>无交互作用</strong>：假设处理和中介变量之间没有交互作用</li>
+<li><strong>时序混淆</strong>：没有明确考虑变量的时间顺序</li>
+<li><strong>因果识别不足</strong>：缺乏对混杂因素的系统考虑</li>
+</ol>
+<h2 id="92">9.2 中介效应的识别</h2>
+<h3 id="921">9.2.1 潜在结果框架下的中介分析</h3>
+<p>使用Rubin因果模型的潜在结果框架，我们可以更严格地定义中介效应。对于每个个体 $i$，定义：</p>
+<ul>
+<li>$Y_i(t, m)$：当处理为 $t$，中介变量为 $m$ 时的潜在结果</li>
+<li>$M_i(t)$：当处理为 $t$ 时中介变量的潜在值</li>
+</ul>
+<h3 id="922">9.2.2 自然直接效应与间接效应</h3>
+<p><strong>自然直接效应（Natural Direct Effect, NDE）</strong>定义为：
+$$\text{NDE} = E[Y(1, M(0)) - Y(0, M(0))]$$
+这表示保持中介变量在控制条件下的"自然"水平时，处理对结果的直接影响。</p>
+<p><strong>自然间接效应（Natural Indirect Effect, NIE）</strong>定义为：
+$$\text{NIE} = E[Y(1, M(1)) - Y(1, M(0))]$$
+这表示在处理条件下，中介变量变化带来的间接影响。</p>
+<p>总效应可以分解为：
+$$\text{TE} = E[Y(1, M(1)) - Y(0, M(0))] = \text{NDE} + \text{NIE}$$</p>
+<h3 id="923">9.2.3 控制直接效应与间接效应</h3>
+<p><strong>控制直接效应（Controlled Direct Effect, CDE）</strong>定义为：
+$$\text{CDE}(m) = E[Y(1, m) - Y(0, m)]$$
+这表示将中介变量固定在特定水平 $m$ 时的直接效应。</p>
+<p>CDE与NDE的区别在于：</p>
+<ul>
+<li>CDE：人为固定中介变量的值</li>
+<li>NDE：允许中介变量取其"自然"值</li>
+</ul>
+<h3 id="924">9.2.4 识别假设</h3>
+<p>中介效应的因果识别需要以下关键假设：</p>
+<ol>
+<li>
+<p><strong>无未测量混杂假设</strong>：
+   - $(Y(t,m), M(t)) \perp!!!\perp T | X$
+   - $Y(t,m) \perp!!!\perp M | T, X$</p>
+</li>
+<li>
+<p><strong>时序一致性假设</strong>：处理发生在中介变量之前，中介变量发生在结果之前</p>
+</li>
+<li>
+<p><strong>交叉世界独立性假设</strong>：
+$$Y(t, m) \perp!!!\perp M(t') | X \quad \text{for all } t, t', m$$
+这是一个强假设，要求不同处理水平下的潜在结果和潜在中介变量值相互独立。</p>
+</li>
+</ol>
+<h2 id="93">9.3 敏感性分析</h2>
+<p>中介分析的识别假设往往难以完全满足，特别是无未测量混杂假设。敏感性分析帮助我们评估违反这些假设时结论的稳健性。</p>
+<h3 id="931">9.3.1 未测量混杂的影响</h3>
+<p>考虑存在未测量混杂因素 $U$ 影响中介变量和结果：</p>
+<div class="codehilite"><pre><span></span><code>    T → M → Y
+        ↑   ↑
+        U ──┘
+</code></pre></div>
+
+<p>这种情况下，传统的中介分析会产生偏差。敏感性分析的核心是量化这种偏差的大小。</p>
+<h3 id="932">9.3.2 敏感性参数</h3>
+<p>定义敏感性参数 $\rho$ 表示残差相关性：
+$$\rho = \text{Corr}(\epsilon_M, \epsilon_Y)$$
+其中 $\epsilon_M$ 和 $\epsilon_Y$ 分别是中介变量和结果变量回归模型的残差。</p>
+<p>在线性模型下，间接效应的偏差可以表示为：
+$$\text{Bias}(\hat{IE}) = \rho \cdot \sigma_M \cdot \sigma_Y \cdot \frac{1}{\text{Var}(M|T,X)}$$</p>
+<h3 id="933">9.3.3 敏感性分析的实施步骤</h3>
+<ol>
+<li><strong>设定敏感性参数范围</strong>：例如 $\rho \in [-0.3, 0.3]$</li>
+<li><strong>计算不同参数值下的效应估计</strong>：对每个 $\rho$ 值重新计算间接效应</li>
+<li><strong>绘制敏感性图</strong>：展示效应估计如何随敏感性参数变化</li>
+<li><strong>确定稳健性区间</strong>：找出使结论改变的参数阈值</li>
+</ol>
+<h3 id="934-e-value">9.3.4 基于E-value的敏感性分析</h3>
+<p>E-value是评估未测量混杂强度的另一种方法。对于中介分析，我们可以计算：</p>
+<ul>
+<li>使间接效应变为零所需的最小混杂强度</li>
+<li>使直接效应变为零所需的最小混杂强度</li>
+</ul>
+<p>E-value越大，说明结果对未测量混杂越稳健。</p>
+<h2 id="94">9.4 多重中介模型</h2>
+<p>实际应用中，因果效应往往通过多个中介变量传导。多重中介模型帮助我们理解复杂的因果机制。</p>
+<h3 id="941">9.4.1 并行中介模型</h3>
+<p>在并行中介模型中，多个中介变量独立地传导处理效应：</p>
+<div class="codehilite"><pre><span></span><code>      ┌→ M1 →┐
+    T →  M2  → Y
+      └→ M3 →┘
+</code></pre></div>
+
+<p>总的间接效应等于各路径间接效应之和：
+$$\text{IE}_{\text{total}} = \text{IE}_{M1} + \text{IE}_{M2} + \text{IE}_{M3}$$</p>
+<h3 id="942">9.4.2 串行中介模型</h3>
+<p>在串行中介模型中，中介变量之间存在因果关系：</p>
+<div class="codehilite"><pre><span></span><code>    T → M1 → M2 → Y
+    ↘       ↗
+      直接
+</code></pre></div>
+
+<p>这种模型需要考虑：</p>
+<ul>
+<li>$T \to M1 \to Y$ 的间接效应</li>
+<li>$T \to M1 \to M2 \to Y$ 的间接效应</li>
+<li>$T \to M2 \to Y$ 的间接效应（如果存在）</li>
+</ul>
+<h3 id="943">9.4.3 效应分解策略</h3>
+<p>对于复杂的多重中介模型，可以采用以下策略：</p>
+<ol>
+<li><strong>逐步分解法</strong>：逐个添加中介变量，观察效应变化</li>
+<li><strong>路径分析法</strong>：计算每条因果路径的贡献</li>
+<li><strong>结构方程模型</strong>：使用SEM同时估计所有路径</li>
+</ol>
+<h3 id="944">9.4.4 识别挑战</h3>
+<p>多重中介模型面临额外的识别挑战：</p>
+<ul>
+<li><strong>中介变量间的混杂</strong>：需要控制影响多个中介变量的共同因素</li>
+<li><strong>时序关系</strong>：确保中介变量的时间顺序正确</li>
+<li><strong>交互效应</strong>：处理与不同中介变量的交互作用</li>
+</ul>
+<h2 id="95">9.5 行业案例：字节跳动内容质量对用户留存的影响机制</h2>
+<h3 id="_2">背景</h3>
+<p>字节跳动的短视频平台需要理解内容质量如何影响用户留存。管理层假设：高质量内容不仅直接提升用户满意度，还通过增加用户互动（点赞、评论、分享）间接影响留存率。</p>
+<h3 id="_3">因果问题</h3>
+<ul>
+<li><strong>处理变量（T）</strong>：内容质量得分（基于算法评估的0-100分）</li>
+<li><strong>中介变量（M）</strong>：用户互动率（点赞+评论+分享的综合指标）</li>
+<li><strong>结果变量（Y）</strong>：7日留存率</li>
+<li><strong>协变量（X）</strong>：用户画像、历史行为、时间特征等</li>
+</ul>
+<h3 id="_4">因果图</h3>
+<div class="codehilite"><pre><span></span><code>内容质量 → 用户互动 → 7日留存
+    ↘                ↗
+         直接效应
+
+潜在混杂：
+
+- 用户偏好 → 内容质量选择 &amp; 留存
+- 时间趋势 → 互动率 &amp; 留存
+</code></pre></div>
+
+<h3 id="_5">分析策略</h3>
+<p><strong>第一步：数据准备</strong></p>
+<ul>
+<li>收集100万用户的观看记录</li>
+<li>计算每个用户接触内容的平均质量分</li>
+<li>统计用户互动行为</li>
+<li>追踪7日留存情况</li>
+</ul>
+<p><strong>第二步：识别策略</strong>
+利用推荐算法的随机性作为准实验：</p>
+<ul>
+<li>算法会随机展示不同质量的内容给用户</li>
+<li>控制用户特征后，内容质量分配近似随机</li>
+</ul>
+<p><strong>第三步：中介分析</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">总效应模型</span><span class="err">：</span>
+<span class="w">   </span><span class="n">留存</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">β₀</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">β₁</span><span class="err">·</span><span class="n">内容质量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">γ</span><span class="err">·</span><span class="n">协变量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ε</span>
+
+<span class="mf">2.</span><span class="w"> </span><span class="n">中介变量模型</span><span class="err">：</span>
+<span class="w">   </span><span class="n">互动率</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">α₀</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">α₁</span><span class="err">·</span><span class="n">内容质量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">δ</span><span class="err">·</span><span class="n">协变量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ε</span>
+
+<span class="mf">3.</span><span class="w"> </span><span class="n">完整模型</span><span class="err">：</span>
+<span class="w">   </span><span class="n">留存</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">θ₀</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">θ₁</span><span class="err">·</span><span class="n">内容质量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">θ₂</span><span class="err">·</span><span class="n">互动率</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">λ</span><span class="err">·</span><span class="n">协变量</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ε</span>
+</code></pre></div>
+
+<h3 id="_6">分析结果</h3>
+<p><strong>效应分解</strong>：</p>
+<ul>
+<li>总效应：内容质量每提升10分，留存率提升2.5%</li>
+<li>直接效应：1.0%（40%）</li>
+<li>间接效应（通过互动）：1.5%（60%）</li>
+</ul>
+<p><strong>路径分析</strong>：</p>
+<ul>
+<li>内容质量 → 互动率：质量每提升10分，互动率提升15%</li>
+<li>互动率 → 留存：互动率每提升10%，留存率提升1%</li>
+</ul>
+<p><strong>异质性分析</strong>：</p>
+<ul>
+<li>新用户：间接效应占比更高（70%）</li>
+<li>老用户：直接效应占比更高（55%）</li>
+</ul>
+<h3 id="_7">敏感性分析</h3>
+<p>考虑未测量的用户兴趣偏好可能同时影响互动和留存：</p>
+<ol>
+<li><strong>基准估计</strong>：间接效应 = 1.5%</li>
+<li><strong>敏感性测试</strong>：
+   - 弱混杂（ρ=0.1）：间接效应 = 1.3%
+   - 中等混杂（ρ=0.2）：间接效应 = 1.1%
+   - 强混杂（ρ=0.3）：间接效应 = 0.9%</li>
+</ol>
+<p>结论：即使存在中等程度的未测量混杂，间接效应仍然显著。</p>
+<h3 id="_8">业务启示</h3>
+<ol>
+<li><strong>内容策略</strong>：提升内容质量是提高留存的有效手段</li>
+<li><strong>互动设计</strong>：优化互动功能可以放大内容质量的效果</li>
+<li><strong>用户分层</strong>：对新用户应更注重互动引导</li>
+<li><strong>算法优化</strong>：推荐算法应同时考虑内容质量和互动潜力</li>
+</ol>
+<h2 id="_9">本章小结</h2>
+<p>中介分析是理解因果机制的重要工具，它帮助我们打开因果效应的"黑箱"，理解处理如何通过中间变量影响最终结果。</p>
+<h3 id="_10">核心概念回顾</h3>
+<ol>
+<li>
+<p><strong>效应分解</strong>：
+   - 总效应 = 直接效应 + 间接效应
+   - 自然效应 vs 控制效应</p>
+</li>
+<li>
+<p><strong>识别条件</strong>：
+   - 无未测量混杂假设
+   - 时序一致性
+   - 交叉世界独立性</p>
+</li>
+<li>
+<p><strong>关键公式</strong>：
+   - 自然直接效应：$\text{NDE} = E[Y(1, M(0)) - Y(0, M(0))]$
+   - 自然间接效应：$\text{NIE} = E[Y(1, M(1)) - Y(1, M(0))]$
+   - Baron-Kenny分解：$c = c' + ab$</p>
+</li>
+<li>
+<p><strong>敏感性分析</strong>：
+   - 评估未测量混杂的影响
+   - 使用敏感性参数和E-value
+   - 确定结论的稳健性边界</p>
+</li>
+<li>
+<p><strong>多重中介</strong>：
+   - 并行中介：多条独立路径
+   - 串行中介：级联效应
+   - 复杂网络的路径分析</p>
+</li>
+</ol>
+<h3 id="_11">实践要点</h3>
+<ul>
+<li>中介分析需要强假设，实践中应谨慎解释</li>
+<li>敏感性分析是必不可少的稳健性检验</li>
+<li>时间顺序和理论支撑对因果解释至关重要</li>
+<li>多重中介模型能更真实地反映复杂机制</li>
+</ul>
+<h2 id="_12">练习题</h2>
+<h3 id="_13">基础题</h3>
+<p><strong>习题9.1</strong> Baron-Kenny方法的基本步骤</p>
+<p>某研究考察教育年限（T）对收入（Y）的影响，假设工作技能（M）是中介变量。研究者进行了以下三个回归：</p>
+<ul>
+<li>回归1：Y = 5000T + ε，系数显著</li>
+<li>回归2：M = 2T + ε，系数显著  </li>
+<li>回归3：Y = 2000T + 1500M + ε，两个系数都显著</li>
+</ul>
+<p>请问：
+a) 根据Baron-Kenny方法，总效应、直接效应和间接效应分别是多少？
+b) 中介效应占总效应的比例是多少？
+c) 这是完全中介还是部分中介？</p>
+<p><em>Hint</em>：间接效应等于a×b，其中a是T对M的效应，b是控制T后M对Y的效应。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 效应分解：</p>
+<ul>
+<li>总效应 = 5000（回归1的系数）</li>
+<li>直接效应 = 2000（回归3中T的系数）</li>
+<li>间接效应 = 2 × 1500 = 3000（a×b）</li>
+<li>验证：5000 = 2000 + 3000 ✓</li>
+</ul>
+<p>b) 中介效应比例 = 3000/5000 = 60%</p>
+<p>c) 这是部分中介，因为控制M后，T对Y仍有显著的直接效应（2000≠0）。如果直接效应为0，才是完全中介。</p>
+</details>
+<p><strong>习题9.2</strong> 自然效应的理解</p>
+<p>在一个员工培训项目中：</p>
+<ul>
+<li>T = 1表示接受培训，T = 0表示未接受培训</li>
+<li>M表示工作积极性（0-10分）</li>
+<li>Y表示绩效评分（0-100分）</li>
+</ul>
+<p>假设我们观察到：</p>
+<ul>
+<li>E[M(1)] = 8，E[M(0)] = 5</li>
+<li>E[Y(1,8)] = 85，E[Y(0,8)] = 75</li>
+<li>E[Y(1,5)] = 70，E[Y(0,5)] = 60</li>
+</ul>
+<p>请计算：
+a) 控制直接效应CDE(8)和CDE(5)
+b) 如果假设Y(t,m)是线性的，自然直接效应NDE是多少？</p>
+<p><em>Hint</em>：CDE(m) = E[Y(1,m) - Y(0,m)]；NDE需要考虑M在控制条件下的自然值。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 控制直接效应：</p>
+<ul>
+<li>CDE(8) = E[Y(1,8) - Y(0,8)] = 85 - 75 = 10</li>
+<li>CDE(5) = E[Y(1,5) - Y(0,5)] = 70 - 60 = 10</li>
+</ul>
+<p>注意：在线性模型下，CDE对所有m值都相同。</p>
+<p>b) 自然直接效应：
+   NDE = E[Y(1,M(0)) - Y(0,M(0))]
+   由于M(0)的期望值是5，在线性假设下：
+   NDE = E[Y(1,5) - Y(0,5)] = 70 - 60 = 10</p>
+<p>这个例子展示了在线性无交互模型下，CDE和NDE相等。</p>
+</details>
+<p><strong>习题9.3</strong> 敏感性参数的计算</p>
+<p>某中介分析研究发现：</p>
+<ul>
+<li>间接效应估计值 = 0.3</li>
+<li>中介变量残差标准差 σ_M = 2</li>
+<li>结果变量残差标准差 σ_Y = 5</li>
+<li>Var(M|T,X) = 4</li>
+</ul>
+<p>如果存在未测量混杂使得残差相关性ρ = 0.2，请问：
+a) 间接效应的偏差是多少？
+b) 真实的间接效应是多少？
+c) 如果要使间接效应变为0，需要多大的ρ？</p>
+<p><em>Hint</em>：使用偏差公式 Bias = ρ × σ_M × σ_Y / Var(M|T,X)</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 偏差计算：
+   Bias = 0.2 × 2 × 5 / 4 = 0.2 × 10 / 4 = 0.5</p>
+<p>b) 真实间接效应：
+   真实效应 = 观察效应 - 偏差 = 0.3 - 0.5 = -0.2</p>
+<p>这表明如果存在这种程度的未测量混杂，真实的间接效应可能是负的！</p>
+<p>c) 使间接效应为0的ρ：
+   设置 0.3 - ρ × 2 × 5 / 4 = 0
+   解得：ρ = 0.3 × 4 / 10 = 0.12</p>
+<p>这意味着即使较小的残差相关性（ρ = 0.12）也足以完全解释观察到的间接效应。</p>
+</details>
+<h3 id="_14">挑战题</h3>
+<p><strong>习题9.4</strong> 多重中介的路径分析</p>
+<p>某在线教育平台研究课程设计（T）对学习成果（Y）的影响机制，考虑两个中介变量：</p>
+<ul>
+<li>M1：学习参与度</li>
+<li>M2：知识掌握度</li>
+</ul>
+<p>假设因果结构为：T → M1 → M2 → Y，同时T对M2和Y都有直接影响。</p>
+<p>通过路径分析得到以下标准化路径系数：</p>
+<ul>
+<li>T → M1: 0.4</li>
+<li>T → M2: 0.2</li>
+<li>T → Y: 0.3</li>
+<li>M1 → M2: 0.5</li>
+<li>M1 → Y: 0.2</li>
+<li>M2 → Y: 0.3</li>
+</ul>
+<p>请问：
+a) 画出完整的路径图并标注所有系数
+b) 计算T对Y的总效应
+c) 分解出每条因果路径的贡献
+d) 如果要最大化课程效果，应该重点改进哪个环节？</p>
+<p><em>Hint</em>：总效应等于所有从T到Y的路径效应之和。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 路径图：</p>
+<div class="codehilite"><pre><span></span><code>      0.4    0.5
+   T ----→ M1 ----→ M2
+   |        |        |
+0.2|     0.2|     0.3|
+   ↓        ↓        ↓
+   M2 ←-----┘        Y
+   |                 ^
+0.3|              0.3|
+   └-----------------┘
+</code></pre></div>
+
+<p>b) 总效应计算：</p>
+<ul>
+<li>直接路径：T → Y = 0.3</li>
+<li>间接路径1：T → M1 → Y = 0.4 × 0.2 = 0.08</li>
+<li>间接路径2：T → M2 → Y = 0.2 × 0.3 = 0.06</li>
+<li>间接路径3：T → M1 → M2 → Y = 0.4 × 0.5 × 0.3 = 0.06</li>
+</ul>
+<p>总效应 = 0.3 + 0.08 + 0.06 + 0.06 = 0.50</p>
+<p>c) 路径贡献分解：</p>
+<ul>
+<li>直接效应：60%（0.3/0.5）</li>
+<li>通过参与度（M1）：16%（0.08/0.5）</li>
+<li>通过知识掌握（M2）直接：12%（0.06/0.5）</li>
+<li>通过参与度影响知识掌握：12%（0.06/0.5）</li>
+</ul>
+<p>d) 改进建议：
+   直接效应占60%，说明课程设计本身的质量最重要。在间接路径中，通过提高参与度的总贡献为28%（16%+12%），因此改进参与度激励机制是第二优先级。</p>
+</details>
+<p><strong>习题9.5</strong> 交互作用下的中介分析</p>
+<p>考虑一个包含处理-中介交互作用的模型：
+Y = β₀ + β₁T + β₂M + β₃T×M + ε</p>
+<p>其中T是二元处理变量，M是连续中介变量。</p>
+<p>给定参数估计：β₁ = 2, β₂ = 3, β₃ = 1，且E[M|T=1] = 4, E[M|T=0] = 2</p>
+<p>请问：
+a) 为什么传统的Baron-Kenny方法不适用？
+b) 计算控制直接效应CDE(m=3)
+c) 计算自然直接效应NDE和自然间接效应NIE
+d) 这个交互作用的实际含义是什么？</p>
+<p><em>Hint</em>：存在交互作用时，效应分解变得复杂，需要考虑不同m值下的效应。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) Baron-Kenny方法不适用的原因：</p>
+<ul>
+<li>Baron-Kenny假设效应可加性（无交互作用）</li>
+<li>当存在T×M交互时，直接效应依赖于M的值</li>
+<li>简单的乘积法（a×b）不再给出正确的间接效应</li>
+</ul>
+<p>b) CDE(m=3)计算：
+   CDE(3) = E[Y|T=1,M=3] - E[Y|T=0,M=3]
+         = (β₁ + β₃×3) - 0
+         = 2 + 1×3 = 5</p>
+<p>c) 自然效应计算：
+   NDE = E[Y(1,M(0))] - E[Y(0,M(0))]
+       = β₁ + β₃×E[M(0)]
+       = 2 + 1×2 = 4</p>
+<p>NIE = E[Y(1,M(1))] - E[Y(1,M(0))]
+       = (β₂ + β₃)×(E[M(1)] - E[M(0)])
+       = (3 + 1)×(4 - 2) = 4×2 = 8</p>
+<p>总效应 = NDE + NIE = 4 + 8 = 12</p>
+<p>d) 交互作用的含义：
+   β₃ &gt; 0表示处理和中介变量之间存在协同作用。具体来说：</p>
+<ul>
+<li>当M值较高时，处理的直接效应更强</li>
+<li>处理不仅通过改变M的水平影响Y，还改变了M对Y的影响强度</li>
+<li>这种交互可能反映了处理使个体对中介变量更加敏感</li>
+</ul>
+</details>
+<p><strong>习题9.6</strong> 时变中介分析</p>
+<p>某公司实施新管理制度（T），通过每月的员工满意度（M_t）影响年终离职率（Y）。数据收集了12个月的满意度。</p>
+<p>思考以下问题：
+a) 如何定义时变中介效应？
+b) 识别时变中介效应需要什么额外假设？
+c) 如果早期满意度影响后期满意度，如何处理这种动态依赖？
+d) 设计一个分析策略来估计不同时期满意度的中介作用</p>
+<p><em>Hint</em>：考虑将时间维度纳入因果图。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 时变中介效应定义：</p>
+<ul>
+<li>将每个时期的满意度M_t视为独立的中介变量</li>
+<li>总间接效应 = Σ(t=1到12) IE_t</li>
+<li>其中IE_t是通过时期t满意度传导的间接效应</li>
+</ul>
+<p>b) 额外识别假设：</p>
+<ul>
+<li>序列可忽略性：T ⊥ Y(t,m₁,...,m₁₂) | X</li>
+<li>无时变混杂：M_t ⊥ Y | T, M₁,...,M_{t-1}, X</li>
+<li>时间一致性：早期中介不受后期中介影响</li>
+</ul>
+<p>c) 处理动态依赖：</p>
+<ul>
+<li>使用边际结构模型（MSM）处理时变混杂</li>
+<li>构建动态因果图：T → M₁ → M₂ → ... → M₁₂ → Y</li>
+<li>使用G-computation或IPW估计累积效应</li>
+<li>考虑滞后效应：M_t可能影响M_{t+k}</li>
+</ul>
+<p>d) 分析策略：</p>
+<ol>
+<li>
+<p>第一阶段：估计处理对各期满意度的影响
+      M_t = α_t × T + γ_t × X + ε_t</p>
+</li>
+<li>
+<p>第二阶段：使用结构方程模型
+      Y = β₀ + β_T × T + Σβ_t × M_t + δ × X + ε</p>
+</li>
+<li>
+<p>时期特定间接效应：
+      IE_t = α_t × β_t</p>
+</li>
+<li>
+<p>时间模式分析：</p>
+<ul>
+<li>绘制IE_t随时间的变化曲线</li>
+<li>识别关键时期（如前3个月最重要）</li>
+<li>检验衰减模式：IE_t = θ × exp(-λt)</li>
+</ul>
+</li>
+</ol>
+</details>
+<p><strong>习题9.7</strong> 因果中介分析的假设检验</p>
+<p>某研究声称发现了显著的中介效应，但你怀疑可能存在反向因果（Y影响M）。</p>
+<p>设计一套诊断方法来检验中介分析的关键假设：
+a) 如何检验时序假设？
+b) 如何检验无未测量混杂假设？
+c) 如何检验反向因果的可能性？
+d) 如果发现假设违反，有什么补救措施？</p>
+<p><em>Hint</em>：考虑使用工具变量、负对照等方法。</p>
+<details>
+<summary>参考答案</summary>
+<p>a) 时序假设检验：</p>
+<ul>
+<li>收集纵向数据，确认T在M之前，M在Y之前</li>
+<li>交叉滞后面板模型：同时估计M_t → Y_{t+1}和Y_t → M_{t+1}</li>
+<li>事件研究：观察处理前后M和Y的动态变化</li>
+<li>Granger因果检验：测试时间优先性</li>
+</ul>
+<p>b) 无未测量混杂检验：</p>
+<ul>
+<li>负对照结果：使用不应受影响的结果变量</li>
+<li>负对照暴露：使用不应有因果效应的处理</li>
+<li>E-value计算：量化需要多强的混杂才能解释效应</li>
+<li>多重中介对比：不同中介路径应给出一致结果</li>
+</ul>
+<p>c) 反向因果检验：</p>
+<ul>
+<li>工具变量法：找到只影响T不直接影响M、Y的IV</li>
+<li>时间反转测试：用未来的Y预测过去的M</li>
+<li>安慰剂测试：在处理前的时期进行分析</li>
+<li>双向中介分析：同时估计T→M→Y和T→Y→M</li>
+</ul>
+<p>d) 补救措施：</p>
+<ul>
+<li>时序问题：收集更细粒度的时间数据</li>
+<li>未测量混杂：<ul>
+<li>进行全面的敏感性分析</li>
+<li>寻找工具变量或自然实验</li>
+<li>使用匹配或加权减少混杂</li>
+</ul>
+</li>
+<li>反向因果：<ul>
+<li>使用滞后变量打破同期相关</li>
+<li>寻找外生冲击作为识别策略</li>
+<li>考虑联立方程模型</li>
+</ul>
+</li>
+<li>模型设定：<ul>
+<li>检验线性假设，考虑非参数方法</li>
+<li>允许交互作用和非线性关系</li>
+<li>使用机器学习方法估计复杂关系</li>
+</ul>
+</li>
+</ul>
+</details>
+<h2 id="_15">常见陷阱与错误</h2>
+<h3 id="1">1. 概念混淆</h3>
+<p><strong>错误</strong>：混淆统计中介和因果中介</p>
+<ul>
+<li><strong>症状</strong>：仅因为回归系数显著就声称存在中介效应</li>
+<li><strong>问题</strong>：统计关联不等于因果关系</li>
+<li><strong>正确做法</strong>：明确因果假设，使用因果推断框架</li>
+</ul>
+<p><strong>错误</strong>：混淆自然效应和控制效应</p>
+<ul>
+<li><strong>症状</strong>：随意使用NDE和CDE，不理解其区别</li>
+<li><strong>问题</strong>：两者回答不同的因果问题</li>
+<li><strong>正确做法</strong>：</li>
+<li>CDE：人为固定中介变量时的效应</li>
+<li>NDE：允许中介变量自然变化时的效应</li>
+</ul>
+<h3 id="2">2. 识别假设违反</h3>
+<p><strong>错误</strong>：忽视时序要求</p>
+<ul>
+<li><strong>症状</strong>：使用横截面数据进行中介分析</li>
+<li><strong>问题</strong>：无法确定因果方向</li>
+<li><strong>调试技巧</strong>：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>检查清单：
+
+1. T是否发生在M之前？
+2. M是否发生在Y之前？
+3. 是否存在反向因果？
+</code></pre></div>
+
+<p><strong>错误</strong>：忽略处理后混杂</p>
+<ul>
+<li><strong>症状</strong>：T影响未观测变量U，U同时影响M和Y</li>
+<li><strong>问题</strong>：违反交叉世界独立性假设</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>错误路径：T → U → M
+              ↓
+              Y
+</code></pre></div>
+
+<ul>
+<li><strong>解决方案</strong>：考虑敏感性分析或工具变量方法</li>
+</ul>
+<h3 id="3">3. 模型设定错误</h3>
+<p><strong>错误</strong>：强加线性假设</p>
+<ul>
+<li><strong>症状</strong>：对明显非线性关系使用线性模型</li>
+<li><strong>问题</strong>：效应分解可能完全错误</li>
+<li><strong>调试方法</strong>：
+  1. 绘制散点图检查线性关系
+  2. 添加多项式项或使用样条
+  3. 考虑非参数中介分析</li>
+</ul>
+<p><strong>错误</strong>：忽略交互作用</p>
+<ul>
+<li><strong>症状</strong>：当T×M交互显著时仍使用Baron-Kenny方法</li>
+<li><strong>问题</strong>：间接效应估计有偏</li>
+<li><strong>正确做法</strong>：使用考虑交互的中介分析方法</li>
+</ul>
+<h3 id="4">4. 多重中介的陷阱</h3>
+<p><strong>错误</strong>：忽略中介变量间的相关性</p>
+<ul>
+<li><strong>症状</strong>：将相关的中介变量当作独立路径</li>
+<li><strong>问题</strong>：重复计算某些效应</li>
+<li><strong>解决方案</strong>：使用结构方程模型正确建模相关性</li>
+</ul>
+<p><strong>错误</strong>：错误的因果顺序</p>
+<ul>
+<li><strong>症状</strong>：M₁ → M₂的方向设定错误</li>
+<li><strong>调试技巧</strong>：</li>
+<li>使用领域知识确定顺序</li>
+<li>进行时间顺序检验</li>
+<li>尝试不同顺序进行敏感性检验</li>
+</ul>
+<h3 id="5">5. 解释错误</h3>
+<p><strong>错误</strong>：过度解释间接效应</p>
+<ul>
+<li><strong>症状</strong>："60%的效应通过M传导"被解释为因果机制</li>
+<li><strong>问题</strong>：比例依赖于模型设定和测量</li>
+<li><strong>正确解释</strong>：强调这是在特定假设下的分解</li>
+</ul>
+<p><strong>错误</strong>：忽视实质重要性</p>
+<ul>
+<li><strong>症状</strong>：仅关注统计显著性</li>
+<li><strong>问题</strong>：统计显著不等于实际重要</li>
+<li><strong>评估标准</strong>：</li>
+<li>效应大小是否有实际意义？</li>
+<li>是否稳健于不同设定？</li>
+<li>是否符合理论预期？</li>
+</ul>
+<h3 id="6">6. 敏感性分析不足</h3>
+<p><strong>错误</strong>：不进行敏感性分析</p>
+<ul>
+<li><strong>症状</strong>：报告点估计，忽略假设违反的影响</li>
+<li><strong>问题</strong>：结论可能完全被未测量混杂推翻</li>
+<li><strong>必做检查</strong>：
+  1. 计算E-value
+  2. 进行相关性敏感性分析
+  3. 使用多种识别策略</li>
+</ul>
+<h3 id="7">7. 样本量和检验力问题</h3>
+<p><strong>错误</strong>：样本量不足检测间接效应</p>
+<ul>
+<li><strong>症状</strong>：间接效应不显著就认为无中介</li>
+<li><strong>问题</strong>：间接效应的检验力通常较低</li>
+<li><strong>解决方案</strong>：</li>
+<li>使用bootstrap方法</li>
+<li>计算所需样本量</li>
+<li>考虑贝叶斯方法</li>
+</ul>
+<h2 id="_16">最佳实践检查清单</h2>
+<h3 id="_17">研究设计阶段</h3>
+<p>□ <strong>理论基础</strong></p>
+<ul>
+<li>[ ] 有明确的理论支持中介机制</li>
+<li>[ ] 因果链条在逻辑上合理</li>
+<li>[ ] 时间顺序符合因果逻辑</li>
+</ul>
+<p>□ <strong>变量选择</strong></p>
+<ul>
+<li>[ ] 中介变量在概念上明确</li>
+<li>[ ] 测量具有良好的信效度</li>
+<li>[ ] 考虑了所有重要的混杂因素</li>
+</ul>
+<p>□ <strong>数据要求</strong></p>
+<ul>
+<li>[ ] 有时间维度（纵向数据优于横截面）</li>
+<li>[ ] 样本量足够检测间接效应</li>
+<li>[ ] 变量分布适合分析方法</li>
+</ul>
+<h3 id="_18">分析实施阶段</h3>
+<p>□ <strong>初步检查</strong></p>
+<ul>
+<li>[ ] 检验T对Y的总效应是否存在</li>
+<li>[ ] 检查变量分布和异常值</li>
+<li>[ ] 评估线性假设的合理性</li>
+</ul>
+<p>□ <strong>模型选择</strong></p>
+<ul>
+<li>[ ] 根据变量类型选择合适方法</li>
+<li>[ ] 考虑是否需要包含交互项</li>
+<li>[ ] 对于多重中介，明确因果结构</li>
+</ul>
+<p>□ <strong>识别策略</strong></p>
+<ul>
+<li>[ ] 明确陈述所有识别假设</li>
+<li>[ ] 讨论假设的合理性</li>
+<li>[ ] 考虑替代识别策略</li>
+</ul>
+<p>□ <strong>稳健性检验</strong></p>
+<ul>
+<li>[ ] 使用多种估计方法</li>
+<li>[ ] 尝试不同的模型设定</li>
+<li>[ ] 进行子样本分析</li>
+</ul>
+<h3 id="_19">敏感性分析阶段</h3>
+<p>□ <strong>未测量混杂</strong></p>
+<ul>
+<li>[ ] 计算E-value或相似指标</li>
+<li>[ ] 进行相关性敏感性分析</li>
+<li>[ ] 使用负对照进行检验</li>
+</ul>
+<p>□ <strong>模型假设</strong></p>
+<ul>
+<li>[ ] 检验函数形式假设</li>
+<li>[ ] 评估交互作用的影响</li>
+<li>[ ] 考虑测量误差的影响</li>
+</ul>
+<p>□ <strong>因果方向</strong></p>
+<ul>
+<li>[ ] 进行反向因果检验</li>
+<li>[ ] 使用工具变量（如可能）</li>
+<li>[ ] 进行时间安慰剂检验</li>
+</ul>
+<h3 id="_20">结果报告阶段</h3>
+<p>□ <strong>效应报告</strong></p>
+<ul>
+<li>[ ] 报告总效应、直接和间接效应</li>
+<li>[ ] 提供置信区间或可信区间</li>
+<li>[ ] 报告效应量和实际重要性</li>
+</ul>
+<p>□ <strong>假设说明</strong></p>
+<ul>
+<li>[ ] 清楚列出所有识别假设</li>
+<li>[ ] 讨论假设可能的违反</li>
+<li>[ ] 说明对结论的影响</li>
+</ul>
+<p>□ <strong>敏感性结果</strong></p>
+<ul>
+<li>[ ] 报告敏感性分析结果</li>
+<li>[ ] 提供稳健性边界</li>
+<li>[ ] 诚实讨论局限性</li>
+</ul>
+<p>□ <strong>可重复性</strong></p>
+<ul>
+<li>[ ] 提供详细的方法描述</li>
+<li>[ ] 报告所用软件和版本</li>
+<li>[ ] 考虑提供代码和数据（如可能）</li>
+</ul>
+<h3 id="_21">解释与应用阶段</h3>
+<p>□ <strong>因果解释</strong></p>
+<ul>
+<li>[ ] 避免过度因果化统计关联</li>
+<li>[ ] 强调估计的不确定性</li>
+<li>[ ] 讨论替代解释</li>
+</ul>
+<p>□ <strong>实践意义</strong></p>
+<ul>
+<li>[ ] 联系实际问题</li>
+<li>[ ] 讨论干预意义</li>
+<li>[ ] 提供可行建议</li>
+</ul>
+<p>□ <strong>未来研究</strong></p>
+<ul>
+<li>[ ] 指出当前研究的局限</li>
+<li>[ ] 建议改进方向</li>
+<li>[ ] 提出新的研究问题</li>
+</ul>
+<h3 id="_22">特殊情况检查</h3>
+<p>□ <strong>多重中介</strong></p>
+<ul>
+<li>[ ] 路径是否都有理论支持</li>
+<li>[ ] 是否考虑了中介间的相关</li>
+<li>[ ] 顺序是否合理</li>
+</ul>
+<p>□ <strong>时变中介</strong></p>
+<ul>
+<li>[ ] 是否正确处理时变混杂</li>
+<li>[ ] 使用合适的估计方法</li>
+<li>[ ] 考虑动态效应</li>
+</ul>
+<p>□ <strong>交互作用</strong></p>
+<ul>
+<li>[ ] 是否检查了T×M交互</li>
+<li>[ ] 使用正确的分解方法</li>
+<li>[ ] 解释是否恰当</li>
+</ul>
+<p>记住：中介分析的目标是理解因果机制，而不仅仅是统计分解。每个步骤都应该服务于这个核心目标。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter8.html" class="nav-link prev">← 第八章：双重差分方法</a><a href="chapter10.html" class="nav-link next">第十章：异质性处理效应 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

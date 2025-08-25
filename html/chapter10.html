@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第十章：异质性处理效应</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第十章：异质性处理效应</h1>
+<h2 id="_2">本章导读</h2>
+<p>在前面的章节中，我们主要关注平均处理效应（ATE），即处理对整个群体的平均影响。然而，在实际应用中，同一个干预措施对不同个体的效果往往存在显著差异。理解和量化这种异质性对于制定个性化策略、优化资源配置以及深入理解因果机制至关重要。本章将系统介绍异质性处理效应的识别、估计和应用方法。</p>
+<p><strong>学习目标</strong>：</p>
+<ul>
+<li>理解异质性处理效应的概念和重要性</li>
+<li>掌握条件平均处理效应（CATE）的估计方法</li>
+<li>学习因果森林、因果树等机器学习方法</li>
+<li>了解元学习框架在因果推断中的应用</li>
+<li>能够设计和评估个体化治疗规则</li>
+</ul>
+<h2 id="101">10.1 异质性处理效应概述</h2>
+<h3 id="1011">10.1.1 为什么关注异质性</h3>
+<p>平均处理效应虽然提供了整体影响的度量，但可能掩盖了重要的个体差异：</p>
+<ol>
+<li><strong>资源优化</strong>：识别对干预反应最好的子群体，实现精准投放</li>
+<li><strong>风险管理</strong>：发现可能受到负面影响的群体，避免不当干预</li>
+<li><strong>机制理解</strong>：通过异质性模式理解因果路径</li>
+<li><strong>公平性考虑</strong>：确保不同群体都能公平受益</li>
+</ol>
+<h3 id="1012">10.1.2 异质性的来源</h3>
+<p>处理效应的异质性可能来自多个方面：</p>
+<ul>
+<li><strong>个体特征差异</strong>：年龄、性别、健康状况等基础特征</li>
+<li><strong>环境因素</strong>：地理位置、社会经济条件、文化背景</li>
+<li><strong>基线水平</strong>：初始状态的不同导致改善空间差异</li>
+<li><strong>互补性因素</strong>：与其他因素的交互作用</li>
+</ul>
+<h3 id="1013">10.1.3 识别挑战</h3>
+<p>估计异质性处理效应面临独特挑战：</p>
+<ol>
+<li><strong>维度诅咒</strong>：协变量维度增加时，传统方法失效</li>
+<li><strong>多重检验</strong>：探索多个子群体时的统计推断问题</li>
+<li><strong>过拟合风险</strong>：复杂模型可能捕获噪声而非真实异质性</li>
+<li><strong>因果识别</strong>：需要比ATE更强的识别假设</li>
+</ol>
+<h2 id="102-cate">10.2 条件平均处理效应（CATE）</h2>
+<h3 id="1021-cate">10.2.1 CATE的定义</h3>
+<p>条件平均处理效应定义为给定协变量$X=x$时的平均处理效应：</p>
+<p>$$\tau(x) = E[Y(1) - Y(0) | X = x]$$
+其中$Y(1)$和$Y(0)$分别是接受和未接受处理的潜在结果。</p>
+<h3 id="1022">10.2.2 识别假设</h3>
+<p>CATE的识别通常需要以下假设：</p>
+<ol>
+<li>
+<p><strong>条件独立性</strong>（Unconfoundedness）：
+$$(Y(1), Y(0)) \perp!!!\perp T | X$$</p>
+</li>
+<li>
+<p><strong>重叠假设</strong>（Overlap）：
+$$0 &lt; P(T=1|X=x) &lt; 1$$</p>
+</li>
+<li>
+<p><strong>SUTVA</strong>：无干扰和处理值唯一性</p>
+</li>
+</ol>
+<h3 id="1023">10.2.3 传统估计方法</h3>
+<h4 id="_3">子群体分析</h4>
+<p>最简单的方法是将样本按特征分组，分别估计各组的ATE：</p>
+<div class="codehilite"><pre><span></span><code>对于每个子群体 g:
+  τ_g = E[Y|T=1, G=g] - E[Y|T=0, G=g]
+</code></pre></div>
+
+<p><strong>优点</strong>：简单直观，易于解释
+<strong>缺点</strong>：只能处理少量离散变量，忽略连续性</p>
+<h4 id="_4">回归调整</h4>
+<p>使用线性回归模型with交互项：
+$$Y = \beta_0 + \beta_1 T + \beta_2 X + \beta_3 T \cdot X + \epsilon$$
+则CATE估计为：$\hat{\tau}(x) = \beta_1 + \beta_3 x$</p>
+<p><strong>优点</strong>：可以处理连续变量
+<strong>缺点</strong>：假设线性关系，模型误设风险</p>
+<h3 id="1024">10.2.4 倾向得分方法</h3>
+<p>基于倾向得分的CATE估计：</p>
+<ol>
+<li><strong>分层估计</strong>：按倾向得分分层，每层内估计ATE</li>
+<li><strong>匹配估计</strong>：对每个个体匹配相似的对照组</li>
+<li><strong>加权估计</strong>：使用IPW在局部估计CATE</li>
+</ol>
+<h2 id="103">10.3 因果森林与因果树</h2>
+<h3 id="1031">10.3.1 因果树原理</h3>
+<p>因果树通过递归分割特征空间来估计异质性处理效应：</p>
+<div class="codehilite"><pre><span></span><code>算法：因果树构建
+
+1. 初始化：将所有样本作为根节点
+2. 对于每个节点：
+   a. 尝试所有可能的分割点
+   b. 选择最大化处理效应异质性的分割
+   c. 递归分割直到满足停止条件
+
+3. 叶节点估计：计算每个叶节点的CATE
+</code></pre></div>
+
+<p><strong>分割准则</strong>：最大化子节点间处理效应的差异
+$$\Delta = n_L \cdot \hat{\tau}_L^2 + n_R \cdot \hat{\tau}_R^2$$
+其中$n_L, n_R$是左右子节点样本数，$\hat{\tau}_L, \hat{\tau}_R$是对应的处理效应估计。</p>
+<h3 id="1032">10.3.2 诚实估计</h3>
+<p>为避免过拟合，采用"诚实"（honest）估计策略：</p>
+<ol>
+<li><strong>样本分割</strong>：将数据分为构建集和估计集</li>
+<li><strong>树结构学习</strong>：使用构建集确定树结构</li>
+<li><strong>效应估计</strong>：使用估计集估计叶节点的CATE</li>
+</ol>
+<p>这种方法保证了估计的渐近正态性，便于构造置信区间。</p>
+<h3 id="1033">10.3.3 因果森林</h3>
+<p>因果森林通过集成多棵因果树提高估计精度：</p>
+<div class="codehilite"><pre><span></span><code>算法：因果森林
+
+1. 对于 b = 1, ..., B:
+   a. 抽取bootstrap样本或子样本
+   b. 随机选择特征子集
+   c. 构建诚实因果树
+
+2. 预测：平均所有树的预测
+</code></pre></div>
+
+<p><strong>关键创新</strong>：</p>
+<ul>
+<li><strong>局部中心化</strong>：在每个节点重新中心化结果变量</li>
+<li><strong>梯度树</strong>：使用梯度信息优化分割</li>
+<li><strong>自适应邻域</strong>：基于树结构定义相似性权重</li>
+</ul>
+<h3 id="1034">10.3.4 统计推断</h3>
+<p>因果森林提供了渐近有效的置信区间：
+$$\hat{\tau}(x) \pm z_{\alpha/2} \cdot \hat{\sigma}(x) / \sqrt{n}$$
+其中$\hat{\sigma}(x)$是通过infinitesimal jackknife估计的标准误。</p>
+<h2 id="104">10.4 元学习方法</h2>
+<p>元学习（Meta-Learning）方法将CATE估计问题转化为监督学习问题，通过巧妙的变换利用现有机器学习算法。</p>
+<h3 id="1041-s-learner">10.4.1 S-Learner（单一学习器）</h3>
+<p>S-Learner使用单一模型同时拟合处理组和对照组：
+$$\mu(x, t) = E[Y | X=x, T=t]$$
+CATE估计为：
+$$\hat{\tau}(x) = \hat{\mu}(x, 1) - \hat{\mu}(x, 0)$$
+<strong>实现步骤</strong>：</p>
+<ol>
+<li>训练模型：$\hat{\mu} = \text{ML}(Y \sim X, T)$</li>
+<li>预测CATE：$\hat{\tau}(x) = \hat{\mu}(x, 1) - \hat{\mu}(x, 0)$</li>
+</ol>
+<p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：简单直接，可使用任何监督学习算法</li>
+<li>缺点：当处理效应较小时可能被忽略，模型可能不关注$T$</li>
+</ul>
+<h3 id="1042-t-learner">10.4.2 T-Learner（双学习器）</h3>
+<p>T-Learner分别为处理组和对照组训练模型：
+$$\mu_0(x) = E[Y | X=x, T=0]$$
+$$\mu_1(x) = E[Y | X=x, T=1]$$
+CATE估计为：
+$$\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)$$
+<strong>实现步骤</strong>：</p>
+<ol>
+<li>分割数据：处理组$(X_1, Y_1)$，对照组$(X_0, Y_0)$</li>
+<li>分别训练：$\hat{\mu}_0 = \text{ML}(Y_0 \sim X_0)$，$\hat{\mu}_1 = \text{ML}(Y_1 \sim X_1)$</li>
+<li>计算CATE：$\hat{\tau}(x) = \hat{\mu}_1(x) - \hat{\mu}_0(x)$</li>
+</ol>
+<p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：灵活性高，可为不同组选择不同模型</li>
+<li>缺点：样本利用率低，可能出现正则化不一致</li>
+</ul>
+<h3 id="1043-x-learner">10.4.3 X-Learner</h3>
+<p>X-Learner通过两阶段过程改进T-Learner：</p>
+<p><strong>第一阶段</strong>：与T-Learner相同，估计$\hat{\mu}_0(x)$和$\hat{\mu}_1(x)$</p>
+<p><strong>第二阶段</strong>：构造伪结果</p>
+<ul>
+<li>处理组：$\tilde{D}_1^i = Y_1^i - \hat{\mu}_0(X_1^i)$</li>
+<li>对照组：$\tilde{D}_0^i = \hat{\mu}_1(X_0^i) - Y_0^i$</li>
+</ul>
+<p>训练第二阶段模型：</p>
+<ul>
+<li>$\hat{\tau}_1(x) = \text{ML}(\tilde{D}_1 \sim X_1)$</li>
+<li>$\hat{\tau}_0(x) = \text{ML}(\tilde{D}_0 \sim X_0)$</li>
+</ul>
+<p><strong>最终估计</strong>：
+$$\hat{\tau}(x) = g(x) \hat{\tau}_0(x) + (1-g(x)) \hat{\tau}_1(x)$$
+其中$g(x) = P(T=1|X=x)$是倾向得分。</p>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>在处理组不平衡时表现更好</li>
+<li>利用了全部数据信息</li>
+<li>可以适应不同的信号强度</li>
+</ul>
+<h3 id="1044-r-learner">10.4.4 R-Learner（残差学习器）</h3>
+<p>R-Learner通过Robinson变换直接学习CATE：</p>
+<p><strong>Robinson变换</strong>：
+$$Y - m(X) = (T - e(X)) \cdot \tau(X) + \epsilon$$
+其中：</p>
+<ul>
+<li>$m(x) = E[Y|X=x]$是边际结果期望</li>
+<li>$e(x) = P(T=1|X=x)$是倾向得分</li>
+</ul>
+<p><strong>实现步骤</strong>：</p>
+<ol>
+<li>估计nuisance参数：$\hat{m}(x)$和$\hat{e}(x)$</li>
+<li>计算残差：
+   - $\tilde{Y} = Y - \hat{m}(X)$
+   - $\tilde{T} = T - \hat{e}(X)$</li>
+<li>解决加权最小二乘：
+$$\hat{\tau} = \arg\min_\tau \sum_{i=1}^n (\tilde{Y}_i - \tilde{T}_i \cdot \tau(X_i))^2$$
+<strong>交叉拟合</strong>：为避免过拟合偏差，使用交叉拟合估计nuisance参数。</li>
+</ol>
+<h3 id="1045-dr-learner">10.4.5 DR-Learner（双重稳健学习器）</h3>
+<p>DR-Learner使用双重稳健估计提高稳健性：</p>
+<p><strong>伪结果构造</strong>：
+$$\tilde{Y} = \frac{T \cdot Y}{e(X)} - \frac{(1-T) \cdot Y}{1-e(X)} + \left(1 - \frac{T}{e(X)}\right) \mu_1(X) - \left(1 - \frac{1-T}{1-e(X)}\right) \mu_0(X)$$
+然后直接学习：$\hat{\tau}(x) = \text{ML}(\tilde{Y} \sim X)$</p>
+<p><strong>双重稳健性</strong>：即使$\hat{e}(x)$或$\hat{\mu}(x)$之一有偏差，估计仍然一致。</p>
+<h2 id="105">10.5 个体化治疗规则</h2>
+<h3 id="1051">10.5.1 治疗规则的定义</h3>
+<p>个体化治疗规则（Individualized Treatment Rule, ITR）是一个将个体特征映射到治疗决策的函数：
+$$d: \mathcal{X} \rightarrow \{0, 1\}$$
+最优治疗规则最大化期望结果：
+$$d^* = \arg\max_d E[Y^{d(X)}]$$
+其中$Y^{d(X)}$是在规则$d$下的潜在结果。</p>
+<h3 id="1052-cate">10.5.2 基于CATE的规则</h3>
+<p>最直接的方法是基于估计的CATE分配治疗：
+$$d(x) = \mathbb{1}\{\hat{\tau}(x) &gt; c\}$$
+其中$c$是成本效益阈值。当$c=0$时，对所有正效应个体施加处理。</p>
+<p><strong>考虑约束的规则</strong>：</p>
+<ul>
+<li>预算约束：$E[d(X)] \leq b$</li>
+<li>公平性约束：$E[d(X)|G=g] \approx E[d(X)]$对所有群体$g$</li>
+</ul>
+<h3 id="1053">10.5.3 直接优化方法</h3>
+<h4 id="owl">结果加权学习（OWL）</h4>
+<p>将治疗分配问题转化为加权分类问题：
+$$\hat{d} = \arg\max_d \sum_{i=1}^n W_i \cdot \mathbb{1}\{d(X_i) = T_i\}$$
+其中权重：
+$$W_i = \frac{|Y_i|}{T_i \cdot e(X_i) + (1-T_i) \cdot (1-e(X_i))}$$
+可以使用支持向量机等分类器求解。</p>
+<h4 id="_5">策略学习</h4>
+<p>直接优化期望价值函数：
+$$V(d) = E\left[\frac{T \cdot d(X) \cdot Y}{e(X)} + \frac{(1-T) \cdot (1-d(X)) \cdot Y}{1-e(X)}\right]$$
+使用策略梯度或其他强化学习方法优化。</p>
+<h3 id="1054">10.5.4 评估方法</h3>
+<h4 id="_6">离线评估</h4>
+<p>使用观察数据评估治疗规则的期望价值：</p>
+<ol>
+<li>
+<p><strong>逆概率加权估计</strong>：
+$$\hat{V}(d) = \frac{1}{n} \sum_{i=1}^n \frac{\mathbb{1}\{T_i = d(X_i)\} \cdot Y_i}{T_i \cdot e(X_i) + (1-T_i) \cdot (1-e(X_i))}$$</p>
+</li>
+<li>
+<p><strong>双重稳健估计</strong>：
+$$\hat{V}_{DR}(d) = \hat{V}_{IPW}(d) + \frac{1}{n} \sum_{i=1}^n [d(X_i) \cdot \hat{\mu}_1(X_i) + (1-d(X_i)) \cdot \hat{\mu}_0(X_i)]$$</p>
+</li>
+</ol>
+<h4 id="_7">在线评估</h4>
+<p>通过A/B测试或多臂老虎机算法在线评估和优化规则。</p>
+<h3 id="1055">10.5.5 实践考虑</h3>
+<ol>
+<li><strong>增量价值</strong>：比较个性化规则与简单规则（如全部处理或全部不处理）</li>
+<li><strong>可解释性</strong>：复杂模型vs简单决策树的权衡</li>
+<li><strong>稳定性</strong>：对新数据的泛化能力</li>
+<li><strong>动态更新</strong>：随时间调整规则</li>
+</ol>
+<h2 id="106">10.6 行业案例：京东个性化促销策略优化</h2>
+<h3 id="1061">10.6.1 业务背景</h3>
+<p>京东作为中国领先的电商平台，面临如何优化促销资源分配的挑战：</p>
+<ul>
+<li><strong>问题</strong>：统一的促销策略（如满减、优惠券）对不同用户效果差异巨大</li>
+<li><strong>目标</strong>：识别促销敏感用户，提高ROI，避免过度补贴</li>
+<li><strong>约束</strong>：促销预算有限，需要精准投放</li>
+</ul>
+<h3 id="1062">10.6.2 实验设计</h3>
+<p><strong>随机化实验</strong>：</p>
+<ol>
+<li>样本：100万活跃用户</li>
+<li>处理：发放50元无门槛优惠券</li>
+<li>对照：不发放优惠券</li>
+<li>观测期：30天</li>
+<li>结果变量：订单金额、购买频率、利润贡献</li>
+</ol>
+<p><strong>特征收集</strong>：</p>
+<ul>
+<li>用户画像：年龄、性别、会员等级、注册时长</li>
+<li>历史行为：购买频率、平均客单价、品类偏好</li>
+<li>价格敏感度：历史促销响应、比价行为</li>
+<li>时间特征：最近购买时间、活跃度趋势</li>
+</ul>
+<h3 id="1063">10.6.3 异质性分析</h3>
+<p><strong>使用因果森林估计CATE</strong>：</p>
+<div class="codehilite"><pre><span></span><code>关键发现：
+
+1. 年轻用户（18-25岁）：τ = 120元，响应强烈
+2. 高频用户：τ = -30元，存在挤出效应
+3. 价格敏感用户：τ = 200元，效果最好
+4. 新用户：τ = 150元，有助于培养习惯
+</code></pre></div>
+
+<p><strong>异质性模式</strong>：</p>
+<ul>
+<li><strong>倒U型关系</strong>：中等活跃度用户响应最好</li>
+<li><strong>品类差异</strong>：日用品类响应&gt;电子产品</li>
+<li><strong>时间效应</strong>：周末发放效果优于工作日</li>
+</ul>
+<h3 id="1064">10.6.4 策略优化</h3>
+<p><strong>个性化规则设计</strong>：</p>
+<ol>
+<li><strong>分层策略</strong>：</li>
+</ol>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span><span class="w"> </span>价格敏感度<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">7</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span>月均消费<span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">1000</span>:
+<span class="w">    </span>发放高额优惠券
+<span class="nv">elif</span><span class="w"> </span>新用户<span class="w"> </span><span class="nv">and</span><span class="w"> </span>首单未完成:
+<span class="w">    </span>发放新人专享券
+<span class="nv">elif</span><span class="w"> </span>流失风险<span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>.<span class="mi">5</span>:
+<span class="w">    </span>发放挽回优惠券
+<span class="k">else</span>:
+<span class="w">    </span>不发放或小额优惠
+</code></pre></div>
+
+<ol start="2">
+<li><strong>动态调整</strong>：
+   - 实时更新用户特征
+   - 根据库存和预算动态调整
+   - 考虑竞争对手促销活动</li>
+</ol>
+<h3 id="1065">10.6.5 实施效果</h3>
+<p><strong>A/B测试结果</strong>（对比统一策略）：</p>
+<ul>
+<li>ROI提升：35%</li>
+<li>促销成本降低：20%</li>
+<li>用户满意度：提升8%</li>
+<li>复购率：提升12%</li>
+</ul>
+<p><strong>长期影响</strong>：</p>
+<ul>
+<li>减少了"羊毛党"的损失</li>
+<li>提高了真实需求用户的忠诚度</li>
+<li>优化了库存周转</li>
+</ul>
+<h3 id="1066">10.6.6 经验教训</h3>
+<ol>
+<li><strong>特征工程至关重要</strong>：行为特征比人口统计特征更有预测力</li>
+<li><strong>动态效应</strong>：用户对促销的响应会随时间变化</li>
+<li><strong>溢出效应</strong>：需考虑用户间的社交影响</li>
+<li><strong>长短期权衡</strong>：短期销量提升vs长期价格预期管理</li>
+</ol>
+<h2 id="_8">本章小结</h2>
+<p>本章系统介绍了异质性处理效应的理论、方法和应用：</p>
+<p><strong>核心概念</strong>：</p>
+<ul>
+<li>条件平均处理效应（CATE）：$\tau(x) = E[Y(1) - Y(0) | X = x]$</li>
+<li>个体化治疗规则（ITR）：$d^* = \arg\max_d E[Y^{d(X)}]$</li>
+<li>异质性的识别依赖于条件独立性和重叠假设</li>
+</ul>
+<p><strong>主要方法</strong>：</p>
+<ol>
+<li><strong>传统方法</strong>：子群体分析、回归调整</li>
+<li><strong>树方法</strong>：因果树、因果森林</li>
+<li><strong>元学习</strong>：S/T/X/R/DR-Learner</li>
+<li><strong>直接优化</strong>：OWL、策略学习</li>
+</ol>
+<p><strong>实践要点</strong>：</p>
+<ul>
+<li>选择合适的方法取决于数据特点和应用场景</li>
+<li>需要在模型复杂度和可解释性间权衡</li>
+<li>评估个性化策略的增量价值</li>
+<li>考虑实施的可行性和成本</li>
+</ul>
+<p><strong>京东案例启示</strong>：</p>
+<ul>
+<li>异质性分析能显著提升营销ROI</li>
+<li>需要持续实验和优化</li>
+<li>业务理解与技术方法同等重要</li>
+</ul>
+<h2 id="_9">练习题</h2>
+<h3 id="_10">基础题</h3>
+<p><strong>练习10.1</strong> 解释为什么平均处理效应（ATE）可能掩盖重要信息。举一个具体例子，其中ATE为零但存在显著的异质性效应。</p>
+<details>
+<summary>提示</summary>
+<p>考虑一个处理对两个相等大小的子群体有相反效果的情况。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>例子：某药物对年轻人（&lt;40岁）平均提升健康指标10单位，对老年人（≥40岁）平均降低10单位。如果两组人数相等，ATE = 0.5×10 + 0.5×(-10) = 0，看起来药物无效。但实际上存在强烈的异质性：应该只给年轻人用药。这说明ATE可能掩盖了重要的个体差异，导致错误的政策决策。</p>
+</details>
+<p><strong>练习10.2</strong> 比较S-Learner和T-Learner的优缺点。在什么情况下你会选择使用T-Learner？</p>
+<details>
+<summary>提示</summary>
+<p>考虑处理组和对照组的样本量、结果分布差异、模型复杂度等因素。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>S-Learner优点：利用全部数据，参数共享，正则化一致。缺点：可能忽略小的处理效应。
+T-Learner优点：灵活建模不同组，能捕获复杂的组间差异。缺点：样本利用率低，可能过拟合。
+选择T-Learner的情况：(1)处理组和对照组的结果生成过程显著不同；(2)样本量充足；(3)预期存在强处理效应；(4)需要对每组使用不同的模型架构。</p>
+</details>
+<p><strong>练习10.3</strong> 解释因果森林中"诚实"（honest）估计的作用。如果不使用诚实估计会有什么问题？</p>
+<details>
+<summary>提示</summary>
+<p>考虑过拟合、统计推断的有效性、置信区间的覆盖率。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>诚实估计将数据分为构建集和估计集，用构建集学习树结构，用估计集估计叶节点的处理效应。作用：(1)避免过拟合：防止对同一数据既用于选择分割又用于估计；(2)保证渐近正态性：使得统计推断有效；(3)正确的置信区间：保证名义覆盖率。
+不使用诚实估计的问题：置信区间过窄，假阳性率增加，估计偏差，泛化性能差。</p>
+</details>
+<p><strong>练习10.4</strong> 给定倾向得分$e(x) = P(T=1|X=x) = 0.2$，处理组和对照组的条件期望$\mu_1(x) = 100$，$\mu_0(x) = 80$。计算该个体的CATE，并解释如果倾向得分估计有偏差会如何影响CATE估计。</p>
+<details>
+<summary>提示</summary>
+<p>CATE = μ₁(x) - μ₀(x)，考虑IPW估计中倾向得分的作用。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>CATE = μ₁(x) - μ₀(x) = 100 - 80 = 20。
+倾向得分偏差的影响：在IPW估计中，如果e(x)被低估（如估计为0.1），处理组权重1/0.1=10会过大，导致处理效应高估；如果e(x)被高估（如0.4），权重1/0.4=2.5会过小，导致低估。极端情况下，接近0或1的倾向得分会导致权重爆炸，估计不稳定。这就是为什么需要重叠假设和双重稳健方法。</p>
+</details>
+<h3 id="_11">挑战题</h3>
+<p><strong>练习10.5</strong> 设计一个模拟研究，比较不同元学习方法（S/T/X/R-Learner）在以下场景中的表现：</p>
+<ul>
+<li>场景A：强处理效应，处理组和对照组平衡</li>
+<li>场景B：弱处理效应，处理组严重不平衡（10% vs 90%）</li>
+<li>场景C：处理效应与倾向得分相关</li>
+</ul>
+<details>
+<summary>提示</summary>
+<p>定义数据生成过程，设置不同的信噪比，考虑评估指标如MSE、覆盖率等。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>模拟设计：</p>
+<ol>
+<li>生成协变量X～N(0,1)</li>
+<li>场景A：e(x)=0.5，τ(x)=2x，强信号</li>
+<li>场景B：e(x)=0.1，τ(x)=0.1x，弱信号  </li>
+<li>场景C：e(x)=Φ(x)，τ(x)=2Φ(x)，相关性</li>
+</ol>
+<p>预期结果：</p>
+<ul>
+<li>场景A：T-Learner表现最好（充足样本+强信号）</li>
+<li>场景B：X-Learner表现最好（处理不平衡时的优势）</li>
+<li>场景C：R-Learner表现最好（直接建模处理效应）
+S-Learner在弱信号时表现差，但计算效率高。</li>
+</ul>
+<p>评估维度：CATE估计的MSE、置信区间覆盖率、计算时间。</p>
+</details>
+<p><strong>练习10.6</strong> 你在一家在线教育平台工作，需要决定是否向学生推送付费课程的优惠券。你有历史A/B测试数据，包括学生特征（学习时长、课程完成率、设备类型等）和是否购买。请设计一个完整的个性化推荐系统，包括：</p>
+<ol>
+<li>CATE估计方法选择</li>
+<li>个体化分配规则</li>
+<li>预算约束处理</li>
+<li>效果评估方案</li>
+</ol>
+<details>
+<summary>提示</summary>
+<p>考虑业务特点、可解释性需求、实时性要求、预算优化。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>完整方案：</p>
+<ol>
+<li>
+<p><strong>CATE估计</strong>：使用因果森林
+   - 原因：非线性关系、自动特征选择、置信区间
+   - 特征：学习行为（时长、频率）、历史购买、设备、时间</p>
+</li>
+<li>
+<p><strong>分配规则</strong>：</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>score(x) = τ(x) × P(完成|购买,x) × (价格 - 优惠额)
+if score(x) &gt; threshold and budget_remaining &gt; 0:
+    发放优惠券
+</code></pre></div>
+
+<ol start="3">
+<li>
+<p><strong>预算约束</strong>：
+   - 排序：按score降序排列用户
+   - 贪心分配：从高到低发放直到预算用完
+   - 动态调整：每小时更新threshold</p>
+</li>
+<li>
+<p><strong>评估方案</strong>：
+   - 留出10%用户随机分配（探索）
+   - 指标：增量收入、ROI、课程完成率
+   - 长期效应：队列分析跟踪6个月
+   - A/B/C测试：个性化vs统一vs无优惠</p>
+</li>
+<li>
+<p><strong>实施细节</strong>：
+   - 冷启动：新用户使用人群平均
+   - 更新频率：每周重训练模型
+   - 监控：实时追踪转化率异常</p>
+</li>
+</ol>
+</details>
+<p><strong>练习10.7</strong> 证明在随机实验数据下，X-Learner的第二阶段估计是CATE的无偏估计。讨论这个性质在观察性研究中是否仍然成立。</p>
+<details>
+<summary>提示</summary>
+<p>利用随机化下的条件独立性，展开期望计算。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>证明（随机实验）：
+第二阶段伪结果：$\tilde{D}_1^i = Y_1^i - \hat{\mu}_0(X_1^i)$</p>
+<p>在随机化下，$T \perp (Y(0), Y(1)) | X$，因此：
+$$E[\tilde{D}_1|X=x] = E[Y_1 - \hat{\mu}_0(X_1)|X=x]$$
+$$= E[Y(1)|X=x] - E[\hat{\mu}_0(x)|X=x]$$</p>
+<p>如果$\hat{\mu}_0$是无偏的：$E[\hat{\mu}_0(x)] = E[Y(0)|X=x]$</p>
+<p>则：$$E[\tilde{D}_1|X=x] = E[Y(1)|X=x] - E[Y(0)|X=x] = \tau(x)$$</p>
+<p>类似可证$\tilde{D}_0$的无偏性。</p>
+<p>观察性研究中的问题：</p>
+<ol>
+<li>需要条件独立性假设$(Y(0),Y(1)) \perp T|X$</li>
+<li>如果存在未观测混杂U，估计有偏</li>
+<li>倾向得分加权可以恢复无偏性，但增加方差</li>
+<li>需要正确指定$\mu_0, \mu_1$的函数形式</li>
+</ol>
+<p>因此X-Learner在观察性研究中的无偏性依赖于更强的假设。</p>
+</details>
+<p><strong>练习10.8</strong>（开放题）讨论在实际应用异质性处理效应分析时，如何处理"多重检验问题"——即探索许多子群体时可能产生的假阳性发现。提出至少两种解决方案并比较它们的优缺点。</p>
+<details>
+<summary>提示</summary>
+<p>考虑统计学的多重比较校正、机器学习的正则化、预先指定vs探索性分析。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>多重检验问题：探索K个子群体，每个假设检验α=0.05的显著性水平，家族错误率可能远超0.05。</p>
+<p>解决方案：</p>
+<ol>
+<li>
+<p><strong>Bonferroni校正</strong>：
+   - 方法：将显著性水平调整为α/K
+   - 优点：强控制FWER，简单实施
+   - 缺点：过于保守，检验效能低</p>
+</li>
+<li>
+<p><strong>False Discovery Rate (FDR)控制</strong>：
+   - 方法：Benjamini-Hochberg程序
+   - 优点：比Bonferroni效能高，适合探索性分析
+   - 缺点：不控制FWER，需要独立性假设</p>
+</li>
+<li>
+<p><strong>预先指定分析计划</strong>：
+   - 方法：事前确定要检验的子群体
+   - 优点：避免数据窥探，结果可信
+   - 缺点：可能错过意外发现</p>
+</li>
+<li>
+<p><strong>交叉验证/样本分割</strong>：
+   - 方法：探索集发现，验证集确认
+   - 优点：平衡探索和验证
+   - 缺点：需要大样本，降低效能</p>
+</li>
+<li>
+<p><strong>正则化方法</strong>：
+   - 方法：LASSO、贝叶斯收缩
+   - 优点：自动特征选择，连续处理
+   - 缺点：难以做传统假设检验</p>
+</li>
+<li>
+<p><strong>层次检验</strong>：
+   - 方法：先检验总体异质性，再检验具体子群体
+   - 优点：逻辑清晰，控制错误率
+   - 缺点：可能缺乏检验整体异质性的效能</p>
+</li>
+</ol>
+<p>实践建议：</p>
+<ul>
+<li>结合使用：预先指定主要假设+FDR控制探索性分析</li>
+<li>透明报告：明确区分确认性和探索性分析</li>
+<li>外部验证：在独立数据集验证发现</li>
+<li>效应大小：关注实质显著性而非仅统计显著性</li>
+</ul>
+</details>
+<h2 id="_12">常见陷阱与错误</h2>
+<h3 id="1">1. 过度解释噪声</h3>
+<p><strong>陷阱</strong>：将随机变异误认为真实的异质性模式
+<strong>表现</strong>：</p>
+<ul>
+<li>在小样本子群体中发现"显著"效应</li>
+<li>模型在训练集表现优异但泛化差</li>
+<li>置信区间未包含真实效应</li>
+</ul>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>使用诚实估计和交叉验证</li>
+<li>设置最小子群体样本量</li>
+<li>进行多重检验校正</li>
+<li>关注置信区间而非点估计</li>
+</ul>
+<h3 id="2">2. 倾向得分极值问题</h3>
+<p><strong>陷阱</strong>：倾向得分接近0或1导致权重爆炸
+<strong>表现</strong>：</p>
+<ul>
+<li>IPW估计方差巨大</li>
+<li>个别观测主导结果</li>
+<li>估计不稳定</li>
+</ul>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>修剪（trimming）极端倾向得分</li>
+<li>使用双重稳健方法</li>
+<li>检查重叠假设</li>
+<li>考虑卡钳匹配</li>
+</ul>
+<h3 id="3">3. 混淆相关性和异质性</h3>
+<p><strong>陷阱</strong>：协变量与结果的相关性不等于处理效应异质性
+<strong>例子</strong>：收入与健康正相关，但治疗效果可能与收入无关</p>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>明确区分预测模型和因果模型</li>
+<li>使用适当的异质性检验</li>
+<li>验证交互效应的显著性</li>
+</ul>
+<h3 id="4-sutva">4. 忽视SUTVA违背</h3>
+<p><strong>陷阱</strong>：个体间存在干扰但仍假设独立
+<strong>表现</strong>：</p>
+<ul>
+<li>社交网络中的溢出效应</li>
+<li>市场均衡效应</li>
+<li>资源竞争</li>
+</ul>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>设计考虑干扰的实验（如cluster randomization）</li>
+<li>使用网络因果推断方法</li>
+<li>明确说明SUTVA假设的合理性</li>
+</ul>
+<h3 id="5">5. 模型选择偏差</h3>
+<p><strong>陷阱</strong>：根据结果选择"最好"的模型
+<strong>表现</strong>：</p>
+<ul>
+<li>尝试多个方法，报告最显著的</li>
+<li>事后选择子群体</li>
+<li>数据窥探（data snooping）</li>
+</ul>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>预先指定分析计划</li>
+<li>使用独立验证集</li>
+<li>报告所有尝试的分析</li>
+<li>采用集成方法</li>
+</ul>
+<h3 id="6">6. 外推问题</h3>
+<p><strong>陷阱</strong>：将估计外推到训练数据范围之外
+<strong>表现</strong>：</p>
+<ul>
+<li>对未观测特征组合预测</li>
+<li>超出支撑集的推断</li>
+<li>时间外推</li>
+</ul>
+<p><strong>避免方法</strong>：</p>
+<ul>
+<li>检查预测点的支撑</li>
+<li>使用局部方法（如匹配）</li>
+<li>明确说明适用范围</li>
+<li>进行敏感性分析</li>
+</ul>
+<h2 id="_13">最佳实践检查清单</h2>
+<h3 id="_14">数据准备阶段</h3>
+<ul>
+<li>[ ] 检查数据质量和完整性</li>
+<li>[ ] 验证随机化或识别假设</li>
+<li>[ ] 评估样本量是否充足</li>
+<li>[ ] 检查协变量平衡性</li>
+<li>[ ] 确认结果变量定义合理</li>
+<li>[ ] 处理缺失数据</li>
+</ul>
+<h3 id="_15">方法选择阶段</h3>
+<ul>
+<li>[ ] 根据数据特点选择合适方法</li>
+<li>[ ] 考虑计算复杂度和可扩展性</li>
+<li>[ ] 评估可解释性需求</li>
+<li>[ ] 确定是否需要置信区间</li>
+<li>[ ] 考虑集成多个方法</li>
+</ul>
+<h3 id="_16">模型训练阶段</h3>
+<ul>
+<li>[ ] 使用交叉验证或样本分割</li>
+<li>[ ] 实施诚实估计</li>
+<li>[ ] 调优超参数</li>
+<li>[ ] 检查收敛性</li>
+<li>[ ] 监控过拟合</li>
+</ul>
+<h3 id="_17">效应估计阶段</h3>
+<ul>
+<li>[ ] 计算点估计和置信区间</li>
+<li>[ ] 检查估计的稳定性</li>
+<li>[ ] 进行异质性检验</li>
+<li>[ ] 可视化效应分布</li>
+<li>[ ] 识别关键子群体</li>
+</ul>
+<h3 id="_18">验证评估阶段</h3>
+<ul>
+<li>[ ] 在独立数据集验证</li>
+<li>[ ] 进行安慰剂检验</li>
+<li>[ ] 检查模型假设</li>
+<li>[ ] 评估预测性能</li>
+<li>[ ] 比较不同方法结果</li>
+</ul>
+<h3 id="_19">实施部署阶段</h3>
+<ul>
+<li>[ ] 设计个体化分配规则</li>
+<li>[ ] 考虑实施成本和约束</li>
+<li>[ ] 制定监控方案</li>
+<li>[ ] 准备A/B测试</li>
+<li>[ ] 设置更新机制</li>
+</ul>
+<h3 id="_20">报告沟通阶段</h3>
+<ul>
+<li>[ ] 清晰说明方法和假设</li>
+<li>[ ] 报告不确定性</li>
+<li>[ ] 讨论局限性</li>
+<li>[ ] 提供可操作建议</li>
+<li>[ ] 使用可视化辅助理解</li>
+</ul>
+<h3 id="_21">持续改进</h3>
+<ul>
+<li>[ ] 收集反馈数据</li>
+<li>[ ] 定期重新评估</li>
+<li>[ ] 更新模型</li>
+<li>[ ] 记录经验教训</li>
+<li>[ ] 分享最佳实践</li>
+</ul>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter9.html" class="nav-link prev">← 第九章：中介分析与路径分析</a><a href="chapter11.html" class="nav-link next">第十一章：时间序列因果推断 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>

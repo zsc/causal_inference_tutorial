@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="./">
+    <title>第七章：断点回归设计</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/highlight.css">
+    <script src="assets/script.js" defer></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: false,
+                packages: {'[+]': ['noerrors', 'ams']}
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            },
+            loader: {
+                load: ['[tex]/noerrors', '[tex]/ams']
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>目录</h3>
+                <button id="sidebar-toggle" class="sidebar-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="sidebar-search">
+                <input type="text" id="sidebar-search-input" placeholder="搜索..." autocomplete="off">
+            </div>
+            <div id="tree-container">
+                <nav class="tree-nav" role="tree">
+                    <div class="tree-item " >
+                        <a href="index.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">因果推断教程</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter1.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第一章：因果推断导论</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter2.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第二章：潜在结果框架</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter3.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第三章：图模型与因果图</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter4.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第四章：随机实验与因果识别</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter5.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第五章：观察性研究中的因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter6.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第六章：工具变量方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item active" >
+                        <a href="chapter7.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第七章：断点回归设计</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter8.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第八章：双重差分方法</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter9.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第九章：中介分析与路径分析</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter10.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十章：异质性处理效应</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter11.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十一章：时间序列因果推断</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter12.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十二章：因果发现</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter13.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十三章：反事实推理与结构因果模型</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter14.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十四章：因果推断与机器学习</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="chapter15.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">第十五章：实践案例与工具</span>
+                        </a>
+                    </div>
+                
+                    <div class="tree-item " >
+                        <a href="CLAUDE.html" class="tree-link">
+                            <span class="tree-icon">📄</span>
+                            <span class="tree-title">Untitled</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </nav>
+        
+        <main class="content">
+            <article>
+                <h1 id="_1">第七章：断点回归设计</h1>
+<p>断点回归设计（Regression Discontinuity Design, RDD）是因果推断中最接近随机实验的准实验方法之一。当处理分配基于某个连续变量是否超过特定阈值时，RDD利用阈值附近个体的"准随机"分配来识别因果效应。这种方法在政策评估、教育研究和商业决策中有着广泛应用，因为许多实际决策规则都基于明确的阈值标准。</p>
+<p>本章将系统介绍RDD的理论基础、实施方法和实践应用。我们将学习如何在精确和模糊的处理分配场景下应用RDD，掌握带宽选择和稳健性检验的关键技术，并通过实际案例理解RDD的优势与局限。</p>
+<h2 id="71-sharp-rdd">7.1 精确断点回归（Sharp RDD）</h2>
+<h3 id="711">7.1.1 基本设定</h3>
+<p>精确断点回归适用于处理完全由运行变量（running variable）决定的情况。设 $X_i$ 为运行变量，$c$ 为断点（cutoff），处理分配规则为：</p>
+<p>$$D_i = \mathbb{1}(X_i \geq c)$$
+其中 $D_i$ 是处理指示变量。在断点附近，我们可以将因果效应识别为：
+$$\tau_{RDD} = \lim_{x \downarrow c} E[Y_i | X_i = x] - \lim_{x \uparrow c} E[Y_i | X_i = x]$$</p>
+<h3 id="712">7.1.2 识别假设</h3>
+<p>Sharp RDD的关键识别假设包括：</p>
+<ol>
+<li>
+<p><strong>连续性假设</strong>：潜在结果的条件期望在断点处连续
+$$E[Y_i(0) | X_i = c^+] = E[Y_i(0) | X_i = c^-]$$</p>
+</li>
+<li>
+<p><strong>局部随机化</strong>：在断点附近，个体无法精确操纵运行变量</p>
+</li>
+<li>
+<p><strong>单调性</strong>：处理分配在断点处严格变化</p>
+</li>
+</ol>
+<div class="codehilite"><pre><span></span><code>运行变量分布图示：
+     |
+  密  |    。。。
+  度  |  。    。
+     |。        。
+     |。          。。
+     |____________。___
+            c    断点
+</code></pre></div>
+
+<h3 id="713">7.1.3 局部线性回归估计</h3>
+<p>实践中，我们通常使用局部线性回归来估计RDD效应：
+$$Y_i = \alpha + \tau D_i + \beta_1 (X_i - c) + \beta_2 D_i \cdot (X_i - c) + \epsilon_i$$
+其中样本限制在带宽 $h$ 内：$|X_i - c| \leq h$</p>
+<p>这种方法允许断点两侧有不同的斜率，更灵活地拟合数据。</p>
+<h3 id="714">7.1.4 图形分析的重要性</h3>
+<p>RDD分析的第一步应该是图形检验：</p>
+<ol>
+<li><strong>结果变量在断点处的跳跃</strong></li>
+<li><strong>运行变量的密度检验</strong>（McCrary检验）</li>
+<li><strong>协变量的平衡性检验</strong></li>
+</ol>
+<p>良好的RDD图形应该显示：</p>
+<ul>
+<li>断点处明显的跳跃</li>
+<li>运行变量密度无异常堆积</li>
+<li>其他协变量在断点处连续</li>
+</ul>
+<h2 id="72-fuzzy-rdd">7.2 模糊断点回归（Fuzzy RDD）</h2>
+<h3 id="721">7.2.1 不完全遵从的处理</h3>
+<p>在现实中，并非所有个体都严格遵循断点规则。模糊RDD处理这种不完全遵从的情况：
+$$P(D_i = 1 | X_i = c^+) - P(D_i = 1 | X_i = c^-) = \pi &lt; 1$$
+其中 $\pi$ 是断点处处理概率的跳跃。</p>
+<h3 id="722-rdd">7.2.2 作为工具变量的RDD</h3>
+<p>模糊RDD可以理解为使用断点指示作为工具变量：</p>
+<p>第一阶段：
+$$D_i = \gamma_0 + \gamma_1 Z_i + \gamma_2 (X_i - c) + \gamma_3 Z_i \cdot (X_i - c) + \nu_i$$
+第二阶段：
+$$Y_i = \alpha + \tau \hat{D}_i + \beta_1 (X_i - c) + \beta_2 Z_i \cdot (X_i - c) + \epsilon_i$$
+其中 $Z_i = \mathbb{1}(X_i \geq c)$ 是工具变量。</p>
+<h3 id="723">7.2.3 识别与解释</h3>
+<p>模糊RDD识别的是局部平均处理效应（LATE）：
+$$\tau_{Fuzzy} = \frac{\lim_{x \downarrow c} E[Y_i | X_i = x] - \lim_{x \uparrow c} E[Y_i | X_i = x]}{\lim_{x \downarrow c} E[D_i | X_i = x] - \lim_{x \uparrow c} E[D_i | X_i = x]}$$
+这个效应仅对"遵从者"（compliers）有效——即那些因为超过断点而接受处理的个体。</p>
+<h2 id="73">7.3 带宽选择与稳健性检验</h2>
+<h3 id="731">7.3.1 最优带宽选择</h3>
+<p>带宽选择涉及偏差-方差权衡：</p>
+<ol>
+<li>
+<p><strong>MSE最优带宽</strong>（Imbens-Kalyanaraman）：
+$$h_{IK} = \left( \frac{2\sigma^2(c)}{f(c) \cdot (m_+''(c) - m_-''(c))^2} \right)^{1/5} \cdot n^{-1/5}$$</p>
+</li>
+<li>
+<p><strong>覆盖误差率最优带宽</strong>（Calonico-Cattaneo-Titiunik）：
+   考虑有限样本偏差修正，提供更准确的置信区间</p>
+</li>
+<li>
+<p><strong>交叉验证方法</strong>：
+   通过留一交叉验证选择预测误差最小的带宽</p>
+</li>
+</ol>
+<h3 id="732">7.3.2 稳健性检验清单</h3>
+<ol>
+<li>
+<p><strong>带宽敏感性分析</strong>
+   - 使用多个带宽（如0.5h, h, 1.5h, 2h）
+   - 绘制不同带宽下的估计值</p>
+</li>
+<li>
+<p><strong>多项式阶数检验</strong>
+   - 比较线性、二次、三次多项式
+   - 检查高阶项的显著性</p>
+</li>
+<li>
+<p><strong>安慰剂检验</strong>
+   - 在非断点处进行RDD分析
+   - 检验预定协变量的跳跃</p>
+</li>
+<li>
+<p><strong>甜甜圈RDD</strong>
+   - 排除断点附近的观测值
+   - 检验对可能操纵的稳健性</p>
+</li>
+</ol>
+<h3 id="733">7.3.3 操纵检验</h3>
+<p>检验运行变量是否被操纵是RDD有效性的关键：</p>
+<ol>
+<li>
+<p><strong>密度检验</strong>（McCrary Test）
+$$\hat{\theta} = \ln \hat{f}_+ - \ln \hat{f}_-$$
+其中 $\hat{f}_+$ 和 $\hat{f}_-$ 是断点两侧的密度估计</p>
+</li>
+<li>
+<p><strong>协变量平衡检验</strong>
+   对预定协变量进行RDD分析，检验是否存在显著跳跃</p>
+</li>
+<li>
+<p><strong>排序检验</strong>
+   检查运行变量的分布是否存在异常模式</p>
+</li>
+</ol>
+<h2 id="74">7.4 应用案例分析</h2>
+<h3 id="741">7.4.1 教育政策评估：高考录取线的因果效应</h3>
+<p>考虑使用RDD评估重点大学录取对学生未来收入的影响：</p>
+<p><strong>设定</strong>：</p>
+<ul>
+<li>运行变量：高考分数 $X_i$</li>
+<li>断点：重点大学录取线 $c = 600$</li>
+<li>处理：进入重点大学 $D_i$</li>
+<li>结果：毕业5年后年收入 $Y_i$</li>
+</ul>
+<p><strong>分析步骤</strong>：</p>
+<ol>
+<li><strong>图形检验</strong></li>
+</ol>
+<div class="codehilite"><pre><span></span><code>收入(万元)
+  40 |       。。
+     |     。  。
+  30 |   。    |。
+     | 。      | 。
+  20 |。       |  。
+     |________|____。
+      580  600  620
+         高考分数
+</code></pre></div>
+
+<ol start="2">
+<li>
+<p><strong>局部线性回归</strong>
+   在带宽 $h = 20$ 分内估计：
+$$\tau_{RDD} = 8.5万元 \quad (SE = 2.1)$$</p>
+</li>
+<li>
+<p><strong>稳健性检验</strong>
+   - 不同带宽：$h \in [10, 30]$，效应稳定在7-10万元
+   - 密度检验：$p = 0.43$，无操纵证据
+   - 协变量平衡：家庭背景、性别等无显著跳跃</p>
+</li>
+</ol>
+<h3 id="742">7.4.2 选举研究：在职优势</h3>
+<p>研究现任者在选举中的优势：</p>
+<p><strong>设定</strong>：</p>
+<ul>
+<li>运行变量：上次选举得票率 $X_i$</li>
+<li>断点：$c = 50\%$</li>
+<li>处理：成为现任者</li>
+<li>结果：下次选举得票率</li>
+</ul>
+<p><strong>关键发现</strong>：</p>
+<ol>
+<li>勉强当选的候选人vs勉强落选的候选人几乎相同</li>
+<li>现任者优势约为8个百分点</li>
+<li>效应在不同政党、地区间存在异质性</li>
+</ol>
+<h2 id="75">7.5 行业案例：拼多多用户等级制度的效果分析</h2>
+<h3 id="_2">背景</h3>
+<p>拼多多实施了基于累计消费金额的用户等级制度，不同等级享受不同的优惠和服务。我们使用RDD评估升级到"黄金会员"（消费满1000元）对用户后续消费行为的影响。</p>
+<h3 id="_3">数据与设定</h3>
+<ul>
+<li><strong>运行变量</strong>：用户累计消费金额 $X_i$</li>
+<li><strong>断点</strong>：$c = 1000$元</li>
+<li><strong>处理</strong>：成为黄金会员，享受专属优惠</li>
+<li><strong>结果变量</strong>：</li>
+<li>升级后30天内消费金额</li>
+<li>购买频次</li>
+<li>客单价</li>
+</ul>
+<h3 id="_4">分析过程</h3>
+<ol>
+<li><strong>初步图形分析</strong></li>
+</ol>
+<div class="codehilite"><pre><span></span><code>后续消费(元)
+  500 |        。。
+      |      。  。
+  400 |    。    |。
+      |  。      | 。。
+  300 |。        |    。
+      |_________|_____。
+       900   1000   1100
+       累计消费金额(元)
+</code></pre></div>
+
+<ol start="2">
+<li>
+<p><strong>Sharp RDD估计</strong>
+   由于会员升级是自动的，这是一个精确断点设计：
+$$Y_i = 320 + 85 \cdot D_i + 0.12(X_i - 1000) + 0.05 \cdot D_i(X_i - 1000)$$
+<strong>效应估计</strong>：$\tau = 85$元（$SE = 18$）</p>
+</li>
+<li>
+<p><strong>机制分析</strong>
+   通过分析不同结果变量：</p>
+</li>
+</ol>
+<ul>
+<li>购买频次增加：$\Delta f = 2.3$次/月</li>
+<li>客单价提升：$\Delta p = 12$元</li>
+<li>品类扩展：新品类购买概率提升15%</li>
+</ul>
+<h3 id="_5">业务洞察</h3>
+<ol>
+<li>
+<p><strong>即时效应vs持续效应</strong>
+   - 短期（7天）：效应最强，增量150元
+   - 中期（30天）：稳定在85元
+   - 长期（90天）：衰减至40元</p>
+</li>
+<li>
+<p><strong>异质性分析</strong>
+   - 价格敏感用户：效应更强（120元）
+   - 高频用户：效应较弱（50元）
+   - 新用户vs老用户：新用户响应更积极</p>
+</li>
+<li>
+<p><strong>策略优化建议</strong>
+   - 动态调整门槛：基于用户特征个性化
+   - 分级激励：多个断点形成递进激励
+   - 配合营销活动：在断点附近推送优惠</p>
+</li>
+</ol>
+<h3 id="_6">实施挑战与解决方案</h3>
+<ol>
+<li>
+<p><strong>操纵问题</strong>
+   - 发现：临近1000元的订单异常增多
+   - 解决：采用甜甜圈RDD，排除995-1005元区间</p>
+</li>
+<li>
+<p><strong>溢出效应</strong>
+   - 问题：用户可能延迟消费等待升级
+   - 处理：分析断点前的消费模式变化</p>
+</li>
+<li>
+<p><strong>多重断点</strong>
+   - 挑战：银牌(500)、金牌(1000)、钻石(2000)多个等级
+   - 方法：分别估计各断点效应，注意样本重叠</p>
+</li>
+</ol>
+<h2 id="76">7.6 本章小结</h2>
+<p>断点回归设计是因果推断工具箱中的有力武器，特别适用于基于明确规则的政策评估。本章的关键要点：</p>
+<h3 id="_7">核心概念</h3>
+<ol>
+<li>
+<p><strong>RDD的识别策略</strong>
+   - 利用断点处的局部随机化
+   - 连续性假设是关键
+   - 图形分析先于统计分析</p>
+</li>
+<li>
+<p><strong>两种RDD类型</strong>
+   - <strong>Sharp RDD</strong>：处理完全由断点决定，$D_i = \mathbb{1}(X_i \geq c)$
+   - <strong>Fuzzy RDD</strong>：断点影响处理概率，需要IV方法</p>
+</li>
+<li>
+<p><strong>估计方法</strong>
+   - 局部线性回归：$Y_i = \alpha + \tau D_i + \beta_1(X_i-c) + \beta_2 D_i(X_i-c) + \epsilon_i$
+   - 带宽选择的偏差-方差权衡
+   - 稳健性检验的系统方法</p>
+</li>
+</ol>
+<h3 id="_8">关键公式汇总</h3>
+<ul>
+<li>
+<p><strong>Sharp RDD因果效应</strong>：
+$$\tau_{Sharp} = \lim_{x \downarrow c} E[Y|X=x] - \lim_{x \uparrow c} E[Y|X=x]$$</p>
+</li>
+<li>
+<p><strong>Fuzzy RDD因果效应</strong>：
+$$\tau_{Fuzzy} = \frac{\text{结果变量跳跃}}{\text{处理概率跳跃}}$$</p>
+</li>
+<li>
+<p><strong>最优带宽</strong>（IK方法）：
+$$h_{opt} \propto n^{-1/5}$$</p>
+</li>
+</ul>
+<h3 id="_9">实践要点</h3>
+<ol>
+<li><strong>分析流程</strong>：图形检验 → 主分析 → 稳健性检验 → 机制探索</li>
+<li><strong>有效性检验</strong>：密度检验、协变量平衡、安慰剂测试</li>
+<li><strong>常见应用</strong>：政策阈值、考试分数线、年龄限制、地理边界</li>
+</ol>
+<p>RDD的优势在于其准实验性质和结果的可信度，但也要注意其局限性：仅识别局部效应、需要大样本、易受操纵影响。掌握RDD不仅需要理解统计方法，更需要对制度背景的深入了解。</p>
+<h2 id="77">7.7 练习题</h2>
+<h3 id="_10">基础题</h3>
+<p><strong>练习7.1</strong> 判断以下场景是否适合使用RDD分析，如果适合，指出运行变量和断点：
+a) 评估最低工资法对就业的影响
+b) 分析优惠券（满100减20）对消费的影响<br />
+c) 研究退休（65岁）对健康的影响
+d) 评估随机分配的培训项目效果</p>
+<details>
+<summary>提示</summary>
+<p>考虑是否存在明确的分配规则和断点。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>a) 不太适合 - 最低工资通常全面实施，缺少明确的断点
+b) 适合 - 运行变量：消费金额，断点：100元
+c) 适合 - 运行变量：年龄，断点：65岁
+d) 不适合 - 随机分配不需要RDD，应使用简单比较</p>
+</details>
+<p><strong>练习7.2</strong> 某公司规定月销售额达到50万的销售员可获得额外奖金。数据显示：</p>
+<ul>
+<li>49-50万区间：平均下月销售额55万</li>
+<li>50-51万区间：平均下月销售额62万</li>
+</ul>
+<p>这7万的差异能否解释为奖金的因果效应？需要检验什么？</p>
+<details>
+<summary>提示</summary>
+<p>考虑RDD的关键假设和可能的违反情况。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>不能直接解释为因果效应。需要检验：</p>
+<ol>
+<li>密度检验：50万处是否有异常堆积（操纵）</li>
+<li>协变量平衡：员工特征在断点处是否连续</li>
+<li>带宽选择：使用更窄的带宽重新估计</li>
+<li>时间趋势：检查断点实施前是否存在类似跳跃
+关键担忧：销售员可能操纵销售额刚好达到50万。</li>
+</ol>
+</details>
+<p><strong>练习7.3</strong> 使用以下RDD回归结果，计算处理效应：</p>
+<div class="codehilite"><pre><span></span><code>Y = 50 + 20D + 2(X-c) + 3D(X-c), 带宽h=10
+</code></pre></div>
+
+<p>其中D是处理指示变量，c是断点。</p>
+<details>
+<summary>提示</summary>
+<p>在断点处，(X-c) = 0。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>处理效应 τ = 20
+解释：在断点c处，(X-c) = 0，因此：</p>
+<ul>
+<li>控制组（D=0）：E[Y|X=c-] = 50</li>
+<li>处理组（D=1）：E[Y|X=c+] = 50 + 20 = 70</li>
+<li>因果效应：τ = 70 - 50 = 20</li>
+</ul>
+</details>
+<h3 id="_11">挑战题</h3>
+<p><strong>练习7.4</strong> 某在线教育平台发现，学习时长超过100小时的用户可获得"认证学员"标识。你想评估这个标识对用户完课率的影响。设计一个完整的RDD分析方案，包括：
+a) 可能的威胁和解决方案
+b) 需要进行的稳健性检验
+c) 如何解释结果的局限性</p>
+<details>
+<summary>提示</summary>
+<p>考虑用户行为的内生性和标识的信号价值。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p><strong>分析方案</strong>：</p>
+<p>a) 可能的威胁和解决方案：</p>
+<ul>
+<li>操纵：用户可能刷课时 → 检查99-101小时密度分布</li>
+<li>选择性：主动学习者更易超过100小时 → 使用窄带宽</li>
+<li>混杂时间趋势：平台同时推出其他激励 → 检查政策实施时间</li>
+</ul>
+<p>b) 稳健性检验：</p>
+<ul>
+<li>多带宽分析：h ∈ [5, 20]小时</li>
+<li>甜甜圈RDD：排除98-102小时</li>
+<li>安慰剂检验：在80、120小时测试</li>
+<li>协变量检验：用户特征（年龄、教育）的连续性</li>
+</ul>
+<p>c) 结果局限性：</p>
+<ul>
+<li>LATE：仅对100小时附近用户有效</li>
+<li>外部效度：不能推广到所有用户</li>
+<li>机制不明：可能是动机效应或信号效应</li>
+<li>短期vs长期：需追踪长期影响</li>
+</ul>
+</details>
+<p><strong>练习7.5</strong> 你在分析某电商平台的会员制度（消费满1000元自动升级），发现：</p>
+<ul>
+<li>Sharp RDD估计：τ = 100元（后续月消费增加）</li>
+<li>Fuzzy RDD估计：τ = 150元</li>
+</ul>
+<p>请解释：
+a) 为什么会出现Fuzzy RDD的情况？
+b) 两个估计值差异的含义
+c) 哪个更适合政策制定？</p>
+<details>
+<summary>提示</summary>
+<p>考虑处理分配的不完美遵从和不同人群的异质性。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p>a) Fuzzy RDD的原因：</p>
+<ul>
+<li>系统延迟：达到1000元后升级有延迟</li>
+<li>用户认知：部分用户不知道已升级</li>
+<li>账户问题：某些账户类型不参与升级</li>
+</ul>
+<p>b) 估计值差异的含义：</p>
+<ul>
+<li>Sharp RDD = 100：意向处理效应（ITT）</li>
+<li>Fuzzy RDD = 150：对实际升级者的效应（LATE）</li>
+<li>比例：升级率 = 100/150 = 67%</li>
+<li>解释：1/3的符合条件用户未实际"接受处理"</li>
+</ul>
+<p>c) 政策制定考虑：</p>
+<ul>
+<li>评估现有制度：用Sharp RDD（实际影响）</li>
+<li>优化制度设计：用Fuzzy RDD（潜在影响）</li>
+<li>成本效益分析：考虑提高升级率的成本vs收益</li>
+<li>建议：解决技术问题提高自动升级率，可增加50%效果</li>
+</ul>
+</details>
+<p><strong>练习7.6</strong> 设计一个利用地理断点的RDD研究。要求：</p>
+<ul>
+<li>明确研究问题和因果效应</li>
+<li>说明识别策略</li>
+<li>讨论可能的挑战</li>
+</ul>
+<details>
+<summary>提示</summary>
+<p>考虑行政边界、政策区域、自然边界等。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p><strong>研究设计：评估经济特区政策对企业生产率的影响</strong></p>
+<p><strong>研究问题</strong>：
+深圳前海自贸区的优惠政策是否提高了区内企业生产率？</p>
+<p><strong>识别策略</strong>：</p>
+<ul>
+<li>运行变量：企业到边界的距离（负值表示区外）</li>
+<li>断点：边界（距离=0）</li>
+<li>处理：享受税收优惠、简化审批等政策</li>
+<li>结果：全要素生产率（TFP）</li>
+</ul>
+<p><strong>RDD设定</strong>：
+$$TFP_i = \alpha + \tau \cdot Inside_i + f(distance_i) + \epsilon_i$$</p>
+<p><strong>关键假设检验</strong>：</p>
+<ol>
+<li>企业选址的准随机性（边界附近）</li>
+<li>其他特征的连续性</li>
+</ol>
+<p><strong>可能的挑战</strong>：</p>
+<ol>
+<li>
+<p><strong>空间溢出效应</strong>
+   - 问题：区外企业可能受益于邻近效应
+   - 解决：估计不同距离的异质性效应</p>
+</li>
+<li>
+<p><strong>选择性迁移</strong>
+   - 问题：高生产率企业可能迁入区内
+   - 解决：使用政策实施前就存在的企业</p>
+</li>
+<li>
+<p><strong>多维度距离</strong>
+   - 问题：不规则边界导致距离定义困难
+   - 解决：使用最短欧氏距离或分段分析</p>
+</li>
+<li>
+<p><strong>混合政策</strong>
+   - 问题：特区可能有多项政策同时实施
+   - 解决：识别总效应，通过异质性分析分解</p>
+</li>
+</ol>
+<p><strong>预期贡献</strong>：</p>
+<ul>
+<li>提供特区政策效果的因果证据</li>
+<li>指导优惠政策的空间设计</li>
+<li>评估政策扩展的潜在收益</li>
+</ul>
+</details>
+<p><strong>练习7.7</strong> 某研究使用RDD评估大学录取（分数线600分）对收入的影响，发现：</p>
+<ul>
+<li>带宽20分：效应8万元（显著）</li>
+<li>带宽10分：效应12万元（显著）</li>
+<li>带宽5分：效应18万元（不显著）</li>
+</ul>
+<p>如何解释这个结果？应该报告哪个估计？</p>
+<details>
+<summary>提示</summary>
+<p>考虑偏差-方差权衡和样本量的影响。</p>
+</details>
+<details>
+<summary>答案</summary>
+<p><strong>结果解释</strong>：</p>
+<ol>
+<li>
+<p><strong>效应递增的原因</strong>：
+   - 偏差减少：窄带宽降低了函数形式误设的偏差
+   - 局部性增强：更接近断点的比较更可信
+   - 可能存在异质性：断点附近效应确实更大</p>
+</li>
+<li>
+<p><strong>显著性变化</strong>：
+   - 样本量减少：5分带宽样本太少，标准误增大
+   - 统计功效不足：真实效应可能存在但检测不到</p>
+</li>
+<li>
+<p><strong>报告策略</strong>：
+   - 主结果：报告10分带宽（平衡偏差和方差）
+   - 稳健性：展示多个带宽的结果
+   - 最优带宽：使用IK或CCT方法计算</p>
+</li>
+</ol>
+<p><strong>建议的报告方式</strong>：
+"使用最优带宽（IK方法，h*=11.5分）估计，大学录取使毕业生年收入增加11.2万元（SE=3.1，p&lt;0.01）。稳健性检验显示，在合理带宽范围内（8-15分），效应稳定在10-13万元之间。"</p>
+<p><strong>额外考虑</strong>：</p>
+<ul>
+<li>检查协变量平衡性在不同带宽下的表现</li>
+<li>进行安慰剂检验验证5分带宽的结果</li>
+<li>考虑使用局部二次多项式提高精度</li>
+</ul>
+</details>
+<h2 id="78">7.8 常见陷阱与错误</h2>
+<h3 id="1">1. 操纵运行变量</h3>
+<p><strong>陷阱</strong>：忽视个体可能精确控制运行变量越过断点</p>
+<p><strong>症状</strong>：</p>
+<ul>
+<li>断点处密度不连续（堆积或缺失）</li>
+<li>某些协变量在断点处跳跃</li>
+<li>结果对带宽极度敏感</li>
+</ul>
+<p><strong>调试技巧</strong>：</p>
+<div class="codehilite"><pre><span></span><code>检查清单：
+□ McCrary密度检验 p &gt; 0.10
+□ 协变量平衡检验全部通过
+□ 甜甜圈RDD结果稳定
+□ 检查制度细节是否允许操纵
+</code></pre></div>
+
+<p><strong>案例</strong>：学生可能通过补考刚好达到60分及格线</p>
+<h3 id="2">2. 带宽选择偏差</h3>
+<p><strong>陷阱</strong>：尝试多个带宽后只报告显著的结果</p>
+<p><strong>正确做法</strong>：</p>
+<ol>
+<li>先确定最优带宽（IK或CCT方法）</li>
+<li>报告主要结果</li>
+<li>展示带宽敏感性分析</li>
+<li>预先注册分析计划</li>
+</ol>
+<p><strong>示例代码逻辑</strong>：</p>
+<div class="codehilite"><pre><span></span><code>主分析：h* = optimal_bandwidth()
+稳健性：[0.5h*, 0.75h*, h*, 1.25h*, 1.5h*]
+</code></pre></div>
+
+<h3 id="3">3. 忽视模糊断点</h3>
+<p><strong>陷阱</strong>：假设所有RDD都是精确的</p>
+<p><strong>识别方法</strong>：</p>
+<ul>
+<li>绘制处理概率vs运行变量图</li>
+<li>检查断点处是否100%跳跃</li>
+<li>了解制度实施细节</li>
+</ul>
+<p><strong>后果</strong>：Sharp RDD用于Fuzzy情况会低估真实效应</p>
+<h3 id="4">4. 错误的函数形式</h3>
+<p><strong>陷阱</strong>：全局高阶多项式可能产生误导性结果</p>
+<p><strong>建议</strong>：</p>
+<ul>
+<li>局部线性/二次为主</li>
+<li>避免高于3阶的多项式</li>
+<li>允许断点两侧不同斜率</li>
+<li>图形检验优先于参数估计</li>
+</ul>
+<h3 id="5">5. 外推过度</h3>
+<p><strong>陷阱</strong>：将断点处的LATE解释为ATE</p>
+<p><strong>正确理解</strong>：</p>
+<ul>
+<li>RDD估计的是局部效应</li>
+<li>仅对断点附近个体有效</li>
+<li>不能推广到远离断点的群体</li>
+<li>政策含义需谨慎</li>
+</ul>
+<h3 id="6">6. 多重断点处理不当</h3>
+<p><strong>陷阱</strong>：存在多个断点时分析混乱</p>
+<p><strong>解决方案</strong>：</p>
+<ol>
+<li>分别分析每个断点</li>
+<li>注意样本重叠问题</li>
+<li>检查不同断点间的干扰</li>
+<li>考虑使用不同运行变量</li>
+</ol>
+<h3 id="7">7. 时间混淆</h3>
+<p><strong>陷阱</strong>：断点实施时间与其他政策变化重合</p>
+<p><strong>检验方法</strong>：</p>
+<ul>
+<li>事件研究图</li>
+<li>使用实施前数据做安慰剂检验</li>
+<li>控制时间趋势</li>
+</ul>
+<h3 id="8">8. 协变量使用错误</h3>
+<p><strong>陷阱</strong>：控制受处理影响的协变量</p>
+<p><strong>原则</strong>：</p>
+<ul>
+<li>只控制预定协变量</li>
+<li>协变量主要用于提高精度</li>
+<li>不应改变点估计（如果改变，说明有问题）</li>
+</ul>
+<h2 id="79">7.9 最佳实践检查清单</h2>
+<h3 id="_12">设计阶段</h3>
+<ul>
+<li>[ ] <strong>明确断点规则</strong></li>
+<li>书面文件确认分配规则</li>
+<li>了解实施细节和例外情况</li>
+<li>
+<p>确认规则的执行严格程度</p>
+</li>
+<li>
+<p>[ ] <strong>评估可行性</strong></p>
+</li>
+<li>样本量是否充足（断点附近至少几百个观测）</li>
+<li>运行变量是否连续且密度足够</li>
+<li>
+<p>是否存在操纵的激励和能力</p>
+</li>
+<li>
+<p>[ ] <strong>识别假设检验计划</strong></p>
+</li>
+<li>预定需要检验的协变量</li>
+<li>确定带宽选择方法</li>
+<li>计划稳健性检验</li>
+</ul>
+<h3 id="_13">实施阶段</h3>
+<ul>
+<li>[ ] <strong>图形分析优先</strong></li>
+<li>原始数据散点图</li>
+<li>分组均值图（bin scatter plot）</li>
+<li>局部多项式平滑图</li>
+<li>
+<p>密度分布图</p>
+</li>
+<li>
+<p>[ ] <strong>基础检验</strong></p>
+</li>
+<li>McCrary密度检验</li>
+<li>协变量平衡性检验</li>
+<li>
+<p>安慰剂断点检验</p>
+</li>
+<li>
+<p>[ ] <strong>主要分析</strong></p>
+</li>
+<li>使用最优带宽方法</li>
+<li>报告第一阶段（如果是Fuzzy）</li>
+<li>
+<p>计算稳健标准误</p>
+</li>
+<li>
+<p>[ ] <strong>稳健性检验</strong></p>
+</li>
+<li>多个带宽</li>
+<li>不同多项式阶数</li>
+<li>甜甜圈RDD</li>
+<li>不同的核函数</li>
+</ul>
+<h3 id="_14">报告阶段</h3>
+<ul>
+<li>[ ] <strong>透明度</strong></li>
+<li>报告所有尝试的规格</li>
+<li>展示完整的图形证据</li>
+<li>
+<p>讨论识别假设的合理性</p>
+</li>
+<li>
+<p>[ ] <strong>完整性</strong></p>
+</li>
+<li>主要效应估计</li>
+<li>标准误和置信区间</li>
+<li>样本量和有效观测数</li>
+<li>
+<p>第一阶段结果（Fuzzy RDD）</p>
+</li>
+<li>
+<p>[ ] <strong>解释恰当</strong></p>
+</li>
+<li>强调局部性质</li>
+<li>讨论外部有效性</li>
+<li>说明政策含义的局限</li>
+</ul>
+<h3 id="_15">进阶考虑</h3>
+<ul>
+<li>[ ] <strong>异质性分析</strong></li>
+<li>按重要特征分组</li>
+<li>交互效应检验</li>
+<li>
+<p>分位数RDD</p>
+</li>
+<li>
+<p>[ ] <strong>机制探索</strong></p>
+</li>
+<li>多个结果变量</li>
+<li>中介分析（谨慎）</li>
+<li>
+<p>动态效应</p>
+</li>
+<li>
+<p>[ ] <strong>扩展方法</strong></p>
+</li>
+<li>RD-DID（如有面板数据）</li>
+<li>空间RDD</li>
+<li>多维RDD</li>
+</ul>
+<h3 id="_16">常用诊断代码框架</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. 密度检验</span>
+<span class="n">density_test</span> <span class="o">=</span> <span class="n">mccrary_test</span><span class="p">(</span><span class="n">running_var</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">)</span>
+
+<span class="c1"># 2. 协变量平衡</span>
+<span class="k">for</span> <span class="n">covariate</span> <span class="ow">in</span> <span class="n">predetermined_vars</span><span class="p">:</span>
+    <span class="n">balance_test</span> <span class="o">=</span> <span class="n">rdd_estimate</span><span class="p">(</span><span class="n">covariate</span> <span class="o">~</span> <span class="n">running_var</span><span class="p">)</span>
+
+<span class="c1"># 3. 带宽选择</span>
+<span class="n">h_ik</span> <span class="o">=</span> <span class="n">ik_bandwidth</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">)</span>
+<span class="n">h_cct</span> <span class="o">=</span> <span class="n">cct_bandwidth</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">)</span>
+
+<span class="c1"># 4. 敏感性分析</span>
+<span class="n">bandwidths</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="mf">1.25</span><span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">h</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="n">rdd_estimate</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">bw</span><span class="p">)</span> <span class="k">for</span> <span class="n">bw</span> <span class="ow">in</span> <span class="n">bandwidths</span><span class="p">]</span>
+
+<span class="c1"># 5. 图形输出</span>
+<span class="n">plot_rdd</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">cutoff</span><span class="p">,</span> <span class="n">bandwidth</span><span class="o">=</span><span class="n">h</span><span class="p">,</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</code></pre></div>
+
+<p>记住：RDD的可信度很大程度上依赖于制度细节的理解和图形证据的说服力，而非复杂的计量技术。</p>
+            </article>
+            
+            <nav class="page-nav"><a href="chapter6.html" class="nav-link prev">← 第六章：工具变量方法</a><a href="chapter8.html" class="nav-link next">第八章：双重差分方法 →</a></nav>
+        </main>
+    </div>
+</body>
+</html>
